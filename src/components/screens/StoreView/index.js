@@ -70,7 +70,7 @@ class StoreView extends Component {
           />
           <MyInfinityScroll
             dataUrl={DATAURLS[selectedIndex]}
-            style={{flex:1, flexDirection:'column'}}/>
+            style={{flex:1, flexDirection:'column', }}/>
           
         </View>
       </View>

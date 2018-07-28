@@ -4,7 +4,9 @@ const { width, height } = Dimensions.get('window')
 
 export default {
   container: {
-    flex: 1
+    flex: 1,
+    paddingRight:10,
+    paddingLeft:10
   },
   header: {
     width,

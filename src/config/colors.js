@@ -28,5 +28,5 @@ export const DHB_TEXT_COLOR = "#FFCA28";
 
 
 //for book card view
-export const CARD_PRICE_COLOR="#388E3C";
+export const CARD_PRICE_COLOR="#3949AB";
 

@@ -30,25 +30,13 @@ class MyInfinityScroll extends Component {
     console.log(props);
   }
   componentDidMount() {
-    this.setState({dataUrl:this.props.dataUrl});
+
     this.makeRemoteRequest();
   }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // super.componentDidUpdate(prevProps, prevState, snapshot);
-    console.log("componentDidUpdate-- prevProps");
-    console.log(prevProps);
-    console.log("componentDidUpdate--");
-    console.log(this.props);
-    if(prevProps.dataUrl != this.props.dataUrl){
-      this.setState({dataUrl:this.props.dataUrl});
-      this.makeRemoteRequest();
-      
-    }
-  }
 
 
-  makeRemoteRequest = () => {
-    const { page, seed, urlparam } = this.state;
+  makeRemoteRequest = (page) => {
+    console.log(page);
     const url = `https://zacsbooks.com/stores/`+this.props.dataUrl+'?page='+page;
     console.log('url', url);
     this.setState({ loading: true });
@@ -61,11 +49,11 @@ class MyInfinityScroll extends Component {
           error: res.error || null,
           loading: false,
           refreshing: false,
-          page:page+1
+          
                     
         });
-        console.log("Result", res.nodes);
-        resolve(this.state.data);
+        console.log("Result", this.state.data);
+        resolve(res.nodes);
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -89,7 +77,9 @@ class MyInfinityScroll extends Component {
       // let rowData = Array.from({ length: pageLimit }, (value, index) => `item -> ${index + skip}`)
        
         // My maid api call 
-      const rowData = await this.makeRemoteRequest();
+        
+      const rowData = await this.makeRemoteRequest(page);
+      console.log('page', page);
       console.log('rowdata', rowData);
       
       // Simulate the network loading in ES7 syntax (async/await)
@@ -178,21 +168,21 @@ class MyInfinityScroll extends Component {
     console.log(this.props.dataUrl)
     return (
       <View style={styles.container}>
-        <Header searchBar rounded>
+        {/* <Header searchBar rounded>
           <Item style={{ backgroundColor: 'lightgray', borderRadius: 5 }}>
             <Icon name="ios-search" />
             <Input placeholder="Search" onChangeText={this.onChangeScrollToIndex} value={this.state.text} />
           </Item>
-        </Header>
+        </Header> */}
         <UltimateListView
           ref={ref => this.listView = ref}
           key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
           onFetch={this.onFetch}
           keyExtractor={(item, index) => `${index} - ${item}`} // this is required when you are using FlatList
-          refreshableMode="advanced" // basic or advanced
+          // refreshableMode="basic" // basic or advanced
           item={this.renderItem} // this takes three params (item, index, separator)
           numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
-          refreshing={this.state.refreshing}
+          
           // ----Extra Config----
           displayDate
           header={this.renderHeader}

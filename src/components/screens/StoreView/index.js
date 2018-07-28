@@ -13,9 +13,9 @@ import styles from './styles';
 
 import { ButtonGroup } from 'react-native-elements'; // 0.17.0
 import DownHeaderBar from "../../atoms/DownHeaderBar"
+import MyInfinityScroll from "../MyInfinityScroll"
 
-
-class Store extends Component {
+class StoreView extends Component {
   static navigationOptions = {
     tabBarLabel: "Store"
   }; // navigationOptions
@@ -35,6 +35,7 @@ class Store extends Component {
   render() {
     const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All']
     const { selectedIndex } = this.state
+    const DATAURLS = ['featured_book','new_books', '','best_sellers','all']
     return (
       <View
         style={{
@@ -67,7 +68,9 @@ class Store extends Component {
             textStyle = {styles.btgText}
             selectedTextStyle = {styles.btgSelectedText}
           />
-          
+          <MyInfinityScroll
+            dataUrl={DATAURLS[selectedIndex]}
+            style={{flex:1, flexDirection:'column'}}/>
           
         </View>
       </View>
@@ -76,4 +79,4 @@ class Store extends Component {
 } // Dashboard
 
 
-export default Store;
+export default StoreView;

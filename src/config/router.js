@@ -15,7 +15,7 @@ import Login from "../components/login";
 import ForgotPassword from "../components/forgotpassword";
 import Myshelf from "../components/screens/Myshelf";
 import Website from "../components/screens/Website";
-import Store from "../components/screens/Store";
+import StoreView from "../components/screens/StoreView";
 import ContactUs from "../components/screens/ContactUs";
 
 import * as COLOR from "./colors";
@@ -76,7 +76,7 @@ export const HomeTabs = TabNavigator(
       screen: ContactUs
     },
     Store: {
-      screen:Store
+      screen:StoreView
     }
   },
   {

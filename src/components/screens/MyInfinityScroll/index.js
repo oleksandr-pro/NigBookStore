@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { Alert, Dimensions, Platform, View } from 'react-native'
 import { Button, Header, Icon, Input, Item, Left, Right, Text } from 'native-base'
 
- import { UltimateListView } from '../../../../lib/index'
+ import { UltimateListView } from '../../../../lib'
 import styles from './styles'
 import LoadingSpinner from '../../atoms/loadingSpinner'
 import ControlTab from '../../molecules/controlTab'
 import FlatListItem from '../../molecules/itemContainer/flatListItem'
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
+import ItemModal from '../../molecules/itemModal';
 
 const { width, height } = Dimensions.get('window')
 class MyInfinityScroll extends Component {
@@ -24,7 +25,8 @@ class MyInfinityScroll extends Component {
       refreshing: false,
       results:[],
       index: 2,
-      dataUrl: ''
+      dataUrl: '',
+      isModalVisible: false
     }
     console.log("MyInfinityScroll--");
     console.log(props);
@@ -120,20 +122,26 @@ class MyInfinityScroll extends Component {
     }
   }
 
-  onPressItem = (type, index, item) => {
-    Alert.alert(type, `You're pressing on ${item.node.title}`)
+  _onPressItem = (type, index, item) => {
+    this._showModal(item);
   }
+
+  _hideModal = () => {
+    this.setState({isModalVisible: false})
+  }
+
+  _showModal = (selectedItem) => this.setState({ isModalVisible: true, selectedItem })
 
 
 
   renderItem = (item, index, separator) => {
     if (this.state.layout === 'list') {
       return (
-        <FlatListItem item={item} index={index} onPress={this.onPressItem} />
+        <FlatListItem item={item} index={index} onPress={this._onPressItem} />
       )
     } else if (this.state.layout === 'grid') {
       return (
-        <FlatListGrid item={item} index={index} onPress={this.onPressItem} />
+        <FlatListGrid item={item} index={index} onPress={this._onPressItem} />
       )
     }
     return null
@@ -200,6 +208,11 @@ class MyInfinityScroll extends Component {
           dateStyle={{ color: 'lightgray' }}
           refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
           refreshViewHeight={80}
+        />
+        <ItemModal 
+          modalVisible={this.state.isModalVisible} 
+          selectedItem={this.state.selectedItem}
+          onDismiss={this._hideModal.bind(this)}
         />
       </View>
     )

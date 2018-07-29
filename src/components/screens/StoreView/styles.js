@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     },
     btgSelectedText:{
         color:COLOR.BTG_TEXT_COLOR
+    },
+    TabTextStyle:{
+        fontSize:12
     }
 })
 

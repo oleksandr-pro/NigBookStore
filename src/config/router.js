@@ -22,6 +22,8 @@ import * as COLOR from "./colors";
 
 import DrawerContainer from "../components/drawer";
 
+
+
 const HomeItem = StackNavigator({
   Home: {
     screen: Home
@@ -113,6 +115,8 @@ export const HomeTabs = TabNavigator(
     }
   }
 );
+
+
 
 const navigateOnce = getStateForAction => (action, state) => {
   const { type, routeName } = action;

@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { bindActionCreators } from "redux";
 import * as authActions from "../../../actions/authenticate";
+
 import { connect } from "react-redux";
 
 import * as COLOR from "../../../config/colors";
@@ -15,15 +16,22 @@ import { ButtonGroup } from 'react-native-elements'; // 0.17.0
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
 
+import { Container, Tabs, Tab } from 'native-base'
+
+import BookCategories from "../StoreTabViews/BookCategories";
+
 class StoreView extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     tabBarLabel: "Store"
-  }; // navigationOptions
+  }); // navigationOptions
 
   constructor () {
     super()
     this.state = {
-      selectedIndex: 4
+      selectedIndex: 4,
+      initialPage:4,
+      activeTab:4
+     
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
@@ -35,7 +43,7 @@ class StoreView extends Component {
   render() {
     const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All']
     const { selectedIndex } = this.state
-    const DATAURLS = ['featured_book','new_books', '','best_sellers','all']
+    const DATAURLS = ['featured_book','new_books', 'best_sellers','all']
     return (
       <View
         style={{
@@ -55,23 +63,62 @@ class StoreView extends Component {
           <View style={{height:24, marginTop:5}}>
            <DownHeaderBar data={buttons[selectedIndex]}/>
           </View>
-          
-          
-          <ButtonGroup
-            style={{padding:0,margin:0}}
-            onPress={this.updateIndex}
-            selectedIndex={selectedIndex}
-            buttons={buttons}
-            containerStyle={styles.btgContainer}
-            containerBorderRadius = {0}
-            selectedButtonStyle = {styles.btgSelected}
-            textStyle = {styles.btgText}
-            selectedTextStyle = {styles.btgSelectedText}
-          />
-          <MyInfinityScroll
-            dataUrl={DATAURLS[selectedIndex]}
-            style={{flex:1, flexDirection:'column', }}/>
-          
+          <Tabs
+            initialPage={this.state.initialPage} page={this.state.activeTab}
+            onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
+          >
+            <Tab
+              heading={'Featured'}
+              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              tabStyle={{backgroundColor: '#FB8C00'}}
+              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              
+              >
+               <MyInfinityScroll dataUrl={DATAURLS[0]}/>
+              
+            </Tab>
+            <Tab
+              heading={'New Books'}
+              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              tabStyle={{backgroundColor: '#FB8C00'}}
+              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTabStyle={{ backgroundColor: '#388E3C' }}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[1]}/>
+            </Tab>
+
+            <Tab
+              heading={'Categories'}
+              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              tabStyle={{backgroundColor: '#FB8C00'}}
+              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTabStyle={{ backgroundColor: '#388E3C' }}
+            >
+              <BookCategories/>
+            </Tab>
+
+            <Tab
+              heading={'Best Seller'}
+              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              tabStyle={{backgroundColor: '#FB8C00'}}
+              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTabStyle={{ backgroundColor: '#388E3C' }}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[2]}/>
+            </Tab>
+            <Tab
+              heading={'All'}
+              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              tabStyle={{backgroundColor: '#FB8C00'}}
+              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTabStyle={{ backgroundColor: '#388E3C' }}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[3]}/>
+              
+            </Tab>
+            
+          </Tabs>
         </View>
       </View>
     );

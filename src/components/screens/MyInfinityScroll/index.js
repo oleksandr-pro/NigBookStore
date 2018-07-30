@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Alert, Dimensions, Platform, View } from 'react-native'
-import { Button, Header, Icon, Input, Item, Left, Right, Text } from 'native-base'
+
 
  import { UltimateListView } from '../../../../lib'
 import styles from './styles'
 import LoadingSpinner from '../../atoms/loadingSpinner'
 import ControlTab from '../../molecules/controlTab'
-import FlatListItem from '../../molecules/itemContainer/flatListItem'
+
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
 import ItemModal from '../../molecules/itemModal';
 
@@ -47,7 +47,7 @@ class MyInfinityScroll extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          data: page === 1 ? res.nodes : [...this.state.data, ...res.nodes],
+          data: [],
           error: res.error || null,
           loading: false,
           refreshing: false,
@@ -137,7 +137,7 @@ class MyInfinityScroll extends Component {
   renderItem = (item, index, separator) => {
     if (this.state.layout === 'list') {
       return (
-        <FlatListItem item={item} index={index} onPress={this._onPressItem} />
+        <FlatListGrid item={item} index={index} onPress={this._onPressItem} />
       )
     } else if (this.state.layout === 'grid') {
       return (

@@ -2,17 +2,10 @@
 
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { bindActionCreators } from "redux";
-import * as authActions from "../../../actions/authenticate";
-
-import { connect } from "react-redux";
 
 import * as COLOR from "../../../config/colors";
 import styles from './styles';
 
-import { ButtonGroup } from 'react-native-elements'; // 0.17.0
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
 
@@ -28,22 +21,27 @@ class StoreView extends Component {
   constructor () {
     super()
     this.state = {
-      selectedIndex: 4,
-      initialPage:4,
-      activeTab:4
+      selectedIndex:0,
+      initialPage:0,
+      activeTab:0
      
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
 
+  componentDidMount(){
+    this.setState({selectedIndex:0,initialPage:0, activeTab:0});
+  }
+
   updateIndex (selectedIndex) {
-    this.setState({selectedIndex})
+    this.setState({selectedIndex});
   };
 
   render() {
-    const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All']
-    const { selectedIndex } = this.state
-    const DATAURLS = ['featured_book','new_books', 'best_sellers','all']
+    const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All'];
+    const { selectedIndex, initialPage } = this.state;
+    const DATAURLS = ['featured_book','new_books', 'best_sellers','all'];
+    
     return (
       <View
         style={{
@@ -63,15 +61,16 @@ class StoreView extends Component {
           <View style={{height:24, marginTop:5}}>
            <DownHeaderBar data={buttons[selectedIndex]}/>
           </View>
+          <Container>
           <Tabs
-            initialPage={this.state.initialPage} page={this.state.activeTab}
+            initialPage={initialPage} page={this.state.activeTab}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
           >
             <Tab
               heading={'Featured'}
-              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              textStyle={{ color: '#fff', fontSize:12 }}
               tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTextStyle={[{ color: '#fff' }, styles.TabTextStyle]}
               activeTabStyle={{ backgroundColor: '#388E3C' }}
               
               >
@@ -80,9 +79,9 @@ class StoreView extends Component {
             </Tab>
             <Tab
               heading={'New Books'}
-              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              textStyle={{ color: '#fff', fontSize:12 }}
               tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTextStyle={{ color: '#fff', fontSize:12}}
               activeTabStyle={{ backgroundColor: '#388E3C' }}
             >
               <MyInfinityScroll dataUrl={DATAURLS[1]}/>
@@ -90,9 +89,9 @@ class StoreView extends Component {
 
             <Tab
               heading={'Categories'}
-              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              textStyle={{ color: '#fff', fontSize:12 }}
               tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTextStyle={{ color: '#fff', fontSize:12}}
               activeTabStyle={{ backgroundColor: '#388E3C' }}
             >
               <BookCategories/>
@@ -100,18 +99,18 @@ class StoreView extends Component {
 
             <Tab
               heading={'Best Seller'}
-              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              textStyle={{ color: '#fff', fontSize:12 }}
               tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTextStyle={{ color: '#fff', fontSize:12}}
               activeTabStyle={{ backgroundColor: '#388E3C' }}
             >
               <MyInfinityScroll dataUrl={DATAURLS[2]}/>
             </Tab>
             <Tab
               heading={'All'}
-              textStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              textStyle={{ color: '#fff', fontSize:12 }}
               tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' },styles.TabTextStyle]}
+              activeTextStyle={{ color: '#fff', fontSize:12}}
               activeTabStyle={{ backgroundColor: '#388E3C' }}
             >
               <MyInfinityScroll dataUrl={DATAURLS[3]}/>
@@ -119,6 +118,7 @@ class StoreView extends Component {
             </Tab>
             
           </Tabs>
+          </Container>
         </View>
       </View>
     );

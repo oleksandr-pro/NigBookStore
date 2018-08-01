@@ -31,7 +31,7 @@ class CustomCardContent extends Component {
                     
                 </View>
                 <View style={styles.subContainer}>
-                    <Text uppercase={false} style={[styles.TextStyle, {paddingRight:2, paddingLeft:2}]}>
+                    <Text numberOfLines={3} uppercase={false} style={[styles.TextStyle, {paddingRight:2, paddingLeft:2}]}>
                         {title}
                     </Text>
                 </View>

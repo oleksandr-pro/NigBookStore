@@ -10,6 +10,7 @@
     "native-base": "^2.7.2",
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-app-intro-slider": "^1.0.1",
     "react-native-cards": "^1.1.4",
     "react-native-elements": "^0.19.1",
     "react-native-material-cards": "^1.0.9",

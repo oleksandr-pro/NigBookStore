@@ -8,32 +8,112 @@ import { bindActionCreators } from "redux";
 import * as authActions from "../../../actions/authenticate";
 import { connect } from "react-redux";
 
+import DownHeaderBar from "../../atoms/DownHeaderBar"
+import MyInfinityScroll from "../MyInfinityScroll"
+import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 import * as COLOR from "../../../config/colors";
+import styles from './styles';
+
 
 class Myshelf extends Component {
   static navigationOptions = {
-    tabBarLabel: "My shelf"
+    tabBarLabel: "My shelf",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="book-open-variant" size={24} color={COLOR.ICON} />
+    )
   }; // navigationOptions
 
+  constructor () {
+    super()
+    this.state = {
+      selectedIndex:0,
+      initialPage:0,
+      activeTab:0
+     
+    }
+    this.updateIndex = this.updateIndex.bind(this)
+  };
+  componentDidMount(){
+    this.setState({selectedIndex:0,initialPage:0, activeTab:0});
+  }
+
+  updateIndex (selectedIndex) {
+    this.setState({selectedIndex});
+  };
   render() {
+    const buttons = ['Read', 'Unread','Recent', 'Wishlist'];
+    const { selectedIndex, initialPage } = this.state;
+    const DATAURLS = ['featured_book','new_books', 'best_sellers','all'];
     return (
       <View
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: COLOR.BACKGROUND
+          backgroundColor: COLOR.BACKGROUND,
+          padding:0
         }}
       >
         <View
           style={{
             flex: 1,
-            marginBottom: 72,
-            justifyContent: "center",
-            alignItems: "center"
+            padding:0,
+            margin:0,
+            flexDirection:'column'
           }}
         >
-          <Icon size={96} name="view-dashboard" color={COLOR.TINT_DARK} />
+          <View style={{height:24, marginTop:5}}>
+           <DownHeaderBar data={buttons[selectedIndex]}/>
+          </View>
+          <Container>
+          <Tabs
+            initialPage={initialPage} page={this.state.activeTab}
+            onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
+            renderTabBar={()=> <ScrollableTab />}
+          >
+            <Tab
+              heading={'Read'}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
+              
+              >
+               <MyInfinityScroll dataUrl={DATAURLS[0]}/>
+              
+            </Tab>
+            <Tab
+              heading={'Unread'}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[1]}/>
+            </Tab>
+
+            <Tab
+              heading={'Recent'}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[2]}/>
+            </Tab>
+            <Tab
+              heading={'Wishlist'}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[3]}/>
+              
+            </Tab>
+            
+          </Tabs>
+          </Container>
+
+
         </View>
       </View>
     );

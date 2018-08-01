@@ -4,6 +4,9 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
+
+
+
 import * as reducers from "./reducers";
 import Main from "./components/main";
 
@@ -12,11 +15,16 @@ const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
 export default class App extends Component {
+ 
+
   render() {
-    return (
-      <Provider store={store}>
-        <Main />
-      </Provider>
-    );
+    
+      return (
+        <Provider store={store}>
+          <Main />
+        </Provider>
+      );
+   
   }
+  
 }

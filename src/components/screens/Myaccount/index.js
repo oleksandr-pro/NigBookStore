@@ -10,9 +10,12 @@ import { connect } from "react-redux";
 
 import * as COLOR from "../../../config/colors";
 
-class Website extends Component {
+class Myaccount extends Component {
   static navigationOptions = {
-    tabBarLabel: "Website"
+    tabBarLabel: "My Account",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="account-circle" size={24} color={COLOR.ICON} />
+    )
   }; // navigationOptions
 
   render() {
@@ -40,4 +43,4 @@ class Website extends Component {
   } // render
 } // Feed
 
-export default Website;
+export default Myaccount;

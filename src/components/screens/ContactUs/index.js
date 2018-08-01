@@ -12,7 +12,10 @@ import * as COLOR from "../../../config/colors";
 
 class ContactUs extends Component {
   static navigationOptions = {
-    tabBarLabel: "Contact Us"
+    tabBarLabel: "Contact Us",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="email" size={24} color={COLOR.ICON} />
+    )
   }; // navigationOptions
 
   render() {

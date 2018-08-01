@@ -9,13 +9,55 @@ import styles from './styles';
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
 
-import { Container, Tabs, Tab } from 'native-base'
+import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import BookCategories from "../StoreTabViews/BookCategories";
+import { colors } from "../../../../node_modules/react-native-elements";
+
+
+
+const styles1 = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+    fontSize: 28,
+  },
+});
+
+const Page = ({label}) => (
+  <View style={styles1.container}>
+    <Text style={styles1.welcome}>
+      {label}
+    </Text>
+    <Text style={styles1.instructions}>
+      To get started, edit index.ios.js
+    </Text>
+    <Text style={styles1.instructions}>
+      Press Cmd+R to reload,{'\n'}
+      Cmd+D or shake for dev menu
+    </Text>
+  </View>
+);
 
 class StoreView extends Component {
   static navigationOptions = ({navigation}) => ({
-    tabBarLabel: "Store"
+    tabBarLabel: "Store",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="shopping" size={24} color={COLOR.ICON} />
+    )
   }); // navigationOptions
 
   constructor () {
@@ -65,13 +107,14 @@ class StoreView extends Component {
           <Tabs
             initialPage={initialPage} page={this.state.activeTab}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
+            renderTabBar={()=> <ScrollableTab />}
           >
             <Tab
               heading={'Featured'}
-              textStyle={{ color: '#fff', fontSize:12 }}
-              tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={[{ color: '#fff' }, styles.TabTextStyle]}
-              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
               
               >
                <MyInfinityScroll dataUrl={DATAURLS[0]}/>
@@ -79,39 +122,39 @@ class StoreView extends Component {
             </Tab>
             <Tab
               heading={'New Books'}
-              textStyle={{ color: '#fff', fontSize:12 }}
-              tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={{ color: '#fff', fontSize:12}}
-              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
             >
               <MyInfinityScroll dataUrl={DATAURLS[1]}/>
             </Tab>
 
             <Tab
               heading={'Categories'}
-              textStyle={{ color: '#fff', fontSize:12 }}
-              tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={{ color: '#fff', fontSize:12}}
-              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
             >
               <BookCategories/>
             </Tab>
 
             <Tab
               heading={'Best Seller'}
-              textStyle={{ color: '#fff', fontSize:12 }}
-              tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={{ color: '#fff', fontSize:12}}
-              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
             >
               <MyInfinityScroll dataUrl={DATAURLS[2]}/>
             </Tab>
             <Tab
               heading={'All'}
-              textStyle={{ color: '#fff', fontSize:12 }}
-              tabStyle={{backgroundColor: '#FB8C00'}}
-              activeTextStyle={{ color: '#fff', fontSize:12}}
-              activeTabStyle={{ backgroundColor: '#388E3C' }}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
             >
               <MyInfinityScroll dataUrl={DATAURLS[3]}/>
               
@@ -119,6 +162,8 @@ class StoreView extends Component {
             
           </Tabs>
           </Container>
+
+
         </View>
       </View>
     );

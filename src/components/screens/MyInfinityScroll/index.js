@@ -9,6 +9,7 @@ import ControlTab from '../../molecules/controlTab'
 
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
 import ItemModal from '../../molecules/itemModal';
+import NativeItemModal from '../../molecules/NativeItemModal'
 
 const { width, height } = Dimensions.get('window')
 class MyInfinityScroll extends Component {
@@ -209,7 +210,7 @@ class MyInfinityScroll extends Component {
           refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
           refreshViewHeight={80}
         />
-        <ItemModal 
+        <NativeItemModal 
           modalVisible={this.state.isModalVisible} 
           selectedItem={this.state.selectedItem}
           onDismiss={this._hideModal.bind(this)}

@@ -1,6 +1,6 @@
 export const HEADER = "#FB8C00";
 export const HEADER_TINT = "#ffffff";
-export const PRIMARY = "#FB8C00";
+export const PRIMARY = "#FFC107";
 export const PRIMARY_TEXT = "#505050";
 export const PRIMARY_TEXT_LIGHT = "#ffffff";
 export const PLACEHOLDER_TEXT_LIGHT = "#999999";
@@ -30,3 +30,13 @@ export const DHB_TEXT_COLOR = "#FFCA28";
 //for book card view
 export const CARD_PRICE_COLOR="#3949AB";
 
+// for parelette from material design
+
+export const DARK_PRIMARY_COLOR="#FFA000";//background-color
+export const DEFAULT_PRIMARY_COLOR="#FFC107";//background-color
+export const LIGHT_PRIMARY_COLOR="#FFECB3";//background-color
+export const TEXT_PRIMARY_COLOR="#212121";
+export const ACCENT_COLOR="#536DFE";//background-color
+export const PRIMARY_TEXT_COLOR="#212121";
+export const SECONDARY_TEXT_COLOR="#757575";
+export const DIVIDER_COLOR="#BDBDBD";//border-color

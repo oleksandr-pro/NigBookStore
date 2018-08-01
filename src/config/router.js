@@ -14,7 +14,7 @@ import Settings from "../components/settings";
 import Login from "../components/login";
 import ForgotPassword from "../components/forgotpassword";
 import Myshelf from "../components/screens/Myshelf";
-import Website from "../components/screens/Website";
+import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
 import ContactUs from "../components/screens/ContactUs";
 
@@ -71,8 +71,8 @@ export const HomeTabs = TabNavigator(
     Myshelf: {
       screen: Myshelf
     },
-    Website: {
-      screen: Website
+    MyAccount: {
+      screen: Myaccount
     },
     ContactUs: {
       screen: ContactUs
@@ -85,15 +85,15 @@ export const HomeTabs = TabNavigator(
     headerMode: "none",
     tabBarComponent: TabBarBottom,
     tabBarPosition: "bottom",
-    initialRouteName: 'Store',
+    initialRouteName: 'Myshelf',
     tabBarOptions: {
       showLabel: true,
-      showIcon:false,
+      showIcon:true,
       upperCaseLabel: false,
       activeTintColor: COLOR.HEADER_TINT,
-      activeBackgroundColor: COLOR.TAB_ACTIVE,
-      inactiveTintColor: COLOR.BACKGROUND,
-      inactiveBackgroundColor: COLOR.TAB_INACTIVE,
+      activeBackgroundColor: COLOR.ACCENT_COLOR,
+      inactiveTintColor: COLOR.LIGHT_PRIMARY_COLOR,
+      inactiveBackgroundColor: COLOR.DARK_PRIMARY_COLOR,
       style: {
         height: 50,
         backgroundColor: COLOR.HEADER,
@@ -103,12 +103,12 @@ export const HomeTabs = TabNavigator(
         backgroundColor: COLOR.HEADER_TINT
       },
       labelStyle: {
-        fontSize: 17
+        fontSize: 13
       },
-      tabStyle: {
-        alignItems:'center',
-        justifyContent: 'center',
-      }
+      // tabStyle: {
+      //   alignItems:'center',
+      //   justifyContent: 'center',
+      // }
     },
     navigationOptions: {
       swipeEnabled:false

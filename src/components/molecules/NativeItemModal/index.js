@@ -63,66 +63,7 @@ export default class NativeItemModal extends Component {
               >
               
                   <View style={styles.container}>
-  
-                    {/* <Card
-                        style={styles.CardStyle}
-                    >
-                        <View 
-                            style={styles.CloseIconContainer}
-                        >   
-                            <View style={{flex:1}}/>
-                            <TouchableHighlight
-                            
-                            // onPress={() => this.props.onDismiss() }
-                            >
-                            <Icon size={20} color={'#000000'} />
-                            </TouchableHighlight>
-                        </View>
-                        
-                        <CardImage 
-                        
-                        source={{ uri: this.state.selectedNode.Image.src }} 
-                        // width = {(width)/2}
-                        style={{flex:4}}
-                        resizeMode = 'contain'
-                        
-                        />
-                        <View
-                            style ={{flex:5, flexDirection:'column', paddingRight:10, paddingLeft:10}}>
-                            <CardTitle
-                            style={{flex:1}}
-                            subtitle={this.state.selectedNode.title}
-                            />
-                            <CardAction 
-                            style={{flex:1, flexDirection:'column'}}
-                            inColumn={false}>
-                                <View style={{flex:1, justifyContent:'center',alignItems:'center',flexDirection:'row' }}>
-                                    <CardButton
-                                        onPress={() => this.props.onDismiss()}
-                                        title="BuyNow"
-                                        color="#ffffff"
-                                        style={{backgroundColor:'#3949AB'}}
-                                    />
-                                </View>
-                            </CardAction>
-                            <Text 
-                                style={{flex:4, justifyContent:'center', alignItems:'center'}}
-                            >
-                            {this.state.selectedNode.Rating}
-                                </Text>
-                            <CardAction 
-                            separator={true} 
-                            inColumn={false}>
-                            
-                                <CardButton
-                                    onPress={() => this.props.onDismiss()}
-                                    title="Close"
-                                    color="#FEB557"
-                                />
-                            </CardAction>
-                        </View>
-   
-                    </Card> */}
+
                     <Container style={{backgroundColor:'transparent', flex:1, justifyContent:'center',alignContent:'center'}}>
                         
                         <Content style={{backgroundColor:'transparent'}}>

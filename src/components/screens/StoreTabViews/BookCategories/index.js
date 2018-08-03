@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from './styles';
 import CategoryModal from '../../../molecules/CategoryModal'
+import EpubReader from '../../../../epubreader/epubreader';
 
 
 class BookCategories extends Component {

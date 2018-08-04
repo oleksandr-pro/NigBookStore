@@ -12,8 +12,11 @@ import Main from "./components/main";
 
 const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
 const reducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(reducer);
-
+const store = createStoreWithMiddleware(
+  reducer,
+  
+);
+console.disableYellowBox = true
 export default class App extends Component {
  
 

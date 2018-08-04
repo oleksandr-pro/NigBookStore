@@ -8,8 +8,14 @@ import LoadingSpinner from '../../atoms/loadingSpinner'
 import ControlTab from '../../molecules/controlTab'
 
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
-import ItemModal from '../../molecules/itemModal';
 import NativeItemModal from '../../molecules/NativeItemModal'
+
+
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {addBook, updateBook} from '../../../actions/books_actions'
+
+var _this;
 
 const { width, height } = Dimensions.get('window')
 class MyInfinityScroll extends Component {
@@ -35,6 +41,16 @@ class MyInfinityScroll extends Component {
   componentDidMount() {
 
     this.makeRemoteRequest();
+  }
+
+  generateID() {
+    var d = new Date().getTime();
+    var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(5);
+    });
+    return id;
   }
 
 
@@ -148,12 +164,6 @@ class MyInfinityScroll extends Component {
     return null
   }
 
-//   renderControlTab = () => (
-//     <ControlTab
-//       layout={this.state.layout}
-//       onChangeLayout={this.onChangeLayout}
-//     />
-//   )
 
   renderHeader = () => (
     <View>
@@ -174,50 +184,62 @@ class MyInfinityScroll extends Component {
   )
 
   render() {
-    console.log(this.props.dataUrl)
-    return (
-      <View style={styles.container}>
-        {/* <Header searchBar rounded>
-          <Item style={{ backgroundColor: 'lightgray', borderRadius: 5 }}>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" onChangeText={this.onChangeScrollToIndex} value={this.state.text} />
-          </Item>
-        </Header> */}
-        <UltimateListView
-          ref={ref => this.listView = ref}
-          key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
-          onFetch={this.onFetch}
-          keyExtractor={(item, index) => `${index} - ${item}`} // this is required when you are using FlatList
-          // refreshableMode="basic" // basic or advanced
-          item={this.renderItem} // this takes three params (item, index, separator)
-          numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
-          
-          // ----Extra Config----
-          displayDate
-          header={this.renderHeader}
-          paginationFetchingView={this.renderPaginationFetchingView}
-          
-          // sectionHeaderView={this.renderSectionHeaderView}   //not supported on FlatList
-          // paginationFetchingView={this.renderPaginationFetchingView}
-          // paginationAllLoadedView={this.renderPaginationAllLoadedView}
-          // paginationWaitingView={this.renderPaginationWaitingView}
-          // emptyView={this.renderEmptyView}
-          // separator={this.renderSeparatorView}
-
-          // new props on v3.2.0
-          arrowImageStyle={{ width: 20, height: 20, resizeMode: 'contain' }}
-          dateStyle={{ color: 'lightgray' }}
-          refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
-          refreshViewHeight={80}
-        />
-        <NativeItemModal 
-          modalVisible={this.state.isModalVisible} 
-          selectedItem={this.state.selectedItem}
-          onDismiss={this._hideModal.bind(this)}
-        />
-      </View>
-    )
+    if (this.props.loading) {
+      return (
+          <View style={styles.activityIndicatorContainer}>
+              <ActivityIndicator
+                  animating={true}
+                  style={[{height: 80}]}
+                  size="small"
+              />
+          </View>
+      );
+      } else {
+        return (
+          <View style={styles.container}>
+            {/* <Header searchBar rounded>
+              <Item style={{ backgroundColor: 'lightgray', borderRadius: 5 }}>
+                <Icon name="ios-search" />
+                <Input placeholder="Search" onChangeText={this.onChangeScrollToIndex} value={this.state.text} />
+              </Item>
+            </Header> */}
+            <UltimateListView
+              ref={ref => this.listView = ref}
+              key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
+              onFetch={this.onFetch}
+              keyExtractor={(item, index) => `${index} - ${item}`} // this is required when you are using FlatList
+              // refreshableMode="basic" // basic or advanced
+              item={this.renderItem} // this takes three params (item, index, separator)
+              numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
+              
+              // ----Extra Config----
+              displayDate
+              header={this.renderHeader}
+              paginationFetchingView={this.renderPaginationFetchingView}
+              arrowImageStyle={{ width: 20, height: 20, resizeMode: 'contain' }}
+              dateStyle={{ color: 'lightgray' }}
+              refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
+              refreshViewHeight={80}
+            />
+            <NativeItemModal 
+              modalVisible={this.state.isModalVisible} 
+              selectedItem={this.state.selectedItem}
+              onDismiss={this._hideModal.bind(this)}
+              screenProps = {this.props.screenProps}
+              onAdd={()=>this.props.addBook({id:this.generateID(), title:this.state.selectedItem.node.title, pages:this.state.selectedItem.node.Pages})}
+            />
+          </View>
+        )
+        
+      }
+    
   }
 };
 
-export default MyInfinityScroll;
+function mapStateToProps(state, props) {
+  return {
+      
+  }
+}
+
+export default connect(mapStateToProps, {addBook, updateBook})(MyInfinityScroll);

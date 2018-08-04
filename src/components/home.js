@@ -9,11 +9,14 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { bindActionCreators } from "redux";
 import * as screenTrackActions from "../actions/screen-tracking";
+import * as bookActions from "../actions/books_actions";
 import { connect } from "react-redux";
 import getCurrentRouteName from "../utils/get-current-route";
+import {Root} from "native-base";
 
 import * as COLOR from "../config/colors";
-
+import Data from '../books.json';
+import {AsyncStorage} from "react-native";
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Zacsbooks",
@@ -46,8 +49,14 @@ class Home extends Component {
     )
   }); // navigationOptions
 
+  componentDidMount(){
+
+
+  }
+
   render() {
     return (
+      <Root>
       <View
         style={{
           flex: 1,
@@ -62,6 +71,7 @@ class Home extends Component {
         >
           <HomeTabs
             screenProps={this.props.navigation}
+        
             onNavigationStateChange={(prevState, currentState) => {
               const currentTab = getCurrentRouteName(currentState);
               const prevScreen = getCurrentRouteName(prevState);
@@ -73,6 +83,7 @@ class Home extends Component {
           />
         </View>
       </View>
+      </Root>
     );
   } // render
 } // Home
@@ -80,6 +91,6 @@ class Home extends Component {
 export default connect(
   state => ({}),
   dispatch => ({
-    actions: bindActionCreators(Object.assign({}, screenTrackActions), dispatch)
+    actions: bindActionCreators(Object.assign({}, screenTrackActions, bookActions), dispatch)
   })
 )(Home);

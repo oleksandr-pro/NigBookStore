@@ -17,16 +17,18 @@ import Myshelf from "../components/screens/Myshelf";
 import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
 import ContactUs from "../components/screens/ContactUs";
+import Epubreader from "../epubreader/epubreader";
 
 import * as COLOR from "./colors";
 
 import DrawerContainer from "../components/drawer";
 
-
-
 const HomeItem = StackNavigator({
   Home: {
     screen: Home
+  },
+  Epub: {
+    screen:Epubreader
   }
 });
 
@@ -115,6 +117,7 @@ export const HomeTabs = TabNavigator(
     }
   }
 );
+
 
 
 

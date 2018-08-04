@@ -14,7 +14,7 @@ import Modal from 'react-native-modal';
 import styles from './styles';
 import Image from 'react-native-scalable-image';
 import {Card, CardTitle, CardContent, CardAction, CardButton, CardImage} from 'react-native-material-cards';
-
+import RNFetchBlob from 'react-native-fetch-blob'
 
 export default class ItemModal extends Component {
     constructor(props){

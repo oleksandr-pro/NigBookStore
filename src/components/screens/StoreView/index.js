@@ -108,6 +108,7 @@ class StoreView extends Component {
             initialPage={initialPage} page={this.state.activeTab}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
             renderTabBar={()=> <ScrollableTab />}
+            
           >
             <Tab
               heading={'Featured'}
@@ -117,7 +118,7 @@ class StoreView extends Component {
               activeTabStyle={styles.ActiveTabStyle}
               
               >
-               <MyInfinityScroll dataUrl={DATAURLS[0]}/>
+               <MyInfinityScroll dataUrl={DATAURLS[0]} screenProps = {this.props.screenProps}/>
               
             </Tab>
             <Tab
@@ -127,7 +128,7 @@ class StoreView extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[1]}/>
+              <MyInfinityScroll dataUrl={DATAURLS[1]} screenProps = {this.props.screenProps}/>
             </Tab>
 
             <Tab
@@ -147,7 +148,7 @@ class StoreView extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[2]}/>
+              <MyInfinityScroll dataUrl={DATAURLS[2]} screenProps = {this.props.screenProps}/>
             </Tab>
             <Tab
               heading={'All'}
@@ -156,7 +157,7 @@ class StoreView extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[3]}/>
+              <MyInfinityScroll dataUrl={DATAURLS[3]} screenProps = {this.props.screenProps}/>
               
             </Tab>
             

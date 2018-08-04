@@ -13,6 +13,8 @@ import MyInfinityScroll from "../MyInfinityScroll"
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 import * as COLOR from "../../../config/colors";
 import styles from './styles';
+import Munread from "./Munread";
+import Mread from "./Mread";
 
 
 class Myshelf extends Component {
@@ -24,7 +26,7 @@ class Myshelf extends Component {
   }; // navigationOptions
 
   constructor () {
-    super()
+    super();
     this.state = {
       selectedIndex:0,
       initialPage:0,
@@ -33,6 +35,7 @@ class Myshelf extends Component {
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
+
   componentDidMount(){
     this.setState({selectedIndex:0,initialPage:0, activeTab:0});
   }
@@ -66,6 +69,7 @@ class Myshelf extends Component {
           <Container>
           <Tabs
             initialPage={initialPage} page={this.state.activeTab}
+            // tabBarBackgroundColor={COLOR.DARK_PRIMARY_COLOR}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
             renderTabBar={()=> <ScrollableTab />}
           >
@@ -77,7 +81,7 @@ class Myshelf extends Component {
               activeTabStyle={styles.ActiveTabStyle}
               
               >
-               <MyInfinityScroll dataUrl={DATAURLS[0]}/>
+              <Mread screenProps = {this.props.screenProps}/>
               
             </Tab>
             <Tab
@@ -87,7 +91,7 @@ class Myshelf extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[1]}/>
+              <Munread/>
             </Tab>
 
             <Tab

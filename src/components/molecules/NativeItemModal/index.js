@@ -17,6 +17,7 @@ import styles from './styles';
 
 import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import RNFetchBlob from 'react-native-fetch-blob'
 
 export default class NativeItemModal extends Component {
     constructor(props){
@@ -48,6 +49,22 @@ export default class NativeItemModal extends Component {
             
         }
     }
+
+    doDownload(){
+        let dirs = RNFetchBlob.fs.dirs;
+        RNFetchBlob
+        .config({
+        // response data will be saved to this path if it has access right.
+        path : dirs.DocumentDir + '/downloaded1.epub'
+        })
+        .fetch('GET', 'https://s3.amazonaws.com/epubjs/books/moby-dick.epub', {
+        //some headers ..
+        })
+        .then((res) => {
+        // the path should be dirs.DocumentDir + 'path-to-file.anything'
+        console.log('The file saved to ', res.path())
+        });
+    }
     
     render() {
         console.log("selected", this.props.selectedItem);
@@ -70,11 +87,11 @@ export default class NativeItemModal extends Component {
                         <Card style={{flex: 1}}>
                             <CardItem bordered>
                             <Left>
-                                <Thumbnail source={require('../../../assets/img/ic_launcher_round.png')} style={{width:35, height:35}} />
+                                <Thumbnail source={require('../../../assets/img/ic_launcher_round.png')} width={35} heigth={35} />
                                 <Body>
                                     <View style={{flex:1, flexDirection:'row'}}>
                                         <View style={{flex:1, flexDirection:'column', justifyContent:'center'}}>
-                                            <Text numberOfLines={2} ellipsizeMode ={'tail'} style={{fontSize:15}}>{this.state.selectedNode.title}</Text>
+                                            <Text numberOfLines={2} ellipsizeMode ={'tail'} noteFontSize={15}>{this.state.selectedNode.title}</Text>
                                         </View>
                                         <Button transparent textStyle={{color: '#87838B', marginRight:-15}}  onPress={() => this.props.onDismiss()}>
                                         <Icon name="close" />
@@ -98,7 +115,15 @@ export default class NativeItemModal extends Component {
                                             <Text>{this.state.selectedNode.Language}</Text>
                                             <Text></Text>
                                             <View style={{flexDirection:'column',justifyContent:'center', alignItems:'center' }}>
-                                            <Button primary  onPress={() => this.props.onDismiss()}>
+                                            <Button primary  onPress={() =>
+                                            //  {
+                                            //     this.props.screenProps.navigate('Epub', { name: 'Jane' });
+                                            //     this.props.onDismiss();
+                                            // }
+                                                // this.doDownload()
+                                                {this.props.onAdd()
+                                                this.props.onDismiss();}
+                                            }>
                                                 <Text>BUY NOW </Text>
                                             
                                             </Button>

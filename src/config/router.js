@@ -7,7 +7,6 @@ import {
   TabNavigator,
   TabBarBottom
 } from "react-navigation";
-
 import Home from "../components/home";
 import Profile from "../components/profile";
 import Settings from "../components/settings";
@@ -18,10 +17,32 @@ import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
 import ContactUs from "../components/screens/ContactUs";
 import Epubreader from "../epubreader/epubreader";
-
 import * as COLOR from "./colors";
-
 import DrawerContainer from "../components/drawer";
+
+export const LoginStack = StackNavigator({
+  Login: {
+    screen: Login
+  },
+  ForgotPassword: {
+    screen: ForgotPassword
+  }
+});
+
+export const MainStack = DrawerNavigator(
+  {
+    HomeItem: {
+      screen: HomeItem
+    },
+    ProfileItem: {
+      screen: ProfileItem
+    },
+    SettingsItem: {
+      screen: SettingsItem
+    }
+  },
+  { contentComponent: DrawerContainer }
+);
 
 const HomeItem = StackNavigator({
   Home: {
@@ -41,30 +62,6 @@ const ProfileItem = StackNavigator({
 const SettingsItem = StackNavigator({
   Settings: {
     screen: Settings
-  }
-});
-
-export const MainStack = DrawerNavigator(
-  {
-    HomeItem: {
-      screen: HomeItem
-    },
-    ProfileItem: {
-      screen: ProfileItem
-    },
-    SettingsItem: {
-      screen: SettingsItem
-    }
-  },
-  { contentComponent: DrawerContainer }
-);
-
-export const LoginStack = StackNavigator({
-  Login: {
-    screen: Login
-  },
-  ForgotPassword: {
-    screen: ForgotPassword
   }
 });
 
@@ -98,8 +95,7 @@ export const HomeTabs = TabNavigator(
       inactiveBackgroundColor: COLOR.DARK_PRIMARY_COLOR,
       style: {
         height: 50,
-        backgroundColor: COLOR.HEADER,
-        
+        backgroundColor: COLOR.HEADER,        
       },
       indicatorStyle: {
         backgroundColor: COLOR.HEADER_TINT
@@ -107,19 +103,12 @@ export const HomeTabs = TabNavigator(
       labelStyle: {
         fontSize: 13
       },
-      // tabStyle: {
-      //   alignItems:'center',
-      //   justifyContent: 'center',
-      // }
     },
     navigationOptions: {
       swipeEnabled:false
     }
   }
 );
-
-
-
 
 const navigateOnce = getStateForAction => (action, state) => {
   const { type, routeName } = action;

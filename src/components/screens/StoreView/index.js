@@ -2,19 +2,13 @@
 
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
-
 import * as COLOR from "../../../config/colors";
 import styles from './styles';
-
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
-
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
-
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import BookCategories from "../StoreTabViews/BookCategories";
-import { colors } from "../../../../node_modules/react-native-elements";
-
 
 
 const styles1 = StyleSheet.create({
@@ -107,16 +101,14 @@ class StoreView extends Component {
           <Tabs
             initialPage={initialPage} page={this.state.activeTab}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
-            renderTabBar={()=> <ScrollableTab />}
-            
+            renderTabBar={()=> <ScrollableTab />}            
           >
             <Tab
               heading={'Featured'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
-              activeTabStyle={styles.ActiveTabStyle}
-              
+              activeTabStyle={styles.ActiveTabStyle}             
               >
                <MyInfinityScroll dataUrl={DATAURLS[0]} screenProps = {this.props.screenProps}/>
               
@@ -163,13 +155,9 @@ class StoreView extends Component {
             
           </Tabs>
           </Container>
-
-
         </View>
       </View>
     );
-  } // render
-} // Dashboard
-
-
+  } 
+} 
 export default StoreView;

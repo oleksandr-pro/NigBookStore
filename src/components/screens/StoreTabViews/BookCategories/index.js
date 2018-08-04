@@ -7,12 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import styles from './styles';
 import CategoryModal from '../../../molecules/CategoryModal'
-import EpubReader from '../../../../epubreader/epubreader';
-
 
 class BookCategories extends Component {
   constructor(props){
@@ -46,12 +42,8 @@ class BookCategories extends Component {
     }
   }
 
- 
-
   _onPressItem = (item) => {
-
-    this._showModal(item);
-    
+    this._showModal(item);  
   }
 
   _hideModal = () => {
@@ -62,8 +54,7 @@ class BookCategories extends Component {
 
   render() {
     return (
-      <View style={styles.container} >
-        
+      <View style={styles.container} >     
           <FlatList
           data={this.state.categories}
           showsVerticalScrollIndicator={false}
@@ -86,7 +77,7 @@ class BookCategories extends Component {
       </View>
       
     );
-  } // render
-} // Dashboard
+  } 
+} 
 
 export default BookCategories;

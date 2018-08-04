@@ -7,14 +7,8 @@ import {
     Dimensions,
     TouchableHighlight
   } from 'react-native';
-
-// import Icon from "react-native-vector-icons/MaterialIcons";
-
 import Modal from 'react-native-modal';
 import styles from './styles';
-// import Image from 'react-native-scalable-image';
-// import {Card, CardTitle, CardContent, CardAction, CardButton, CardImage} from 'react-native-material-cards';
-
 import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 import RNFetchBlob from 'react-native-fetch-blob'
@@ -40,7 +34,6 @@ export default class NativeItemModal extends Component {
         }
     }
     
-
     componentDidUpdate(prevprops){
         if(prevprops.selectedItem!==this.props.selectedItem){
             if (typeof(this.props.selectedItem) !=='undefined'){
@@ -77,12 +70,9 @@ export default class NativeItemModal extends Component {
               transparent={true}
               visible={this.props.modalVisible}
               onRequestClose={() => { this.props.onDismiss() }}
-              >
-              
+              >            
                   <View style={styles.container}>
-
-                    <Container style={{backgroundColor:'transparent', flex:1, justifyContent:'center',alignContent:'center'}}>
-                        
+                    <Container style={{backgroundColor:'transparent', flex:1, justifyContent:'center',alignContent:'center'}}>                        
                         <Content style={{backgroundColor:'transparent'}}>
                         <Card style={{flex: 1}}>
                             <CardItem bordered>
@@ -94,16 +84,14 @@ export default class NativeItemModal extends Component {
                                             <Text numberOfLines={2} ellipsizeMode ={'tail'} noteFontSize={15}>{this.state.selectedNode.title}</Text>
                                         </View>
                                         <Button transparent textStyle={{color: '#87838B', marginRight:-15}}  onPress={() => this.props.onDismiss()}>
-                                        <Icon name="close" />
-                                        
+                                        <Icon name="close" />                                       
                                         </Button>
                                     </View>
                                 
                                 </Body>
                             </Left>
                             </CardItem>
-                            <CardItem bordered>
-                                
+                            <CardItem bordered>                              
                                 <Body>
                                     <View style={{flex:1, flexDirection:'row'}}>
                                         <View style={{flex:1, }}>
@@ -116,22 +104,14 @@ export default class NativeItemModal extends Component {
                                             <Text></Text>
                                             <View style={{flexDirection:'column',justifyContent:'center', alignItems:'center' }}>
                                             <Button primary  onPress={() =>
-                                            //  {
-                                            //     this.props.screenProps.navigate('Epub', { name: 'Jane' });
-                                            //     this.props.onDismiss();
-                                            // }
-                                                // this.doDownload()
                                                 {this.props.onAdd()
                                                 this.props.onDismiss();}
                                             }>
-                                                <Text>BUY NOW </Text>
-                                            
+                                                <Text>BUY NOW </Text>                                           
                                             </Button>
-                                            </View>
-                                            
-                                        </View>
-                                    </View>
-                                
+                                            </View>                                          
+                                       </View>
+                                    </View>                                
                                 </Body>
                             </CardItem>
                             <CardItem>

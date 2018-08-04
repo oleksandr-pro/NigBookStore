@@ -1,21 +1,12 @@
 import React, { Component } from 'react'
-import { Alert, Dimensions, Platform, View } from 'react-native'
-
-
- import { UltimateListView } from '../../../../lib'
+import { Dimensions, Platform, View } from 'react-native'
+import { UltimateListView } from '../../../../lib'
 import styles from './styles'
 import LoadingSpinner from '../../atoms/loadingSpinner'
-import ControlTab from '../../molecules/controlTab'
-
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
 import NativeItemModal from '../../molecules/NativeItemModal'
-
-
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {addBook, updateBook} from '../../../actions/books_actions'
-
-var _this;
 
 const { width, height } = Dimensions.get('window')
 class MyInfinityScroll extends Component {
@@ -53,7 +44,6 @@ class MyInfinityScroll extends Component {
     return id;
   }
 
-
   makeRemoteRequest = (page) => {
     console.log(page);
     const url = `https://zacsbooks.com/stores/`+this.props.dataUrl+'?page='+page;
@@ -67,9 +57,7 @@ class MyInfinityScroll extends Component {
           data: [],
           error: res.error || null,
           loading: false,
-          refreshing: false,
-          
-                    
+          refreshing: false,                   
         });
         console.log("Result", this.state.data);
         resolve(res.nodes);
@@ -87,30 +75,18 @@ class MyInfinityScroll extends Component {
 
   onFetch = async (page = 1, startFetch, abortFetch) => {
     try {
-      // This is required to determinate whether the first loading list is all loaded.
       let pageLimit = 10
       if (this.state.layout === 'grid') pageLimit = 10
       const skip = (page - 1) * pageLimit
-
-      // Generate dummy data
-      // let rowData = Array.from({ length: pageLimit }, (value, index) => `item -> ${index + skip}`)
-       
-        // My maid api call 
-        
       const rowData = await this.makeRemoteRequest(page);
       console.log('page', page);
       console.log('rowdata', rowData);
-      
-      // Simulate the network loading in ES7 syntax (async/await)
-      // await this.sleep(2000)
       startFetch(rowData, pageLimit)
     } catch (err) {
       abortFetch() // manually stop the refresh or pagination if it encounters network error
       console.log(err)
     }
   }
-
-  
 
   onChangeLayout = (event) => {
     this.setState({ text: '' })
@@ -164,18 +140,8 @@ class MyInfinityScroll extends Component {
     return null
   }
 
-
   renderHeader = () => (
-    <View>
-      {/* <View style={styles.header}>
-        <Text style={{ textAlign: 'center' }}>I am the Header View, you can put some Instructions or Ads Banner here!
-        </Text>
-      </View> */}
-      {/* <View style={styles.headerSegment}>
-        <Left style={{ flex: 0.15 }} />
-        {this.renderControlTab()}
-        <Right style={{ flex: 0.15 }} />
-      </View> */}
+    <View>     
     </View>
   )
 
@@ -197,12 +163,6 @@ class MyInfinityScroll extends Component {
       } else {
         return (
           <View style={styles.container}>
-            {/* <Header searchBar rounded>
-              <Item style={{ backgroundColor: 'lightgray', borderRadius: 5 }}>
-                <Icon name="ios-search" />
-                <Input placeholder="Search" onChangeText={this.onChangeScrollToIndex} value={this.state.text} />
-              </Item>
-            </Header> */}
             <UltimateListView
               ref={ref => this.listView = ref}
               key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
@@ -211,8 +171,6 @@ class MyInfinityScroll extends Component {
               // refreshableMode="basic" // basic or advanced
               item={this.renderItem} // this takes three params (item, index, separator)
               numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
-              
-              // ----Extra Config----
               displayDate
               header={this.renderHeader}
               paginationFetchingView={this.renderPaginationFetchingView}
@@ -230,16 +188,12 @@ class MyInfinityScroll extends Component {
             />
           </View>
         )
-        
-      }
-    
+      }    
   }
 };
 
 function mapStateToProps(state, props) {
-  return {
-      
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, {addBook, updateBook})(MyInfinityScroll);

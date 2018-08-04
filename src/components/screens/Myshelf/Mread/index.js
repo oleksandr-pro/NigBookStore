@@ -1,11 +1,10 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity,FlatList } from "react-native";
+import { View} from "react-native";
 var {
-    StyleSheet,
     ListView,
-    ActivityIndicator, TouchableHighlight, ActionSheetIOS, TouchableWithoutFeedback
+    ActivityIndicator
 } = require('react-native');
 import { bindActionCreators } from "redux";
 import * as bookActions from "../../../../actions/books_actions";
@@ -13,15 +12,6 @@ import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
-var _this;
-var BUTTONS = [
-    "Edit",
-    "Delete",
-    'Cancel',
-];
-
-var CANCEL_INDEX = 2;
-
 
 class Mread extends Component {
  
@@ -81,16 +71,6 @@ class Mread extends Component {
         }
     }
 
-    showOptions(book) {
-        ActionSheetIOS.showActionSheetWithOptions({
-                options: BUTTONS,
-                cancelButtonIndex: CANCEL_INDEX,
-                destructiveButtonIndex: 1,
-            },
-            (buttonIndex) => {
-                 _this.props.deleteBook(book.id)
-            });
-    } 
 } 
 
 function mapStateToProps(state, props) {

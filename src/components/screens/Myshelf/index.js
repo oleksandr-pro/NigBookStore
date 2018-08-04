@@ -1,13 +1,7 @@
 /* @flow */
-
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View,} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { bindActionCreators } from "redux";
-import * as authActions from "../../../actions/authenticate";
-import { connect } from "react-redux";
-
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
@@ -16,14 +10,13 @@ import styles from './styles';
 import Munread from "./Munread";
 import Mread from "./Mread";
 
-
 class Myshelf extends Component {
   static navigationOptions = {
     tabBarLabel: "My shelf",
     tabBarIcon: ({ tintColor }) => (
       <Icon name="book-open-variant" size={24} color={COLOR.ICON} />
     )
-  }; // navigationOptions
+  }; 
 
   constructor () {
     super();
@@ -31,7 +24,6 @@ class Myshelf extends Component {
       selectedIndex:0,
       initialPage:0,
       activeTab:0
-     
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
@@ -69,7 +61,6 @@ class Myshelf extends Component {
           <Container>
           <Tabs
             initialPage={initialPage} page={this.state.activeTab}
-            // tabBarBackgroundColor={COLOR.DARK_PRIMARY_COLOR}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
             renderTabBar={()=> <ScrollableTab />}
           >
@@ -78,8 +69,7 @@ class Myshelf extends Component {
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
-              activeTabStyle={styles.ActiveTabStyle}
-              
+              activeTabStyle={styles.ActiveTabStyle} 
               >
               <Mread screenProps = {this.props.screenProps}/>
               
@@ -121,7 +111,7 @@ class Myshelf extends Component {
         </View>
       </View>
     );
-  } // render
-} // Dashboard
+  } 
+}
 
 export default Myshelf;

@@ -2,19 +2,14 @@
 import React, { Component } from 'react';
 import {
     Text,
-    TouchableOpacity,
     View,
     Dimensions,
     TouchableHighlight
   } from 'react-native';
-
 import Icon from "react-native-vector-icons/MaterialIcons";
-
 import Modal from 'react-native-modal';
 import styles from './styles';
 import MyInfinityScroll from '../../screens/MyInfinityScroll';
-
-
 
 export default class CategoryModal extends Component {
     constructor(props){
@@ -26,7 +21,6 @@ export default class CategoryModal extends Component {
           }
         }
     }
-    
 
     componentDidUpdate(prevprops){
         if(prevprops.selectedItem!==this.props.selectedItem){
@@ -50,15 +44,12 @@ export default class CategoryModal extends Component {
               onRequestClose={() => { this.props.onDismiss() }}
               style = {{padding:0, margin:0}}
               >
-                  <View style={styles.container}>
-  
-                    
+                  <View style={styles.container}>                
                     <View 
                         style={styles.closeIconContainer}
                     >   
                         <View style={{flex:1}}/>
-                        <TouchableHighlight
-                        
+                        <TouchableHighlight                        
                         onPress={() => this.props.onDismiss() }
                         >
                         <Icon size={20} color={'#000000'} name="close"/>
@@ -69,10 +60,8 @@ export default class CategoryModal extends Component {
                         style={styles.scrollContainer}
                     >  
                       <MyInfinityScroll dataUrl={'featured_book'}/>
+                    </View>                 
                     </View>
-                        
-                       
-                  </View>
               </Modal>
           </View>
       );

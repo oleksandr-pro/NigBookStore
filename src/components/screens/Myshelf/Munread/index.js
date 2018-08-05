@@ -37,6 +37,16 @@ class Munread extends Component {
 
   }
 
+  updateBook(book){
+      book['read'] = true;
+      this.props.updateBook(book);
+  }
+
+  likeBook(book){
+    book['like']=true;
+    this.props.updateBook(book);
+    }
+
 
   render() {
       console.log('Rendering', this.state.books);
@@ -59,7 +69,15 @@ class Munread extends Component {
                     {this.state.books.map((item, index) => {
                         return (
                         <View key={index}>
-                            <ShelfCard screenProps ={this.props.screenProps} book ={item} deleteBook={()=>this.props.deleteBook(item.id)}/>
+                            {item.read ===false
+                                ?<ShelfCard
+                                 screenProps ={this.props.screenProps} 
+                                 book ={item} 
+                                 deleteBook={()=>this.props.deleteBook(item.id)}
+                                 upreBook={()=>this.updateBook(item)}
+                                 likeBook={()=>this.likeBook(item)}/>
+                                :<View/>
+                            }
                         </View>
                         )
                     })}

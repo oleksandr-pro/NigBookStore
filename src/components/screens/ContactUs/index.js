@@ -9,6 +9,9 @@ import * as authActions from "../../../actions/authenticate";
 import { connect } from "react-redux";
 
 import * as COLOR from "../../../config/colors";
+import DownHeaderBar from "../../atoms/DownHeaderBar"
+import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
+import styles from './styles';
 
 class ContactUs extends Component {
   static navigationOptions = {
@@ -21,24 +24,44 @@ class ContactUs extends Component {
   render() {
     return (
       <View
+      style={{
+        flex: 1,
+        backgroundColor: COLOR.BACKGROUND,
+        padding:0
+      }}
+     >
+      <View
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: COLOR.BACKGROUND
+          padding:0,
+          margin:0,
+          flexDirection:'column'
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            marginBottom: 72,
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <Icon size={96} name="view-dashboard" color={COLOR.TINT_DARK} />
+        <View style={{height:24, marginTop:5}}>
+         <DownHeaderBar data={'Contact Us'}/>
         </View>
+        <Container>
+        <Tabs
+          style={{backgroundColor:COLOR.DARK_PRIMARY_COLOR}}
+        >
+          <Tab
+            heading={'Contact Us'}
+            textStyle={styles.TabTextStyle}
+            tabStyle={styles.TabStyle}
+            activeTextStyle={styles.ActiveTextStyle}
+            activeTabStyle={styles.ActiveTabStyle}
+            
+            >
+             <Text>View my profile </Text>
+            
+          </Tab>
+              
+        </Tabs>
+        </Container>
+
       </View>
+    </View>
     );
   } // render
 } // Dashboard

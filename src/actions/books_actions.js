@@ -42,6 +42,9 @@ export function updateBook(book){
                 if (index !== -1) {
                     books[index]['title'] = book.title;
                     books[index]['pages'] = book.pages;
+                    books[index]['read'] = book.read;
+                    books[index]['like'] = book.like;
+                    books[index]['image'] = book.image;
                 }
                 AsyncStorage.setItem('data', JSON.stringify(books), () => {
                     dispatch({type: UPDATE_BOOK, book:book});
@@ -51,7 +54,7 @@ export function updateBook(book){
     };
 }
 
-// Delete Quote - DELETE (D)
+// Delete BOOK - DELETE (D)
 export function deleteBook(id){
     return (dispatch) => {
         AsyncStorage.getItem('data', (err, books) => {

@@ -5,11 +5,12 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 import * as reducers from "./reducers";
 import Main from "./components/main";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+// const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
 const reducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(
-  reducer,  
+const store = createStore(
+  reducer, composeWithDevTools(applyMiddleware(thunk, logger)) 
 );
 
 console.disableYellowBox = true

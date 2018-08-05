@@ -9,6 +9,8 @@ import * as COLOR from "../../../config/colors";
 import styles from './styles';
 import Munread from "./Munread";
 import Mread from "./Mread";
+import Mrecent from "./Mrecent";
+import Mwishlist from "./Mwishlist";
 
 class Myshelf extends Component {
   static navigationOptions = {
@@ -81,7 +83,7 @@ class Myshelf extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <Munread/>
+              <Munread screenProps = {this.props.screenProps}/>
             </Tab>
 
             <Tab
@@ -91,7 +93,7 @@ class Myshelf extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[2]}/>
+              <Mrecent screenProps = {this.props.screenProps}/>
             </Tab>
             <Tab
               heading={'Wishlist'}
@@ -100,7 +102,7 @@ class Myshelf extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[3]}/>
+              <Mwishlist  screenProps = {this.props.screenProps}/>
               
             </Tab>
             

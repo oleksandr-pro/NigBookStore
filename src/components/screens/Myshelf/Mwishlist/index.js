@@ -12,36 +12,50 @@ import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
+import HalfShelfCard from "../../../molecules/halfShelfCard";
+import GridList from 'react-native-grid-list';
 
-class Mread extends Component {
+class Mwishlist extends Component {
  
     constructor(props){
         super(props);
-
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             books:[]
         };
     }
   componentWillReceiveProps(nextProps){
       if(nextProps!==this.props){
-
-          this.setState({books:nextProps.books});
+            this.filtering(nextProps.books);
       }
 
   }
-
+  filtering(realbooks){
+    rebooks = [];
+    for (book in realbooks){
+        if (realbooks[book]['like']===true){
+            rebooks.push(realbooks[book]);
+        }
+    }
+    console.log('filtered books', rebooks);
+    this.setState({books:rebooks}); 
+  }
   componentDidMount(){
       this.props.getBooks();
-      this.setState({books:this.props.books});
+        this.filtering(this.props.books);
 
   }
-  likeBook(book){
-      book['like']=true;
-      this.props.updateBook(book);
-  }
 
+  renderItem = ({ item, index }) => (
 
+    <HalfShelfCard
+        screenProps ={this.props.screenProps}
+        book ={item}
+        upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
+        state = {'wish'}
+    />
+
+  );
+ 
   render() {
       console.log('screenProps', this.props.screenProps);
         if (this.props.loading) {
@@ -58,26 +72,16 @@ class Mread extends Component {
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
 
-                    <Content>
-                    <List>
-                    {this.state.books.map((item, index) => {
-                        
-                        return (
-                        <View key={index}>
-                            {item.read ===true
-                                ?<ShelfCard
-                                 screenProps ={this.props.screenProps} 
-                                 book ={item} 
-                                 deleteBook={()=>this.props.deleteBook(item.id)}
-                                 upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
-                                 likeBook={()=>this.likeBook(item)}
-                                 />
-                                :<View/>
-                            }
-                        </View>
-                        )
-                    })}
-                </List>
+                <Content>
+                    <GridList
+                    
+                    numColumns={2}
+                    data={this.state.books}
+                    renderItem={this.renderItem}
+                    
+                    >
+                    
+                </GridList>
                 </Content>
 
                 </View>
@@ -98,5 +102,5 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(bookActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Mread);
+export default connect(mapStateToProps, mapDispatchToProps)(Mwishlist);
 

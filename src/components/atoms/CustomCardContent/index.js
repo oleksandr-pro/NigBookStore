@@ -24,7 +24,7 @@ class CustomCardContent extends Component {
                     <Icon name="file-download" size={17} color={COLOR.DHB_ICON_DARK} style={{top:4, left:5}} />                   
                     <Text  style={[styles.PageNum, {marginLeft:10}]}>{Pages}</Text>                    
                 </View>
-                <View style={styles.subContainer}>
+                <View style={[styles.subContainer,{height:60}]}>
                     <Text numberOfLines={3} uppercase={false} style={[styles.TextStyle, {paddingRight:2, paddingLeft:2}]}>
                         {title}
                     </Text>

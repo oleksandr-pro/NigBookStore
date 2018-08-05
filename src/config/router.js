@@ -29,21 +29,6 @@ export const LoginStack = StackNavigator({
   }
 });
 
-export const MainStack = DrawerNavigator(
-  {
-    HomeItem: {
-      screen: HomeItem
-    },
-    ProfileItem: {
-      screen: ProfileItem
-    },
-    SettingsItem: {
-      screen: SettingsItem
-    }
-  },
-  { contentComponent: DrawerContainer }
-);
-
 const HomeItem = StackNavigator({
   Home: {
     screen: Home
@@ -64,6 +49,22 @@ const SettingsItem = StackNavigator({
     screen: Settings
   }
 });
+
+export const MainStack = DrawerNavigator(
+  {
+    HomeItem: {
+      screen: HomeItem
+    },
+    ProfileItem: {
+      screen: ProfileItem
+    },
+    SettingsItem: {
+      screen: SettingsItem
+    }
+  },
+  { contentComponent: DrawerContainer }
+);
+
 
 export const HomeTabs = TabNavigator(
   {

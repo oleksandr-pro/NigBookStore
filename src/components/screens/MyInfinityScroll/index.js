@@ -184,7 +184,15 @@ class MyInfinityScroll extends Component {
               selectedItem={this.state.selectedItem}
               onDismiss={this._hideModal.bind(this)}
               screenProps = {this.props.screenProps}
-              onAdd={()=>this.props.addBook({id:this.generateID(), title:this.state.selectedItem.node.title, pages:this.state.selectedItem.node.Pages})}
+              onAdd={()=>this.props.addBook(
+                {id:this.generateID(),
+                title:this.state.selectedItem.node.title,
+                pages:this.state.selectedItem.node.Pages,
+                read: false, 
+                like: false,
+                image: this.state.selectedItem.node.Image.src
+              }
+              )}
             />
           </View>
         )

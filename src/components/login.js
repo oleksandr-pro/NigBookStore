@@ -21,8 +21,44 @@ import LoginView from "./login/login";
 import RegisterView from "./login/register";
 import ModalProgress from "./common/loading";
 import { CARD } from "../config/colors";
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { StyleSheet } from 'react-native';
+
 
 import { DATA_SESSION } from "../config/global";
+
+const styles = StyleSheet.create({
+  image: {
+    width: 200,
+    height: 200,
+  }
+});
+const slides = [
+  {
+    key: 'somethun',
+    title: 'Our Misson',
+    text: 'Our mission is to provide free channels through which Nigerians can access information and learning tools to acquire knowledge.',
+    image: require('../assets/2.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#febe29',
+  },
+  {
+    key: 'somethun-dos',
+    title: 'Our Vision',
+    text: 'ZODML\'s vision is a Nigeria in which everyone has the ability to educate themselves.',
+    image: require('../assets/1.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#59b2ab',
+  },
+  {
+    key: 'somethun1',
+    title: 'App section',
+    text: 'This will be based on how to use the app Different section in the app.',
+    image: require('../assets/3.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#22bcb5',
+  }
+];
 
 class Login extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -35,9 +71,16 @@ class Login extends Component {
     this.state = {
       hideLogo: false,
       showLogin: true,
-      initializing: true
+      initializing: true,
+      showRealApp: false
     };
   } // constructor
+
+  _onDone = () => {
+    // User finished the introduction. Show real app through
+    // navigation or simply by controlling state
+    this.setState({ showRealApp: true });
+  }
 
   componentWillMount() {
     // recover previous data
@@ -157,7 +200,7 @@ class Login extends Component {
 
   render() {
     // if loading show splash
-    if (this.state.initializing) {
+    if (this.state.initializing && this.state.showRealApp==false) {
       return (
         <View
           style={{
@@ -181,6 +224,11 @@ class Login extends Component {
           </View>
         </View>
       );
+    }
+
+    // if screen done
+    if (this.state.initializing===false && this.state.showRealApp==false){
+      return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
     }
 
     // conditional login/register view

@@ -48,7 +48,7 @@ class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showRealApp: true
+      showRealApp: false
     }
   }
 
@@ -66,20 +66,17 @@ class Main extends Component {
         </View>
       );
     } else {
-      if (this.state.showRealApp) {
         return (
           <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
           <LoginStack />
           </View>
         );
-      } else {
-        return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
       }
       
     }
-  } // render
-} // Main
+  } 
+
 
 export default connect(
   state => ({ state: state.authenticate }),

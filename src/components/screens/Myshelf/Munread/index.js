@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
+import Loader from '../../../atoms/Loader';
+import RNFS from 'react-native-fs';
 
 class Munread extends Component {
  
@@ -20,7 +22,8 @@ class Munread extends Component {
 
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            books:[]
+            books:[],
+            loading: false,
         };
     }
   componentWillReceiveProps(nextProps){
@@ -37,16 +40,39 @@ class Munread extends Component {
 
   }
 
-  updateBook(book){
-      book['read'] = true;
-      this.props.updateBook(book);
-  }
+//   updateBook(book){
+//       book['wish'] = false;
+//       this.props.updateBook(book);
+//   }
 
   likeBook(book){
     book['like']=true;
     this.props.updateBook(book);
     }
 
+  updateBook(book){
+
+        this.setState({loading:true});
+        let path = RNFS.DocumentDirectoryPath+'/www'+'/downloaded1.epub';
+        RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www').then(()=>{
+            RNFS.downloadFile({fromUrl:'https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub', toFile: path}).promise.then(res => {
+            console.log('The file saved to ', res.statusCode)
+            this.setState({loading:false});
+            book['wish']=false;
+            this.props.updateBook(book);
+            Alert.alert('Success', 'This book has downloaded!')
+          })
+          .catch((err)=>{
+              console.log('err', err);
+              this.setState({loading:false});
+
+              this.props.onDismiss();
+              Alert.alert('Failed', 'This book has not downloaded!')
+          });
+
+        })
+        
+    }
 
   render() {
       console.log('Rendering', this.state.books);
@@ -63,13 +89,14 @@ class Munread extends Component {
         } else {   
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
-
+                    <Loader
+                        loading={this.state.loading} /> 
                     <Content>
                     <List>
                     {this.state.books.map((item, index) => {
                         return (
                         <View key={index}>
-                            {item.read ===false
+                            {item.read ===true  && item.wish===true
                                 ?<ShelfCard
                                  screenProps ={this.props.screenProps} 
                                  book ={item} 

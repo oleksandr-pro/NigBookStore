@@ -5,13 +5,21 @@ import {
     TouchableOpacity,
     View,
     Dimensions,
-    TouchableHighlight
+    TouchableHighlight,
+   Alert,
   } from 'react-native';
 import Modal from 'react-native-modal';
 import styles from './styles';
 import { Image } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, ActionSheet } from 'native-base';
 import RNFetchBlob from 'react-native-fetch-blob'
+import Loader from '../../atoms/Loader';
+import RNFS from 'react-native-fs';
+
+var BUYBUTTONS=['Buy', 'Cancel'];
+var WISHBUTTONS=['Ok', 'Cancel'];
+var DESTRUCTIVE_INDEX = 0;
+var CANCEL_INDEX = 1;
 
 export default class NativeItemModal extends Component {
     constructor(props){
@@ -30,7 +38,8 @@ export default class NativeItemModal extends Component {
                     'src':'http://bit.ly/2GfzooV',
                     'alt':''
                 }
-            }
+            },
+            loading: false,
         }
     }
     
@@ -44,19 +53,27 @@ export default class NativeItemModal extends Component {
     }
 
     doDownload(){
-        let dirs = RNFetchBlob.fs.dirs;
-        RNFetchBlob
-        .config({
-        // response data will be saved to this path if it has access right.
-        path : dirs.DocumentDir + '/downloaded1.epub'
+
+        this.setState({loading:true});
+        let path = RNFS.DocumentDirectoryPath+'/www'+'/downloaded1.epub';
+        RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www').then(()=>{
+            RNFS.downloadFile({fromUrl:'https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub', toFile: path}).promise.then(res => {
+            console.log('The file saved to ', res.statusCode)
+            this.setState({loading:false});
+            this.props.onAdd();
+            this.props.onDismiss();
+            Alert.alert('Success', 'This book has downloaded!')
+          })
+          .catch((err)=>{
+              console.log('err', err);
+              this.setState({loading:false});
+
+              this.props.onDismiss();
+              Alert.alert('Failed', 'This book has not downloaded!')
+          });
+
         })
-        .fetch('GET', 'https://s3.amazonaws.com/epubjs/books/moby-dick.epub', {
-        //some headers ..
-        })
-        .then((res) => {
-        // the path should be dirs.DocumentDir + 'path-to-file.anything'
-        console.log('The file saved to ', res.path())
-        });
+        
     }
     
     render() {
@@ -72,6 +89,8 @@ export default class NativeItemModal extends Component {
               onRequestClose={() => { this.props.onDismiss() }}
               >            
                   <View style={styles.container}>
+                  <Loader
+                        loading={this.state.loading} />
                     <Container style={{backgroundColor:'transparent', flex:1, justifyContent:'center',alignContent:'center'}}>                        
                         <Content style={{backgroundColor:'transparent'}}>
                         <Card style={{flex: 1}}>
@@ -98,16 +117,49 @@ export default class NativeItemModal extends Component {
                                             <Image source={{uri: this.state.selectedNode.Image.src}} style={{ flex: 1, height:200}}/>
                                         </View>
                                         <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center', padding:5}}>
-                                            <Text numberOfLines={1} ellipsizeMode ={'tail'}>{this.state.selectedNode['Author Name']}</Text>
+                                            <Text numberOfLines={1} ellipsizeMode ={'tail'}>{this.state.selectedNode['Authors']}</Text>
+                                            <Text> Price: {this.state.selectedNode.Price} </Text>
                                             <Text> Pages: {this.state.selectedNode.Pages}</Text>
                                             <Text>{this.state.selectedNode.Language}</Text>
                                             <Text></Text>
                                             <View style={{flexDirection:'column',justifyContent:'center', alignItems:'center' }}>
-                                            <Button primary  onPress={() =>
-                                                {this.props.onAdd()
-                                                this.props.onDismiss();}
-                                            }>
+                                            <Button primary small 
+                                                    onPress={()=>
+                                                        ActionSheet.show(
+                                                            {
+                                                                options: BUYBUTTONS,
+                                                                cancelButtonIndex: CANCEL_INDEX,
+                                                                destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                                                                title: "Do you want to buy this book?"
+                                                            },
+                                                            buttonIndex => {
+                                                                if (buttonIndex === 0){
+                                                                    this.doDownload();
+                                                                }
+                                                               
+                                                            }
+                                                            )}
+                                            >
                                                 <Text>BUY NOW </Text>                                           
+                                            </Button>
+                                            <Button danger small style={{marginTop:10}}
+                                                    onPress={()=>
+                                                        ActionSheet.show(
+                                                            {
+                                                                options: WISHBUTTONS,
+                                                                cancelButtonIndex: CANCEL_INDEX,
+                                                                destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                                                                title: "Add this book to wish list."
+                                                            },
+                                                            buttonIndex => {
+                                                                if (buttonIndex === 0){
+                                                                    this.props.onAddWISH();
+                                                                    this.props.onDismiss();
+                                                                }                                                               
+                                                            }
+                                                            )}
+                                            >
+                                                <Text>WISHLIST </Text>                                           
                                             </Button>
                                             </View>                                          
                                        </View>
@@ -128,6 +180,31 @@ export default class NativeItemModal extends Component {
                                     </View>
                                 </Body>
 
+                            </CardItem>
+                            <CardItem bordered>
+                                <Left>
+                                    <Text style={{color:'gray'}}>ISBN: {this.state.selectedNode.ISBN}</Text>
+                                </Left>
+                            </CardItem>
+                            <CardItem >
+                                <Left>
+                                    <Text style={{color:'gray'}}>Categories</Text>
+                                </Left>
+                            </CardItem >
+                            <CardItem bordered>
+                                <Left>
+                                    <Text>{this.state.selectedNode.Category}</Text>
+                                </Left>
+                            </CardItem>
+                            <CardItem >
+                                <Left>
+                                    <Text style={{color:'gray'}}>Rating</Text>
+                                </Left>
+                            </CardItem>
+                            <CardItem bordered>
+                                <Left>
+                                    <Text >{this.state.selectedNode.Rating}</Text>
+                                </Left>
                             </CardItem>
                             <CardItem footer bordered>
                             <Left>

@@ -32,7 +32,7 @@ class Mwishlist extends Component {
   filtering(realbooks){
     rebooks = [];
     for (book in realbooks){
-        if (realbooks[book]['like']===true){
+        if (realbooks[book]['wish']===true && realbooks[book]['read']===false){
             rebooks.push(realbooks[book]);
         }
     }

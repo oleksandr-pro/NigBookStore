@@ -26,16 +26,25 @@ class Mrecent extends Component {
   componentWillReceiveProps(nextProps){
       if(nextProps!==this.props){
 
-          this.setState({books:nextProps.books.slice(0,10)});
-      }
+        this.filtering(nextProps.books);      }
 
+  }
+
+  filtering(realbooks){
+    rebooks = [];
+    for (book in realbooks){
+        if (realbooks[book]['read']===true){
+            rebooks.push(realbooks[book]);
+        }
+    }
+    console.log('filtered books', rebooks);
+    this.setState({books:rebooks.slice(0,10)}); 
   }
 
   componentDidMount(){
       this.props.getBooks();
-      this.setState({books:this.props.books.slice(0,2)});
-
-  }
+      this.filtering(this.props.books);
+    }
 
   renderItem = ({ item, index }) => (
 

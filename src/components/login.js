@@ -228,7 +228,7 @@ class Login extends Component {
 
     // if screen done
     if (this.state.initializing===false && this.state.showRealApp==false){
-      return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
+      return <AppIntroSlider slides={slides} onDone={this._onDone} showSkipButton onSkip={this._onDone}/>;
     }
 
     // conditional login/register view

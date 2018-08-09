@@ -40,6 +40,10 @@ class Mread extends Component {
       book['like']=true;
       this.props.updateBook(book);
   }
+  deleteBook(book){
+    book['wish'] = true;
+    this.props.updateBook(book);
+  }
 
 
   render() {
@@ -64,11 +68,11 @@ class Mread extends Component {
                         
                         return (
                         <View key={index}>
-                            {item.read ===true
+                            {item.read ===true && item.wish ===false
                                 ?<ShelfCard
                                  screenProps ={this.props.screenProps} 
                                  book ={item} 
-                                 deleteBook={()=>this.props.deleteBook(item.id)}
+                                 deleteBook={()=>this.deleteBook(item)}
                                  upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
                                  likeBook={()=>this.likeBook(item)}
                                  />

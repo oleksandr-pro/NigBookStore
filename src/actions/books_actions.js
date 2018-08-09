@@ -27,7 +27,7 @@ export function getBooks(){
         AsyncStorage.getItem('data', (err, books) => {
             if (books !== null){
                 dispatch({type: BOOKS_AVAILABLE, books:JSON.parse(books)});
-            }
+            } 
         });
     };
 }
@@ -45,6 +45,7 @@ export function updateBook(book){
                     books[index]['read'] = book.read;
                     books[index]['like'] = book.like;
                     books[index]['image'] = book.image;
+                    books[index]['wish'] = book.wish;
                 }
                 AsyncStorage.setItem('data', JSON.stringify(books), () => {
                     dispatch({type: UPDATE_BOOK, book:book});

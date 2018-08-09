@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, AsyncStorage } from "react-native";
 import { HomeTabs } from "../config/router";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { bindActionCreators } from "redux";
@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import getCurrentRouteName from "../utils/get-current-route";
 import {Root} from "native-base";
 import * as COLOR from "../config/colors";
+import Data from '../books.json'
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -42,6 +43,16 @@ class Home extends Component {
   }); // navigationOptions
 
   componentDidMount(){
+
+    AsyncStorage.getItem('data', (err, data) => {
+      //if it doesn't exist, extract from json file
+      //save the initial data in Async
+      if (data === null){
+          AsyncStorage.setItem('data', JSON.stringify(Data.books));
+          // this.props.getBooks();
+      }
+  });
+
   }
 
   render() {

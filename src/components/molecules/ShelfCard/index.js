@@ -33,7 +33,7 @@ class ShelfCard extends Component {
     }
     
   render() {
-   const {book = {id:0, title:'', pages:0, read:false, like:false, image:''}} = this.props;
+   const {book = {id:0, title:'', pages:0, read:false, like:false, wish:true, image:''}} = this.props;
    console.log('book in the card', book);
 
     return (
@@ -52,58 +52,45 @@ class ShelfCard extends Component {
                                     <Image source={{uri: book.image}} style={{ flex: 1, height:200}}/>
                                 </View>
                                 <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center', padding:5}}>
+                                    <View style={styles.colCenter}>
+                                    <Text style={styles.titleText}> {book.title}</Text> 
                                     <Text numberOfLines={1} ellipsizeMode ={'tail'}>{this.state.selectedNode['Author Name']}</Text>
-                                    <Text > {book.title}</Text>
-                                                                        
-                                    <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center' }}>
-                                       {book.like === true
-                                        ?<Button transparent danger iconLeft>
-                                            <Icon  type="FontAwesome" name='heart' large></Icon>
-                                            </Button>
-                                        :<Button transparent primary iconLeft 
-                                        onPress={()=>
-                                            ActionSheet.show(
-                                                {
-                                                    options: LIKEBUTTONS,
-                                                    cancelButtonIndex: CANCEL_INDEX,
-                                                    destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                                                    title: "Do you like this book."
-                                                },
-                                                buttonIndex => {
-                                                    if (buttonIndex === 0){
-                                                        this.props.likeBook();
-                                                    }
-                                                   
-                                                }
-                                                )}>
-                                             <Icon  type="FontAwesome" name='heart-o' large></Icon>
-                                        </Button>
-                                        } 
+                                    <Text style={[styles.titleText, {marginBottom:5}]}> {book.pages} pages</Text> 
+
                                     </View>
-                                    <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center' }}>
-                                    <Button primary small onPress={() =>this.props.upreBook()}>
-                                         
-                                        <Text>Read </Text>
                                     
-                                    </Button>
-                                    <Button danger small
-                                        onPress={() =>
-                                        ActionSheet.show(
-                                        {
-                                            options: BUTTONS,
-                                            cancelButtonIndex: CANCEL_INDEX,
-                                            destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                                            title: "Delete this book."
-                                        },
-                                        buttonIndex => {
-                                            if (buttonIndex === 0){
-                                                this.props.deleteBook();
-                                            }
+                                    <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center' }}>
+                                        {book.read === true && book.wish ===false
+                                        ?<Button primary small onPress={() =>this.props.upreBook()}>    
+                                        <Text>Read </Text>
+                                         </Button>
+                                        :<Button primary small onPress={() =>this.props.upreBook()}>    
+                                        <Text>Download </Text>
+                                         </Button>
+                                        
                                         }
-                                        )}
-                                    >
-                                        <Icon name='trash'></Icon>
-                                    </Button>
+                                        {book.read === true && book.wish ===false
+                                        ?<Button danger small
+                                            onPress={() =>
+                                            ActionSheet.show(
+                                            {
+                                                options: BUTTONS,
+                                                cancelButtonIndex: CANCEL_INDEX,
+                                                destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                                                title: "Delete this book."
+                                            },
+                                            buttonIndex => {
+                                                if (buttonIndex === 0){
+                                                    this.props.deleteBook();
+                                                }
+                                            }
+                                            )}
+                                        >
+                                            <Icon name='trash'></Icon>
+                                        </Button>
+                                        : <View/>
+                                        }
+                                        
                                     
                                     
                                     </View>

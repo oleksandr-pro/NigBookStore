@@ -17,7 +17,7 @@ class MyInfinityScroll extends Component {
       text: '',
       loading: false,
       data: [],
-      page: 1,
+      page: 0,
       seed: 1,
       error: null,
       refreshing: false,
@@ -46,7 +46,7 @@ class MyInfinityScroll extends Component {
 
   makeRemoteRequest = (page) => {
     console.log(page);
-    const url = `https://zacsbooks.com/stores/`+this.props.dataUrl+'?page='+page;
+    const url = `https://zacsbooks.com/stores/`+this.props.dataUrl+'?page='+(page-1);
     console.log('url', url);
     this.setState({ loading: true });
     return new Promise((resolve, reject) => {
@@ -73,10 +73,10 @@ class MyInfinityScroll extends Component {
 
   
 
-  onFetch = async (page = 1, startFetch, abortFetch) => {
+  onFetch = async (page = 0, startFetch, abortFetch) => {
     try {
-      let pageLimit = 10
-      if (this.state.layout === 'grid') pageLimit = 10
+      let pageLimit = 12
+      if (this.state.layout === 'grid') pageLimit = 12
       const skip = (page - 1) * pageLimit
       const rowData = await this.makeRemoteRequest(page);
       console.log('page', page);
@@ -188,11 +188,24 @@ class MyInfinityScroll extends Component {
                 {id:this.generateID(),
                 title:this.state.selectedItem.node.title,
                 pages:this.state.selectedItem.node.Pages,
-                read: false, 
+                image: this.state.selectedItem.node.Image.src,
+                read: true,
+                wish: false, 
                 like: false,
-                image: this.state.selectedItem.node.Image.src
+                
               }
               )}
+              onAddWISH={()=>this.props.addBook(
+                {id:this.generateID(),
+                title:this.state.selectedItem.node.title,
+                pages:this.state.selectedItem.node.Pages,
+                image: this.state.selectedItem.node.Image.src,
+                read: false, 
+                like: false,
+                wish: true,
+              }
+              )
+              }
             />
           </View>
         )

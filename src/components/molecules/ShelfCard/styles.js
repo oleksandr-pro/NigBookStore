@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
           backgroundColor:'#ffffff'
 
       },
+      colCenter:{
+        flexDirection:'column',justifyContent:'center', alignItems:'center'
+      },
+      titleText:{
+          fontSize:14
+      },
       CloseIconContainer: {
           width:'100%',
           flexDirection:'row',

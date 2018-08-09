@@ -8,19 +8,22 @@ import {
   StatusBar
 } from 'react-native';
 
-import { Epub, Streamer } from "epubjs-rn";
-
+import { Epub, Streamer} from "epubjs-rn";
 import TopBar from './elements/TopBar'
 import BottomBar from './elements/BottomBar'
 import Nav from './elements/Nav'
+import RNFetchBlob from 'react-native-fetch-blob'
+
 
 class EpubReader extends Component {
   constructor(props) {
     super(props);
+    window.DOMParser = require('xmldom').DOMParser;
     this.state = {
       flow: "paginated", // paginated || scrolled-continuous
       location: 6,
-      url: "https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub",
+      url: "file:///data/user/0/com.reactor/files/downloaded1.epub",
+      // "https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub",
       src: "",
       origin: "",
       title: "",
@@ -30,16 +33,23 @@ class EpubReader extends Component {
       sliderDisabled: true
     };
 
-    this.streamer = new Streamer();
+    this.streamer = new Streamer({port: '8899', root:'www'});
   }
 
   componentDidMount() {
+
     this.streamer.start()
       .then((origin) => {
-        this.setState({origin})
-        return this.streamer.get(this.state.url);
+        console.log("Served from:", origin);
+        // this.setState({origin})
+        this.streamer.check('http://localhost:8899/downloaded1.epub').then((t) => console.log("checking", t));
+        return this.streamer.add("http://localhost:8899/downloaded1.epub");
+        // return this.streamer.get(this.state.url);
       })
+      .catch((error) => console.warn("fetch error:", error))
       .then((src) => {
+        console.log("Loading from:", src);
+        console.log("src", src);
         return this.setState({src});
       });
 
@@ -114,7 +124,7 @@ class EpubReader extends Component {
               // theme="tan"
               // regenerateLocations={true}
               // generateLocations={true}
-              origin={this.state.origin}
+              // origin={this.state.origin}
               onError={(message) => {
                 console.log("EPUBJS-Webview", message);
               }}

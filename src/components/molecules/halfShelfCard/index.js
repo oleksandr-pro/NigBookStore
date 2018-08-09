@@ -30,12 +30,15 @@ export default class HalfShelfCard extends Component {
                     ?
                         <Icon  type="FontAwesome" name='heart' style={{ position: 'absolute', top: 5, right: 0, color:'#ee0000', fontSize:15 }}></Icon> 
                     : <View/>
-                    }
+                }
             </CardItem>
             <CardItem>
                 <Body>
                     <View style={{ flexDirection:'row', flex:1, justifyContent:'center', alignItems:'center'}}>
-                        <Text>{book.title}</Text>
+                        <Text numberOfLines={1} ellipsizeMode ={'tail'} style={{fontSize:12}}>{book.title}</Text>
+                    </View>
+                    <View style={{ flexDirection:'row', flex:1, justifyContent:'center', alignItems:'center'}}>
+
                     </View>
                 </Body>
             </CardItem>

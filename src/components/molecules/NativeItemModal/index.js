@@ -186,16 +186,12 @@ export default class NativeItemModal extends Component {
                                     <Text style={{color:'gray'}}>ISBN: {this.state.selectedNode.ISBN}</Text>
                                 </Left>
                             </CardItem>
-                            <CardItem >
-                                <Left>
-                                    <Text style={{color:'gray'}}>Categories</Text>
-                                </Left>
-                            </CardItem >
                             <CardItem bordered>
                                 <Left>
-                                    <Text>{this.state.selectedNode.Category}</Text>
+                                    <Text style={{color:'gray'}}>Publisher: {this.state.selectedNode.Publisher}</Text>
                                 </Left>
                             </CardItem>
+                           
                             <CardItem >
                                 <Left>
                                     <Text style={{color:'gray'}}>Rating</Text>

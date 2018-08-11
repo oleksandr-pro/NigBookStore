@@ -8,14 +8,14 @@ import {
   TabBarBottom
 } from "react-navigation";
 import Home from "../components/home";
-import Profile from "../components/profile";
+import ContactUs from "../components/contactus";
 import Settings from "../components/settings";
 import Login from "../components/login";
 import ForgotPassword from "../components/forgotpassword";
 import Myshelf from "../components/screens/Myshelf";
 import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
-import ContactUs from "../components/screens/ContactUs";
+import Categories from "../components/screens/Categories";
 import Epubreader from "../epubreader/epubreader";
 import * as COLOR from "./colors";
 import DrawerContainer from "../components/drawer";
@@ -38,9 +38,9 @@ const HomeItem = StackNavigator({
   }
 });
 
-const ProfileItem = StackNavigator({
-  Profile: {
-    screen: Profile
+const ContactUsItem = StackNavigator({
+  ContactUs: {
+    screen: ContactUs
   }
 });
 
@@ -55,8 +55,8 @@ export const MainStack = DrawerNavigator(
     HomeItem: {
       screen: HomeItem
     },
-    ProfileItem: {
-      screen: ProfileItem
+    ContactUsItem: {
+      screen: ContactUsItem
     },
     SettingsItem: {
       screen: SettingsItem
@@ -74,8 +74,8 @@ export const HomeTabs = TabNavigator(
     MyAccount: {
       screen: Myaccount
     },
-    ContactUs: {
-      screen: ContactUs
+    Categories: {
+      screen: Categories
     },
     Store: {
       screen:StoreView

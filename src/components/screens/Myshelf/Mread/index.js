@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View} from "react-native";
+import { View, AsyncStorage} from "react-native";
 var {
     ListView,
     ActivityIndicator
@@ -12,6 +12,10 @@ import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
+import Loader from '../../../atoms/Loader';
+import RNFS from 'react-native-fs';
+import Data from '../../../../books.json'
+
 
 class Mread extends Component {
  
@@ -20,29 +24,73 @@ class Mread extends Component {
 
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            books:[]
+            books:[],
+            loading:false
         };
     }
   componentWillReceiveProps(nextProps){
-      if(nextProps!==this.props){
-
-          this.setState({books:nextProps.books});
+      if(nextProps.books.length!==this.props.books.length){
+        AsyncStorage.getItem('data', (err, data) => {
+            //if it doesn't exist, extract from json file
+            //save the initial data in Async
+            if (data === null){
+                AsyncStorage.setItem('data', JSON.stringify(Data.books));
+            } else {
+                this.props.getBooks();
+                this.setState({books:nextProps.books});
+            }  
+        });
       }
 
   }
 
   componentDidMount(){
-      this.props.getBooks();
-      this.setState({books:this.props.books});
+    AsyncStorage.getItem('data', (err, data) => {
+        //if it doesn't exist, extract from json file
+        //save the initial data in Async
+        if (data === null){
+            AsyncStorage.setItem('data', JSON.stringify(Data.books));
+        } else {
+            this.props.getBooks();
+            this.setState({books:this.props.books});
+        }
 
+    });
   }
   likeBook(book){
       book['like']=true;
       this.props.updateBook(book);
   }
+
   deleteBook(book){
-    book['wish'] = true;
-    this.props.updateBook(book);
+    this.setState({loading:true});
+    let path = RNFS.DocumentDirectoryPath+'/www'+'/downloaded1.epub';
+    RNFS.exists(path)
+        .then((res) => {
+            this.setState({loading:false});
+            console.log('file exist: ', res);
+            if (res){
+                return RNFS.unlink(filepath)
+                .then(() => {
+                console.log('FILE DELETED');
+                    book['wish'] = true;
+                    this.props.updateBook(book);
+                })
+                // `unlink` will throw an error, if the item to unlink does not exist
+                .catch((err) => {
+                console.log(err.message);
+                });
+            }
+
+        })
+        .catch((err) => {
+            this.setState({loading:false});
+            console.log(err.message);
+            book['wish'] = true;
+            this.props.updateBook(book);
+        });
+        
+    
   }
 
 
@@ -61,7 +109,8 @@ class Mread extends Component {
         } else {   
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
-
+                    <Loader
+                        loading={this.state.loading} />
                     <Content>
                     <List>
                     {this.state.books.map((item, index) => {

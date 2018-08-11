@@ -38,7 +38,7 @@ export default class HalfShelfCard extends Component {
                         <Text numberOfLines={1} ellipsizeMode ={'tail'} style={{fontSize:12}}>{book.title}</Text>
                     </View>
                     <View style={{ flexDirection:'row', flex:1, justifyContent:'center', alignItems:'center'}}>
-
+                    
                     </View>
                 </Body>
             </CardItem>

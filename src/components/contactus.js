@@ -10,9 +10,9 @@ import { connect } from "react-redux";
 
 import * as COLOR from "../config/colors";
 
-class Profile extends Component {
+class ContactUs extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Profile",
+    title: "Contact Us",
     headerTintColor: COLOR.HEADER_TINT,
     headerStyle: {
       backgroundColor: COLOR.HEADER
@@ -76,4 +76,4 @@ export default connect(
   dispatch => ({
     actions: bindActionCreators(authActions, dispatch)
   })
-)(Profile);
+)(ContactUs);

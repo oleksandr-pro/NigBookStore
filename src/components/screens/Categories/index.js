@@ -1,24 +1,25 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import * as COLOR from "../../../config/colors";
-import styles from './styles';
-import DownHeaderBar from "../../atoms/DownHeaderBar"
+import { View, Text, TouchableOpacity } from "react-native";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { bindActionCreators } from "redux";
+import * as authActions from "../../../actions/authenticate";
+import { connect } from "react-redux";
 import MyInfinityScroll from "../MyInfinityScroll"
-import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import BookCategories from "../StoreTabViews/BookCategories";
+import * as COLOR from "../../../config/colors";
+import DownHeaderBar from "../../atoms/DownHeaderBar"
+import { Container, Tabs, Tab, ScrollableTab, Icon } from 'native-base'
+import styles from './styles';
 
-
-class StoreView extends Component {
-  static navigationOptions = ({navigation}) => ({
-    tabBarLabel: "Store",
+class Categories extends Component {
+  static navigationOptions = {
+    tabBarLabel: "Categories",
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="shopping" size={24} color={COLOR.ICON} />
+      <Icon type="Entypo" name="list" size={24} style={{color:COLOR.ICON}} />
     )
-  }); // navigationOptions
-
+  }; // navigationOptions
   constructor () {
     super()
     this.state = {
@@ -39,37 +40,38 @@ class StoreView extends Component {
   };
 
   render() {
-    const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All'];
+
+    const buttons = ['Award Winners', 'Adults','Nigerian Writing', 'Fictions','Non Fictions'];
     const { selectedIndex, initialPage } = this.state;
-    const DATAURLS = ['featured_book','new_books', 'best_sellers','all'];
-    
+    const DATAURLS = ['categoriesapi','categoriesapi', 'categoriesapi','categoriesapi', 'categoriesapi' ];
     return (
+      <View
+      style={{
+        flex: 1,
+        backgroundColor: COLOR.BACKGROUND,
+        padding:0
+      }}
+     >
       <View
         style={{
           flex: 1,
-          backgroundColor: COLOR.BACKGROUND,
-          padding:0
+          padding:0,
+          margin:0,
+          flexDirection:'column'
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            padding:0,
-            margin:0,
-            flexDirection:'column'
-          }}
-        >
-          <View style={{height:24, marginTop:5}}>
+        <View style={{height:24, marginTop:5}}>
            <DownHeaderBar data={buttons[selectedIndex]}/>
-          </View>
-          <Container>
+        </View>
+        <Container>
+
           <Tabs
             initialPage={initialPage} page={this.state.activeTab}
             onChangeTab={(i, ref)=> this.setState({selectedIndex:i.i, initialPage:i.i, activeTab:i.i})}
             renderTabBar={()=> <ScrollableTab />}            
           >
             <Tab
-              heading={'Featured'}
+              heading={buttons[0]}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -79,7 +81,7 @@ class StoreView extends Component {
               
             </Tab>
             <Tab
-              heading={'New Books'}
+              heading={buttons[1]}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -89,7 +91,7 @@ class StoreView extends Component {
             </Tab>
 
             <Tab
-              heading={'Best Seller'}
+              heading={buttons[2]}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -98,7 +100,7 @@ class StoreView extends Component {
               <MyInfinityScroll dataUrl={DATAURLS[2]} screenProps = {this.props.screenProps}/>
             </Tab>
             <Tab
-              heading={'All'}
+              heading={buttons[3]}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -107,12 +109,25 @@ class StoreView extends Component {
               <MyInfinityScroll dataUrl={DATAURLS[3]} screenProps = {this.props.screenProps}/>
               
             </Tab>
+            <Tab
+              heading={buttons[4]}
+              textStyle={styles.TabTextStyle}
+              tabStyle={styles.TabStyle}
+              activeTextStyle={styles.ActiveTextStyle}
+              activeTabStyle={styles.ActiveTabStyle}
+            >
+              <MyInfinityScroll dataUrl={DATAURLS[4]} screenProps = {this.props.screenProps}/>
+              
+            </Tab>
             
           </Tabs>
-          </Container>
-        </View>
+
+        </Container>
+
       </View>
+    </View>
     );
-  } 
-} 
-export default StoreView;
+  } // render
+} // Dashboard
+
+export default Categories;

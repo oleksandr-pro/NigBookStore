@@ -38,7 +38,7 @@ class LoginView extends Component {
           backgroundColor: COLOR.CARD
         }}
       >
-        <View
+        {/* <View
           style={{
             backgroundColor: COLOR.INPUT_TEXT_BACKGROUND,
             marginBottom: 8,
@@ -72,7 +72,7 @@ class LoginView extends Component {
             returnKeyType="next"
             onSubmitEditing={() => this.refs.passwordInput.focus()}
           />
-        </View>
+        </View> */}
 
         <View
           style={{
@@ -81,7 +81,7 @@ class LoginView extends Component {
             flexDirection: "row"
           }}
         >
-          <View
+          {/* <View
             style={{
               width: 32,
               justifyContent: "center",
@@ -89,9 +89,9 @@ class LoginView extends Component {
             }}
           >
             <Icon name="lock" size={21} color={COLOR.PRIMARY_TEXT} />
-          </View>
+          </View> */}
 
-          <TextInput
+          {/* <TextInput
             ref="passwordInput"
             underlineColorAndroid={COLOR.INPUT_TEXT_BACKGROUND}
             style={{
@@ -110,9 +110,9 @@ class LoginView extends Component {
             onSubmitEditing={() => {
               this.props.setHideLogo(false);
             }}
-          />
+          /> */}
 
-          <View
+          {/* <View
             style={{
               width: 40,
               backgroundColor: COLOR.WHITE,
@@ -134,10 +134,10 @@ class LoginView extends Component {
                 <Icon name="eye-off" size={24} color={COLOR.ICON_DARK} />
               )}
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.5}
           onPress={() =>
             this.login(
@@ -164,9 +164,9 @@ class LoginView extends Component {
               LOGIN
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ marginVertical: 16 }}
           onPress={() => this.props.navigate("ForgotPassword")}
         >
@@ -179,7 +179,7 @@ class LoginView extends Component {
           >
             Forgot Password?
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* <View style={{ alignItems: "center", height: 36 }}>
           <Text style={{ color: COLOR.ERROR_TEXT }}>{this.props.error}</Text>

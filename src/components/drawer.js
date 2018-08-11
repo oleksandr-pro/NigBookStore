@@ -17,7 +17,7 @@ class DrawerContainer extends Component {
     super(props);
     this.state = {
       homeSelected: true,
-      profileSelected: false,
+      contactusSelected: false,
       settingsSelected: false
     };
   } // constructor
@@ -52,7 +52,7 @@ class DrawerContainer extends Component {
               this.props.actions.setScreen("Home");
               this.setState({
                 homeSelected: true,
-                profileSelected: false,
+                contactusSelected: false,
                 settingsSelected: false
               });
               navigation.navigate("HomeItem");
@@ -82,33 +82,33 @@ class DrawerContainer extends Component {
           <TouchableOpacity
             style={{ marginBottom: 24 }}
             onPress={() => {
-              this.props.actions.setScreen("Profile");
+              this.props.actions.setScreen("ContactUs");
               this.setState({
                 homeSelected: false,
-                profileSelected: true,
+                contactusSelected: true,
                 settingsSelected: false
               });
 
-              navigation.navigate("ProfileItem");
+              navigation.navigate("ContactUsItem");
             }}
           >
             <View
               style={{
                 padding: 16,
                 flexDirection: "row",
-                backgroundColor: this.state.profileSelected
+                backgroundColor: this.state.contactusSelected
                   ? COLOR.TINT_DARK
                   : null
               }}
             >
               <Icon
                 style={{ marginRight: 24 }}
-                name="account"
+                name="email"
                 size={21}
                 color={COLOR.PRIMARY_TEXT}
               />
               <Text style={{ fontSize: 14, color: COLOR.PRIMARY_TEXT }}>
-                Profile
+                Contact Us
               </Text>
             </View>
           </TouchableOpacity>
@@ -119,7 +119,7 @@ class DrawerContainer extends Component {
               this.props.actions.setScreen("Settings");
               this.setState({
                 homeSelected: false,
-                profileSelected: false,
+                contactusSelected: false,
                 settingsSelected: true
               });
 

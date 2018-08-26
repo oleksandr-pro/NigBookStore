@@ -46,9 +46,11 @@ class MyInfinityScroll extends Component {
 
   makeRemoteRequest = (page) => {
     console.log(page);
-    const url = `https://zacsbooks.com/stores/`+this.props.dataUrl+'?page='+(page-1);
+    let url = `https://zacsbooks.com/`+this.props.dataUrl+'?page='+(page-1);
+
     console.log('url', url);
     this.setState({ loading: true });
+
     return new Promise((resolve, reject) => {
       fetch(url)
       .then(res => res.json())
@@ -100,6 +102,11 @@ class MyInfinityScroll extends Component {
       default:
         break
     }
+  }
+
+  getFileName=(url)=> {
+    let num = url.split('/').length;
+    return url.split('/')[num-1];
   }
 
   onChangeScrollToIndex = (num) => {
@@ -186,20 +193,25 @@ class MyInfinityScroll extends Component {
               screenProps = {this.props.screenProps}
               onAdd={()=>this.props.addBook(
                 {id:this.generateID(),
+                nid:this.state.selectedItem.node.Nid,
                 title:this.state.selectedItem.node.title,
                 pages:this.state.selectedItem.node.Pages,
                 image: this.state.selectedItem.node.Image.src,
+                downloadurl:this.state.selectedItem.node['ebook download link'],
+                localpath: this.getFileName(this.state.selectedItem.node['ebook download link']),
                 read: true,
                 wish: false, 
-                like: false,
-                
+                like: false,                
               }
               )}
               onAddWISH={()=>this.props.addBook(
                 {id:this.generateID(),
+                nid:this.state.selectedItem.node.Nid,
                 title:this.state.selectedItem.node.title,
                 pages:this.state.selectedItem.node.Pages,
                 image: this.state.selectedItem.node.Image.src,
+                downloadurl:this.state.selectedItem.node['ebook download link'],
+                localpath:'',
                 read: false, 
                 like: false,
                 wish: true,

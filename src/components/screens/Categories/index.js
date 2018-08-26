@@ -43,7 +43,7 @@ class Categories extends Component {
 
     const buttons = ['Award Winners', 'Adults','Nigerian Writing', 'Fictions','Non Fictions'];
     const { selectedIndex, initialPage } = this.state;
-    const DATAURLS = ['categoriesapi','categoriesapi', 'categoriesapi','categoriesapi', 'categoriesapi' ];
+    const DATAURLS = ['categories/award_winners','categories/adults', 'categories/nigerian-writings','categories/fictions', 'categories/non-fictions' ];
     return (
       <View
       style={{

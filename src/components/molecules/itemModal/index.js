@@ -100,7 +100,7 @@ export default class ItemModal extends Component {
                             <Text 
                                 style={{flex:4, justifyContent:'center', alignItems:'center'}}
                             >
-                            {this.state.selectedNode.Rating}
+                            {/* {this.state.selectedNode.Rating} */}
                                 </Text>
                             <CardAction 
                             separator={true} 

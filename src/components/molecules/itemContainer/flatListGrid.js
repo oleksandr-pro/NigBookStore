@@ -25,7 +25,7 @@ export default class flatListGrid extends PureComponent {
             width = {(width-20) / 3}              
           />
          
-          <CustomCardContent data={rowData.node}/>
+          {/* <CustomCardContent data={rowData.node}/> */}
           
         </Card>
 

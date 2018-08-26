@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, AsyncStorage} from "react-native";
+import { View, AsyncStorage, TouchableOpacity, Text} from "react-native";
 var {
     ListView,
     ActivityIndicator
@@ -25,7 +25,7 @@ class Mread extends Component {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             books:[],
-            loading:false
+            onloading:false
         };
     }
   componentWillReceiveProps(nextProps){
@@ -64,53 +64,81 @@ class Mread extends Component {
 
   deleteBook(book){
     this.setState({loading:true});
-    let path = RNFS.DocumentDirectoryPath+'/www'+'/downloaded1.epub';
+    let {localpath=''} = book;
+    if (localpath===''){
+        console.log('already deleted', book);
+        return null;
+    }
+    let path = RNFS.DocumentDirectoryPath+'/www/'+localpath;
     RNFS.exists(path)
         .then((res) => {
-            this.setState({loading:false});
+            this.setState({onloading:false});
             console.log('file exist: ', res);
             if (res){
                 return RNFS.unlink(filepath)
                 .then(() => {
                 console.log('FILE DELETED');
                     book['wish'] = true;
+                    book['localpath'] = '';
                     this.props.updateBook(book);
                 })
                 // `unlink` will throw an error, if the item to unlink does not exist
                 .catch((err) => {
                 console.log(err.message);
                 });
+            } else {
+                book['wish'] = true;
+                    book['localpath'] = '';
+                    this.props.updateBook(book);
             }
 
         })
         .catch((err) => {
-            this.setState({loading:false});
+            this.setState({onloading:false});
             console.log(err.message);
             book['wish'] = true;
             this.props.updateBook(book);
         });
-        
-    
+ 
   }
 
 
   render() {
       console.log('screenProps', this.props.screenProps);
-        if (this.props.loading) {
+      const {books=[]} = this.state;
+      let read_books = [];
+      books.map((item, index)=>{
+          if (item.read ===true && item.wish ===false) {
+            read_books.push(item);
+          }
+      })
+      const {screenProps} = this.props;
+        // if (this.props.loading) {
+        //     return (
+        //         <View style={styles.activityIndicatorContainer}>
+        //             <ActivityIndicator
+        //                 animating={true}
+        //                 style={[{height: 80}]}
+        //                 size="small"
+        //             />
+        //         </View>
+        //     );
+        // } 
+        if(read_books.length===0){
             return (
-                <View style={styles.activityIndicatorContainer}>
-                    <ActivityIndicator
-                        animating={true}
-                        style={[{height: 80}]}
-                        size="small"
-                    />
-                </View>
-            );
-        } else {   
+            <View style={{flex: 1, backgroundColor: '#eaeaea', justifyContent:'center', alignItems:'center'}}>
+                <TouchableOpacity >
+                    <Text style={{color:'#666666', fontWeight:'bold', fontSize:17}}>
+                    Please download books from bookshop.
+                    </Text>
+                </TouchableOpacity>
+                
+            </View>) 
+        }
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
                     <Loader
-                        loading={this.state.loading} />
+                        loading={this.state.onloading} />
                     <Content>
                     <List>
                     {this.state.books.map((item, index) => {
@@ -136,8 +164,7 @@ class Mread extends Component {
                 </View>
             );
         }
-    }
-
+   
 } 
 
 function mapStateToProps(state, props) {

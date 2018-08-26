@@ -25,7 +25,8 @@ class Home extends Component {
         <TouchableOpacity
           style={{
             marginRight: 16
-          }}        
+          }} 
+          onPress = {() =>navigation.navigate("Search")}       
         >
           <Icon name="search" size={32} color={COLOR.ICON} />
         </TouchableOpacity>
@@ -47,6 +48,7 @@ class Home extends Component {
     AsyncStorage.getItem('data', (err, data) => {
       //if it doesn't exist, extract from json file
       //save the initial data in Async
+      console.log('It is home', data);
       if (data === null){
           AsyncStorage.setItem('data', JSON.stringify(Data.books));
           // this.props.getBooks();
@@ -57,7 +59,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Root>
+ 
       <View
         style={{
           flex: 1,
@@ -84,7 +86,7 @@ class Home extends Component {
           />
         </View>
       </View>
-      </Root>
+
     );
   } 
 } 

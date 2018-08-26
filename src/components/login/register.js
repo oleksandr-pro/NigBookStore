@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
 
@@ -14,6 +14,48 @@ class RegisterView extends Component {
       securePassword: true
     };
   } // constructor
+
+  register(){
+    let {usernameInput, emailInput, passwordInput} = this.state;
+    if (usernameInput===""||emailInput===""||passwordInput==="") return null;
+
+    return fetch(`https://zacsbooks.com/api/user/register`, {
+        headers: {'Content-Type':'application/json'},
+        method:'POST',
+        body: JSON.stringify({'name':usernameInput, 'pass':passwordInput, 'mail':emailInput})
+      }).then(response => response.json())
+      .then(responseJson => {
+        const{uid, uri} = responseJson;
+        if (uid!==undefined){
+          console.log('success');
+          this.registerSuccess();
+        } else {
+          const{form_errors} = responseJson;
+          console.log('failure', form_errors);
+          this.registerFailed(form_errors);
+        }
+    })
+    .catch(error => {this.registerFailed({name:'Network Error'})});
+  }
+
+  registerFailed(error){
+    let {name='', mail=''} = error;
+    return Alert.alert(
+      "Registration Failed",
+      `${name}\n${mail}`,
+      [{ text: "OK", onPress: () => null }],
+      { cancelable: true }
+    );
+  }
+
+  registerSuccess(){
+    return Alert.alert(
+      "Successfully registered",
+      ``,
+      [{ text: "OK", onPress: () => null }],
+      { cancelable: true }
+    );
+  }
 
   render() {
     return (
@@ -128,7 +170,7 @@ class RegisterView extends Component {
           </View>
         </View>
 
-        <TouchableOpacity activeOpacity={0.5}>
+        <TouchableOpacity activeOpacity={0.5} onPress={()=> this.register()}>
           <View
             style={{
               height: 48,

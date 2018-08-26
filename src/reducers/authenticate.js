@@ -7,10 +7,12 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
-  RESTORE_SESSION
+  RESTORE_SESSION,
+  VERIFY_TOKEN
 } from "../config/redux-events";
 
 import { DATA_SESSION } from "../config/global";
+import { LoginManager} from 'react-native-fbsdk';
 
 const initialState = {
   isAuth: false,
@@ -18,6 +20,7 @@ const initialState = {
   authSession: null,
   authError: ""
 };
+
 
 export default function authenticate(state = initialState, action = {}) {
   switch (action.type) {
@@ -42,6 +45,7 @@ export default function authenticate(state = initialState, action = {}) {
         authError: action.data.error
       };
     case LOGOUT_SUCCESS:
+      LoginManager.logOut();
       AsyncStorage.removeItem(DATA_SESSION);
       return {
         ...state,
@@ -55,6 +59,11 @@ export default function authenticate(state = initialState, action = {}) {
         isAuth: true,
         authSession: action.data.session
       };
+    case VERIFY_TOKEN:
+      return {
+        isAuth: true,
+        authSession: action.data.session
+      }
     default:
       return state;
   }

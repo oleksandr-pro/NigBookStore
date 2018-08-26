@@ -10,6 +10,7 @@ import * as authActions from "../actions/authenticate";
 import { connect } from "react-redux";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { StyleSheet } from 'react-native';
+import {Root} from "native-base";
 
 const styles = StyleSheet.create({
   image: {
@@ -59,11 +60,12 @@ class Main extends Component {
   }
   render() {
     if (this.props.state.isAuth) {
-      return (
+      return (     <Root>
         <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
           <MainStack />
         </View>
+        </Root>
       );
     } else {
         return (

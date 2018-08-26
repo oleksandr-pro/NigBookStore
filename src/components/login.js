@@ -82,20 +82,30 @@ class Login extends Component {
     this.setState({ showRealApp: true });
   }
 
+  veryifyFailed = () => {
+    return Alert.alert(
+      "Authentication Failed",
+      "Incorrect username/password",
+      [{ text: "OK", onPress: () => null }],
+      { cancelable: true }
+    );
+  };
+
   componentWillMount() {
     // recover previous data
-    setTimeout(() => {
-      AsyncStorage.getItem(DATA_SESSION)
-        .then(value => {
-          if (value) {
-            session = JSON.parse(value);
-            this.props.actions.restoreSession(session);
-          } else {
-            this.setState({ initializing: false });
-          }
-        })
-        .done();
-    }, 1000);
+    // setTimeout(() => {
+    //   AsyncStorage.getItem(DATA_SESSION)
+    //     .then(value => {
+    //       if (value) {
+    //         session = JSON.parse(value);
+    //         this.props.actions.restoreSession(session, );
+    //       } else {
+    //         this.setState({ initializing: false });
+    //       }
+    //     })
+    //     .done();
+    // }, 1000);
+    this.setState({initializing:false});
   }
 
   _setHideLogo = value => {
@@ -117,7 +127,7 @@ class Login extends Component {
         >
           <Text
             style={{
-              color: this.state.showLogin ? COLOR.TRANSPARENT : COLOR.TINT
+              color: this.state.showLogin ? 'white' : COLOR.TINT
             }}
           >
             LOGIN
@@ -137,7 +147,7 @@ class Login extends Component {
         >
           <Text
             style={{
-              color: this.state.showLogin ? COLOR.TINT : COLOR.TRANSPARENT
+              color: this.state.showLogin ? COLOR.TINT : 'white'
             }}
           >
             REGISTER
@@ -245,8 +255,8 @@ class Login extends Component {
         {this.state.showLogin ? (
           <LoginView
             setHideLogo={value => this._setHideLogo(value)}
-            login={(username, password, callback) => {
-              this.props.actions.login(username, password, callback);
+            login={(username, password, email, pictureurl, callback) => {
+              this.props.actions.login(username, password, email, pictureurl, callback);
             }}
             error={this.props.state.authError}
             navigate={route => this.props.navigation.navigate(route)}

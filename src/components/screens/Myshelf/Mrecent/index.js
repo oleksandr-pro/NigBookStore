@@ -73,17 +73,13 @@ class Mrecent extends Component {
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
 
                 <Content>
-                    <GridList
-                    
+                    <GridList                    
                     numColumns={2}
                     data={this.state.books}
-                    renderItem={this.renderItem}
-                    
-                    >
-                    
+                    renderItem={this.renderItem}                    
+                    >                    
                 </GridList>
                 </Content>
-
                 </View>
             );
         }

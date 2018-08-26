@@ -17,6 +17,7 @@ import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
 import Categories from "../components/screens/Categories";
 import Epubreader from "../epubreader/epubreader";
+import Search from "../components/screens/Search";
 import * as COLOR from "./colors";
 import DrawerContainer from "../components/drawer";
 
@@ -60,6 +61,9 @@ export const MainStack = DrawerNavigator(
     },
     SettingsItem: {
       screen: SettingsItem
+    },
+    Search: {
+      screen: Search
     }
   },
   { contentComponent: DrawerContainer }

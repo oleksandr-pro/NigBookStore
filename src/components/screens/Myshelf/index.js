@@ -67,7 +67,7 @@ class Myshelf extends Component {
             renderTabBar={()=> <ScrollableTab />}
           >
             <Tab
-              heading={'Read'}
+              heading={'Reading List'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -77,7 +77,7 @@ class Myshelf extends Component {
               
             </Tab>
             <Tab
-              heading={'Unread'}
+              heading={'Deleted'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}

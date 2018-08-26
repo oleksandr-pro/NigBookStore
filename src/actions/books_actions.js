@@ -25,6 +25,7 @@ export function getBooks(){
     return (dispatch) => {
         console.log('getbooks');
         AsyncStorage.getItem('data', (err, books) => {
+            console.log('available books', books);
             if (books !== null){
                 dispatch({type: BOOKS_AVAILABLE, books:JSON.parse(books)});
             } 
@@ -46,6 +47,8 @@ export function updateBook(book){
                     books[index]['like'] = book.like;
                     books[index]['image'] = book.image;
                     books[index]['wish'] = book.wish;
+                    books[index]['localpath'] = book.localpath;
+                    books[index]['nid'] = book.nid;
                 }
                 AsyncStorage.setItem('data', JSON.stringify(books), () => {
                     dispatch({type: UPDATE_BOOK, book:book});

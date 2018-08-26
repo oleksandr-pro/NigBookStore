@@ -75,7 +75,7 @@ class Mwishlist extends Component {
                 <Content>
                     <GridList
                     
-                    numColumns={2}
+                    numColumns={3}
                     data={this.state.books}
                     renderItem={this.renderItem}
                     

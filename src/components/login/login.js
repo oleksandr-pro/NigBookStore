@@ -5,18 +5,29 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
 import PropTypes from "prop-types";
 
+import { LoginManager,LoginButton,AccessToken,GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
 class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      username: "gui5",
+      password: "tigers3me",
       securePassword: true
     };
   } // constructor
 
-  login = (username, password, callback) => {
-    this.props.login(username, password, callback);
+ //Create response callback.
+ _responseInfoCallback = (error, result) => {
+  if (error) {
+    alert('Error fetching data: ' + error.toString());
+  } else {
+    console.log('result', result);
+
+    this.login(result.name,result.id, result.email, result.picture.data.url,this.loginFailed )
+  }
+}
+  login = (username, password,email, pictureurl, callback) => {
+    this.props.login(username, password,email, pictureurl, callback);
   };
 
   loginFailed = () => {
@@ -38,7 +49,7 @@ class LoginView extends Component {
           backgroundColor: COLOR.CARD
         }}
       >
-        {/* <View
+        <View
           style={{
             backgroundColor: COLOR.INPUT_TEXT_BACKGROUND,
             marginBottom: 8,
@@ -72,7 +83,7 @@ class LoginView extends Component {
             returnKeyType="next"
             onSubmitEditing={() => this.refs.passwordInput.focus()}
           />
-        </View> */}
+        </View>
 
         <View
           style={{
@@ -81,7 +92,7 @@ class LoginView extends Component {
             flexDirection: "row"
           }}
         >
-          {/* <View
+          <View
             style={{
               width: 32,
               justifyContent: "center",
@@ -89,9 +100,9 @@ class LoginView extends Component {
             }}
           >
             <Icon name="lock" size={21} color={COLOR.PRIMARY_TEXT} />
-          </View> */}
+          </View>
 
-          {/* <TextInput
+          <TextInput
             ref="passwordInput"
             underlineColorAndroid={COLOR.INPUT_TEXT_BACKGROUND}
             style={{
@@ -110,9 +121,9 @@ class LoginView extends Component {
             onSubmitEditing={() => {
               this.props.setHideLogo(false);
             }}
-          /> */}
+          />
 
-          {/* <View
+          <View
             style={{
               width: 40,
               backgroundColor: COLOR.WHITE,
@@ -134,10 +145,10 @@ class LoginView extends Component {
                 <Icon name="eye-off" size={24} color={COLOR.ICON_DARK} />
               )}
             </TouchableOpacity>
-          </View> */}
+          </View>
         </View>
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
           activeOpacity={0.5}
           onPress={() =>
             this.login(
@@ -164,9 +175,40 @@ class LoginView extends Component {
               LOGIN
             </Text>
           </View>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
-        {/* <TouchableOpacity
+        <View style={{ backgroundColor: '#425bb4',width:200, height:40, flexDirection:'row', display:'none',
+          justifyContent:'center',
+          alignItems:'center' }}>
+          
+          <LoginButton
+            publishPermissions={["publish_actions"]}
+            onLoginFinished={
+              (error, result) => {
+                if (error) {
+                  this.login("test","12345", "test.com", "http://placehold.jp/3d4070/ffffff/150x150.png?css=%7B%22border-radius%22%3A%2215px%22%7D",this.loginFailed )
+                 console.log ("login has error: " + error);
+                } else if (result.isCancelled) {
+                  alert("login is cancelled.");
+                } else {
+                  AccessToken.getCurrentAccessToken().then(
+                    (data) => {
+                      const infoRequest = new GraphRequest(
+                        '/me?fields=name,picture,email,id',
+                        null,
+                        this._responseInfoCallback
+                      );
+                      // Start the graph request.
+                      new GraphRequestManager().addRequest(infoRequest).start();
+                    }
+                  );
+                }
+              }
+            }
+            onLogoutFinished={() => alert("logout.")}/>
+        </View>
+
+        <TouchableOpacity
           style={{ marginVertical: 16 }}
           onPress={() => this.props.navigate("ForgotPassword")}
         >
@@ -179,12 +221,18 @@ class LoginView extends Component {
           >
             Forgot Password?
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
+        
+        
         {/* <View style={{ alignItems: "center", height: 36 }}>
           <Text style={{ color: COLOR.ERROR_TEXT }}>{this.props.error}</Text>
         </View> */}
+
       </View>
+      
+        
+
     );
   } // render
 } // LoginView

@@ -13,7 +13,7 @@ import BookCategories from "../StoreTabViews/BookCategories";
 
 class StoreView extends Component {
   static navigationOptions = ({navigation}) => ({
-    tabBarLabel: "Store",
+    tabBarLabel: "Bookshop",
     tabBarIcon: ({ tintColor }) => (
       <Icon name="shopping" size={24} color={COLOR.ICON} />
     )
@@ -41,7 +41,7 @@ class StoreView extends Component {
   render() {
     const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All'];
     const { selectedIndex, initialPage } = this.state;
-    const DATAURLS = ['featured_book','new_books', 'best_sellers','all'];
+    const DATAURLS = ['stores/featured_book','stores/new_books', 'stores/best_sellers','stores/all'];
     
     return (
       <View

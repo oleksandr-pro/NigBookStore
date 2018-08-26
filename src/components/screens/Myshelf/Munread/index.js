@@ -51,21 +51,26 @@ class Munread extends Component {
     }
 
   updateBook(book){
-
+        let {downloadurl=''} = book;
+        var flag = downloadurl.split('/').length;
+        if (flag>0){
+            var filename = url.split('/')[flag-1];
+            console.log('filename', filename);
+        }
         this.setState({loading:true});
-        let path = RNFS.DocumentDirectoryPath+'/www'+'/downloaded1.epub';
+        let path = RNFS.DocumentDirectoryPath+'/www/'+ filename;
         RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www').then(()=>{
             RNFS.downloadFile({fromUrl:'https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub', toFile: path}).promise.then(res => {
             console.log('The file saved to ', res.statusCode)
             this.setState({loading:false});
+            book['localpath'] = filename;
             book['wish']=false;
             this.props.updateBook(book);
-            Alert.alert('Success', 'This book has downloaded!')
+            Alert.alert('Success', 'This book has downloaded!');
           })
           .catch((err)=>{
               console.log('err', err);
               this.setState({loading:false});
-
               this.props.onDismiss();
               Alert.alert('Failed', 'This book has not downloaded!')
           });

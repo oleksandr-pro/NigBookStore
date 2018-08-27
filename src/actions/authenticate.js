@@ -6,7 +6,6 @@ import {
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
   RESTORE_SESSION,
-  VERIFY_TOKEN,
 } from "../config/redux-events";
 
 export function login(username, password, callback) {
@@ -65,40 +64,17 @@ function loginFailed(error) {
   };
 } // loginFailed
 
-function verifyToken(session) {
-  return {
-    type: VERIFY_TOKEN,
-    data: {
-      session
-    }
-  }
-}
-
 export function logout() {
   console.log("authenticate:logout");
   return { type: LOGOUT_SUCCESS };
 } // logout
 
 export function restoreSession(session) {
-
-  const {token} = session;
-  console.log("verify-token",token);
-  return dispatch => {
-    dispatch (loginRequest());
-
-    fetch(`https://zacsbooks.com/api/user/token.json`, {
-      headers: {'Content-Type':'application/json'},
-      method:'GET',
-      body: JSON.stringify({'token':token})
-    }).then(response => response.json())
-    .then(responseJson => {
-      //validate responseJson'
-      console.log('response from verify token', responseJson);
-      dispatch(loginSuccess(session));
-      //dispatch(loginFailed("Authentication Failed"));
-    })
-    .catch(error => {
-      dispatch(loginFailed("Network Error"))});
-  }
-
+  console.log("authenticate:restoreSession", `${JSON.stringify(session)}`);
+  return {
+    type: RESTORE_SESSION,
+    data: {
+      session
+    }
+  };
 } // restoreSession

@@ -38,7 +38,7 @@ class Myshelf extends Component {
     this.setState({selectedIndex});
   };
   render() {
-    const buttons = ['Read', 'Unread','Recent', 'Wishlist'];
+    const buttons = ['Reading List', 'Delted','Recent', 'Wishlist'];
     const { selectedIndex, initialPage } = this.state;
     const DATAURLS = ['featured_book','new_books', 'best_sellers','all'];
     return (

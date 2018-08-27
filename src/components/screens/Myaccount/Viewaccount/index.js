@@ -1,12 +1,14 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { bindActionCreators } from "redux";
 import * as authActions from "../../../../actions/authenticate";
 import { connect } from "react-redux";
+
+import {Container, Content, Form, Item, Label, Text} from 'native-base';
 
 import * as COLOR from "../../../../config/colors";
 
@@ -15,52 +17,20 @@ class ViewAccount extends Component {
   render() {
     const { user } = this.props.state.authSession;
     return (
-      <View
-        style={{
-          flex: 1,
-          padding: 8,
-          backgroundColor: COLOR.BACKGROUND,
-          flexDirection:'column',
-          justifyContent:'center',
-          alignItems:'center'
-        }}
-      >
-      <View
-          style={{
-            padding: 16,
-            marginBottom: 8
-          }}
-        >
-        </View>
-      
-        <View
-          style={{
-            padding: 16,
-            marginBottom: 8
-          }}
-        >
-          <Text
-            style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
-          >{`Username`}</Text>
-          <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            user.name
-          }`}</Text>
-        </View>
-
-        <View
-          style={{
-            padding: 16,
-            marginBottom: 8
-          }}
-        >
-          <Text
-            style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
-          >{`Email`}</Text>
-          <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            user.email
-          }`}</Text>
-        </View>
-      </View>
+      <Container>
+        <Content>
+        <Form style={{padding:15}}>
+              <Item fixedLabel style={{height:40}}>
+                <Label>Username</Label>
+                <Text> {user.name} </Text>
+              </Item>
+              <Item fixedLabel style={{height:40}}>
+                <Label>Email</Label>
+                <Text> {user.mail} </Text>
+              </Item>
+          </Form>
+        </Content>
+      </Container>
     );
   } // render
 } // Profile

@@ -90,22 +90,21 @@ class Login extends Component {
       { cancelable: true }
     );
   };
-
+  
   componentWillMount() {
     // recover previous data
-    // setTimeout(() => {
-    //   AsyncStorage.getItem(DATA_SESSION)
-    //     .then(value => {
-    //       if (value) {
-    //         session = JSON.parse(value);
-    //         this.props.actions.restoreSession(session, );
-    //       } else {
-    //         this.setState({ initializing: false });
-    //       }
-    //     })
-    //     .done();
-    // }, 1000);
-    this.setState({initializing:false});
+    setTimeout(() => {
+      AsyncStorage.getItem(DATA_SESSION)
+        .then(value => {
+          if (value) {
+            session = JSON.parse(value);
+            this.props.actions.restoreSession(session);
+          } else {
+            this.setState({ initializing: false });
+          }
+        })
+        .done();
+    }, 1000);
   }
 
   _setHideLogo = value => {

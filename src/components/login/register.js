@@ -42,7 +42,7 @@ class RegisterView extends Component {
     let {name='', mail=''} = error;
     return Alert.alert(
       "Registration Failed",
-      `${name}\n${mail}`,
+      `Please input correct values.`,
       [{ text: "OK", onPress: () => null }],
       { cancelable: true }
     );

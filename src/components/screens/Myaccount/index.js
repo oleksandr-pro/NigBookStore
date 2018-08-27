@@ -12,7 +12,8 @@ import * as COLOR from "../../../config/colors";
 import DownHeaderBar from "../../atoms/DownHeaderBar"
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 import styles from './styles';
-import ViewAccount from "./Viewaccount"
+import ViewAccount from "./Viewaccount";
+import EditAccount from "./Editaccount";
 
 
 class Myaccount extends Component {
@@ -89,7 +90,7 @@ class Myaccount extends Component {
             activeTextStyle={styles.ActiveTextStyle}
             activeTabStyle={styles.ActiveTabStyle}
           >
-             <Text>Edit my profile </Text>
+             <EditAccount/>
           </Tab>          
         </Tabs>
         </Container>

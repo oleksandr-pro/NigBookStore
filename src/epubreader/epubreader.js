@@ -37,13 +37,20 @@ class EpubReader extends Component {
   }
 
   componentDidMount() {
-
+    const { navigation } = this.props;
+    const path = navigation.getParam('path', '');
+    console.log('path', path);
     this.streamer.start()
       .then((origin) => {
         console.log("Served from:", origin);
         // this.setState({origin})
-        this.streamer.check('http://localhost:8899/downloaded1.epub').then((t) => console.log("checking", t));
-        return this.streamer.add("http://localhost:8899/downloaded1.epub");
+        this.streamer.check(`http://localhost:8899/${path}`).then((t) => {
+              console.log("checking", t);
+              if (!t){
+                return navigation.goBack();
+              }
+          });
+        return this.streamer.add(`http://localhost:8899/${path}`);
         // return this.streamer.get(this.state.url);
       })
       .catch((error) => console.warn("fetch error:", error))

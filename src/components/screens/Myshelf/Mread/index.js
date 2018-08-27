@@ -150,7 +150,7 @@ class Mread extends Component {
                                  screenProps ={this.props.screenProps} 
                                  book ={item} 
                                  deleteBook={()=>this.deleteBook(item)}
-                                 upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
+                                 upreBook={()=>{this.props.screenProps.navigate('Epub', { path: item.localpath })}}
                                  likeBook={()=>this.likeBook(item)}
                                  />
                                 :<View/>

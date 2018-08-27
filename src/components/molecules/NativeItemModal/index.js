@@ -53,6 +53,7 @@ class NativeItemModal extends Component {
     }
 
     filtering(realbooks){
+        
         wishbooks = [];
         downloadedbooks = [];
         for (book in realbooks){
@@ -63,7 +64,7 @@ class NativeItemModal extends Component {
             }
         }
 
-        console.log('filtered books', rebooks);
+        console.log('filtered books', downloadedbooks);
         this.setState({wishbooks:wishbooks, downloadedbooks:downloadedbooks}); 
     }
 
@@ -74,8 +75,11 @@ class NativeItemModal extends Component {
             if (data === null){
                 AsyncStorage.setItem('data', JSON.stringify(Data.books));
             } else {
-                this.props.getBooks();
-                this.filtering(this.props.books);
+                console.log('qq');
+                this.props.getBooks()
+                
+               
+                
             }
     
         });
@@ -84,11 +88,13 @@ class NativeItemModal extends Component {
         if(prevprops.selectedItem!==this.props.selectedItem){
             if (typeof(this.props.selectedItem) !=='undefined'){
                 this.setState({selectedNode:this.props.selectedItem.node});
+                this.filtering(this.props.books);
             }         
         }
     }
 
     checkDownloaded(nid){
+        console.log('sdfsdfsdf', this.state.downloadedbooks);
         let result = this.state.downloadedbooks.filter(obj => {
             return obj.nid === nid;
           })
@@ -112,19 +118,22 @@ class NativeItemModal extends Component {
         }
         this.setState({loading:true});
         setTimeout(() => {
-            this.setState({loading:false});
             this.props.onDismiss();
-           return Alert.alert('Timeout', 'Timeout. Connection error');
+            if (this.state.loading){
+                this.setState({loading:false});
+                return Alert.alert('Timeout', 'Timeout. Connection error');
+            }
+         
 
         }, 60000);
-        let path = RNFS.DocumentDirectoryPath+'/www'+filename;
-        RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www').then(()=>{
+        let path = RNFS.DocumentDirectoryPath+'/www/'+filename;
+        RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www/').then(()=>{
             RNFS.downloadFile({fromUrl:url, toFile: path}).promise.then(res => {
             console.log('The file saved to ', res.statusCode)
             this.setState({loading:false});
             this.props.onAdd();
             this.props.onDismiss();
-           return  Alert.alert('Success', 'This book has downloaded!');
+           return  Alert.alert('Success', 'This book has downloaded to your reading section on the shelf!');
           })
           .catch((err)=>{
               console.log('err', err);
@@ -138,6 +147,8 @@ class NativeItemModal extends Component {
     render() {
         console.log("selected", this.props.selectedItem);
         const {Nid} = this.state.selectedNode;
+        console.log("selected nid", Nid);
+
         const { width, height } = Dimensions.get('window')
       return (
           <View>
@@ -205,7 +216,7 @@ class NativeItemModal extends Component {
                                             : <View/>
                                             }
 
-                                            {this.checkWished(Nid) ===false
+                                            {this.checkDownloaded(Nid)===false||this.checkWished(Nid) ===false
                                             ?<Button danger small style={{marginTop:10}}
                                                     onPress={()=>
                                                         ActionSheet.show(
@@ -288,4 +299,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(bookActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NativeItemModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NativeItemModal);   

@@ -8,7 +8,6 @@ import {
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
   RESTORE_SESSION,
-  VERIFY_TOKEN
 } from "../config/redux-events";
 
 import { DATA_SESSION } from "../config/global";
@@ -59,11 +58,7 @@ export default function authenticate(state = initialState, action = {}) {
         isAuth: true,
         authSession: action.data.session
       };
-    case VERIFY_TOKEN:
-      return {
-        isAuth: true,
-        authSession: action.data.session
-      }
+
     default:
       return state;
   }

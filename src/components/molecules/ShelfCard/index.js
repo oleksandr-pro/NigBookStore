@@ -53,9 +53,9 @@ class ShelfCard extends Component {
                                 </View>
                                 <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center', padding:5}}>
                                     <View style={styles.colCenter}>
-                                    <Text style={styles.titleText}> {book.title}</Text> 
+                                    {/* <Text style={styles.titleText}> {book.title}</Text> 
                                     <Text numberOfLines={1} ellipsizeMode ={'tail'}>{this.state.selectedNode['Author Name']}</Text>
-                                    <Text style={[styles.titleText, {marginBottom:5}]}> {book.pages} pages</Text> 
+                                    <Text style={[styles.titleText, {marginBottom:5}]}> {book.pages} pages</Text>  */}
 
                                     </View>
                                     

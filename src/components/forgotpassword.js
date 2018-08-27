@@ -1,8 +1,8 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import ModalProgress from './common/loading';
 import * as COLOR from "../config/colors";
 
 class ForgotPassword extends Component {
@@ -20,8 +20,43 @@ class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emailInput: ""
+      emailInput: "",
+      isLoading:false,
     };
+  }
+
+  doResetPassword = ()=> {
+    const {emailInput} = this.state;
+    return fetch(`https://zacsbooks.com/api/user/request_new_password `, {
+        headers: {'Content-Type':'application/json'},
+        method:'POST',
+        body: JSON.stringify({'name':emailInput})
+      }).then(response => response.json())
+      .then(responseJson => {
+        console.log("response", responseJson);
+        if (responseJson[0]===true){
+          Alert.alert( "Success",
+          'Please check your email and follow instructions to recover password.',
+          [{ text: "OK", onPress: () => null }],
+          { cancelable: true }
+          );
+        } else {
+          Alert.alert( "Failed",
+          'Please input correct value.',
+          [{ text: "OK", onPress: () => null }],
+          { cancelable: true }
+           );}
+        }
+         
+      )
+      .catch(error => {
+        console.log('failed', error);
+        Alert.alert( "Failed",
+          'Network error.',
+          [{ text: "OK", onPress: () => null }],
+          { cancelable: true }
+           );
+      });
   }
 
   render() {
@@ -35,6 +70,8 @@ class ForgotPassword extends Component {
           backgroundColor: COLOR.BACKGROUND
         }}
       >
+         <ModalProgress isVisible = {this.state.isLoading}/>
+
         <View
           style={{
             paddingVertical: 16
@@ -73,7 +110,7 @@ class ForgotPassword extends Component {
 
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => this.props.navigation.goBack()}
+          onPress={() => this.doResetPassword()}
         >
           <View
             style={{

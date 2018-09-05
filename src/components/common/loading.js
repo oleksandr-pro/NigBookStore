@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { View, Text, Modal, ActivityIndicator } from "react-native";
 import * as COLOR from "../../config/colors";
 import PropTypes from "prop-types";
+import {DotsLoader} from 'react-native-indicator';
 
 class ModalProgress extends Component {
   render() {
@@ -18,7 +19,7 @@ class ModalProgress extends Component {
         >
           <View
             style={{
-              backgroundColor: COLOR.CARD,
+              backgroundColor: 'transparent',
               padding: 32,
               flexDirection: "row",
               alignItems: "center",
@@ -28,8 +29,9 @@ class ModalProgress extends Component {
               elevation: 3
             }}
           >
-            <ActivityIndicator isVisible={true} size="large" />
-            <Text style={{ marginLeft: 8 }}>Loading...</Text>
+            {/* <ActivityIndicator isVisible={true} size="large" />
+            <Text style={{ marginLeft: 8 }}>Loading...</Text> */}
+            <DotsLoader size={10} color={'#1e90ff'} betweenSpace={5}/>
           </View>
         </View>
       </Modal>

@@ -1,4 +1,4 @@
-import { SET_CURRENT_SCREEN, SET_CURRENT_TAB } from "../config/redux-events";
+import { SET_CURRENT_SCREEN, SET_CURRENT_TAB } from "../redux-events";
 /* @flow */
 
 const initialState = {

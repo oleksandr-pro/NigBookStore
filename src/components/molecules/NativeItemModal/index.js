@@ -1,11 +1,9 @@
 
 import React, { Component } from 'react';
 import {
-
     TouchableOpacity,
     View,
     Dimensions,
-
     TouchableHighlight,
     Alert,
   } from 'react-native';
@@ -14,12 +12,12 @@ import styles from './styles';
 import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, ActionSheet } from 'native-base';
 import RNFetchBlob from 'react-native-fetch-blob'
-import Loader from '../../atoms/Loader';
 import RNFS from 'react-native-fs';
 
 import { bindActionCreators } from "redux";
-import * as bookActions from "../../../actions/books_actions";
+import * as bookActions from "../../../services/actions/books_actions";
 import { connect } from "react-redux";
+import ModalProgress from '../../common/loading';
 
 var BUYBUTTONS=['Download', 'Cancel'];
 var WISHBUTTONS=['Ok', 'Cancel'];
@@ -110,7 +108,6 @@ class NativeItemModal extends Component {
 
     doDownload(item){
         let url =item['ebook download link'];
-        
         var flag = url.split('/').length;
         if (flag>0){
             var filename = url.split('/')[flag-1];
@@ -123,8 +120,6 @@ class NativeItemModal extends Component {
                 this.setState({loading:false});
                 return Alert.alert('Timeout', 'Timeout. Connection error');
             }
-         
-
         }, 60000);
         let path = RNFS.DocumentDirectoryPath+'/www/'+filename;
         RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www/').then(()=>{
@@ -159,8 +154,8 @@ class NativeItemModal extends Component {
               onRequestClose={() => { this.props.onDismiss() }}
               >            
                   <View style={styles.container}>
-                  <Loader
-                        loading={this.state.loading} />
+                  <ModalProgress
+                        isVisible={this.state.loading} />
                     <Container style={{backgroundColor:'transparent', flex:1, justifyContent:'center',alignContent:'center'}}>                        
                         <Content style={{backgroundColor:'transparent'}}>
                         <Card style={{flex: 1}}>

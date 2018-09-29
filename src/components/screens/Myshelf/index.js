@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { View,} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import DownHeaderBar from "../../atoms/DownHeaderBar"
-import MyInfinityScroll from "../MyInfinityScroll"
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 import * as COLOR from "../../../config/colors";
 import styles from './styles';
@@ -73,7 +72,7 @@ class Myshelf extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle} 
               >
-              <Mread screenProps = {this.props.screenProps}/>
+              <Mread screenProps = {this.props.navigation} readProps={this.props.screenProps}/>
               
             </Tab>
             <Tab
@@ -103,13 +102,9 @@ class Myshelf extends Component {
               activeTabStyle={styles.ActiveTabStyle}
             >
               <Mwishlist  screenProps = {this.props.screenProps}/>
-              
-            </Tab>
-            
+            </Tab>            
           </Tabs>
           </Container>
-
-
         </View>
       </View>
     );

@@ -10,12 +10,10 @@ export default class Search extends Component {
         }
     }
     doSearch =()=>{
-        
         if (this.state.keyword!==''&&this.state.keyword!==undefined){
             this.setState({search:true})
         } else {this.setState({search:false})}
     }
-
   render() {
     return (
       <Container>
@@ -24,29 +22,21 @@ export default class Search extends Component {
                 <Button transparent onPress={()=> this.props.navigation.goBack()} small>
                     <Icon style={{color:'black'}}  name="arrow-back"/>
                 </Button>
-
             </Left>
-          
                 <Item style={{flex:1}}>
                     <Icon name="ios-search" />
                     <Input placeholder="Search" onChangeText={keyword => this.setState({ keyword })}/>
                 </Item>
-
-
                 <Button transparent icon small onPress={this.doSearch}>
                     <Icon style={{color:'black'}} type="Feather" name="check"/>
                 </Button>
-
         </Header>
         <Content>
         {this.state.search===true
         ? <MyInfinityScroll dataUrl={`search_api?node_field_category=All&title=${this.state.keyword}`} screenProps = {this.props.navigation}/>   
-
         : <Body/>
         }
-          
         </Content>
-
       </Container>
     );
   }

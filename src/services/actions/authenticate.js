@@ -6,7 +6,7 @@ import {
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
   RESTORE_SESSION,
-} from "../config/redux-events";
+} from "../redux-events";
 
 export function login(username, password, callback) {
   console.log("authenticate:login", `${username}:${password}`);
@@ -14,7 +14,6 @@ export function login(username, password, callback) {
     dispatch(loginRequest());
 
     // =======================================================
-
     const body = {};
     fetch(`https://zacsbooks.com/api/user/login`, {
       headers:{'Content-Type': 'application/json'},
@@ -26,16 +25,21 @@ export function login(username, password, callback) {
         //validate responseJson'
         console.log('response from login', responseJson);
         const session = responseJson;
+        const {user} = session;
+        
         dispatch(loginSuccess(session));
         //dispatch(loginFailed("Authentication Failed"));
       })
       .catch(error => {callback(); dispatch(loginFailed("Network Error"))});
-
     // =======================================================
 
 
   };
 } // login
+
+function paymentStart(){
+
+}
 
 function loginRequest() {
   return {

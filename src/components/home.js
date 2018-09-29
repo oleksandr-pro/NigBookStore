@@ -2,16 +2,15 @@
 
 import React, { Component } from "react";
 import { View, TouchableOpacity, AsyncStorage } from "react-native";
-import { HomeTabs } from "../config/router";
+import { HomeTabs } from "../navigation/router";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { bindActionCreators } from "redux";
-import * as screenTrackActions from "../actions/screen-tracking";
-import * as bookActions from "../actions/books_actions";
+import * as screenTrackActions from "../services/actions/screen-tracking";
+import * as bookActions from "../services/actions/books_actions";
 import { connect } from "react-redux";
 import getCurrentRouteName from "../utils/get-current-route";
-import {Root} from "native-base";
 import * as COLOR from "../config/colors";
-import Data from '../books.json'
+import Data from '../../src/books.json';
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,7 +20,7 @@ class Home extends Component {
       backgroundColor: COLOR.HEADER
     },
     headerRight: (
-      <View style={{flex:1, flexDirection:'row'}}>
+      <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
         <TouchableOpacity
           style={{
             marginRight: 16
@@ -39,27 +38,20 @@ class Home extends Component {
           <Icon name="menu" size={32} color={COLOR.ICON} />
         </TouchableOpacity>     
       </View>
-      
     )
   }); // navigationOptions
 
   componentDidMount(){
-
     AsyncStorage.getItem('data', (err, data) => {
-      //if it doesn't exist, extract from json file
-      //save the initial data in Async
       console.log('It is home', data);
       if (data === null){
           AsyncStorage.setItem('data', JSON.stringify(Data.books));
-          // this.props.getBooks();
       }
   });
-
   }
 
   render() {
     return (
- 
       <View
         style={{
           flex: 1,
@@ -74,11 +66,9 @@ class Home extends Component {
         >
           <HomeTabs
             screenProps={this.props.navigation}
-        
             onNavigationStateChange={(prevState, currentState) => {
               const currentTab = getCurrentRouteName(currentState);
               const prevScreen = getCurrentRouteName(prevState);
-
               if (prevScreen !== currentTab) {
                 this.props.actions.setTab(currentTab);
               }

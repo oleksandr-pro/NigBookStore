@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import * as reducers from "./reducers";
+import * as reducers from "../src/services/reducers";
 import Main from "./components/main";
 import { composeWithDevTools } from 'redux-devtools-extension';
 

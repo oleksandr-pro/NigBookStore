@@ -2,9 +2,7 @@ export const BOOKS_AVAILABLE = 'BOOKS_AVAILABLE';
 export const ADD_BOOK = 'ADD_BOOK';
 export const UPDATE_BOOK = 'UPDATE_BOOK';
 export const DELETE_BOOK = 'DELETE_BOOK';
-
 import {AsyncStorage} from "react-native";
-
 // Add BOOK - CREATE (C)
 export function addBook(book){
     return (dispatch) => {

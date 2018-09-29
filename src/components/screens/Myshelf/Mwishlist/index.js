@@ -2,21 +2,16 @@
 
 import React, { Component } from "react";
 import { View} from "react-native";
-var {
-    ListView,
-    ActivityIndicator
-} = require('react-native');
+var { ActivityIndicator} = require('react-native');
 import { bindActionCreators } from "redux";
-import * as bookActions from "../../../../actions/books_actions";
+import * as bookActions from "../../../../services/actions/books_actions";
 import { connect } from "react-redux";
 import {Content, List} from 'native-base';
-import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
 import HalfShelfCard from "../../../molecules/halfShelfCard";
 import GridList from 'react-native-grid-list';
 
 class Mwishlist extends Component {
- 
     constructor(props){
         super(props);
         this.state = {
@@ -27,7 +22,6 @@ class Mwishlist extends Component {
       if(nextProps!==this.props){
             this.filtering(nextProps.books);
       }
-
   }
   filtering(realbooks){
     rebooks = [];
@@ -41,19 +35,16 @@ class Mwishlist extends Component {
   }
   componentDidMount(){
       this.props.getBooks();
-        this.filtering(this.props.books);
-
+      this.filtering(this.props.books);
   }
 
   renderItem = ({ item, index }) => (
-
     <HalfShelfCard
         screenProps ={this.props.screenProps}
         book ={item}
         upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
         state = {'wish'}
     />
-
   );
  
   render() {
@@ -71,19 +62,14 @@ class Mwishlist extends Component {
         } else {   
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
-
                 <Content>
-                    <GridList
-                    
+                    <GridList                    
                     numColumns={3}
                     data={this.state.books}
-                    renderItem={this.renderItem}
-                    
-                    >
-                    
+                    renderItem={this.renderItem}                    
+                    >                    
                 </GridList>
                 </Content>
-
                 </View>
             );
         }

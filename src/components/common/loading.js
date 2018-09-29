@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { View, Text, Modal, ActivityIndicator } from "react-native";
 import * as COLOR from "../../config/colors";
 import PropTypes from "prop-types";
-import {DotsLoader} from 'react-native-indicator';
+import { SkypeIndicator,} from 'react-native-indicators';
 
 class ModalProgress extends Component {
   render() {
@@ -12,16 +12,20 @@ class ModalProgress extends Component {
         transparent={true}
         animationType="fade"
         visible={this.props.isVisible}
-        onRequestClose={() => null}
+        onRequestClose={this.props.onClose}
       >
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
+          style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor:'#555', opacity:0.5 }}
+        />
+        <View style ={{position:'absolute', top:0, left:0, bottom:0, right:0, justifyContent:'center', alignItems:'center'}}>
           <View
             style={{
-              backgroundColor: 'transparent',
-              padding: 32,
+              backgroundColor: 'white',
+              borderRadius:5,
+              width: 50,
+              height:50,
               flexDirection: "row",
+              justifyContent:'center',
               alignItems: "center",
               shadowOffset: { width: 0, height: 13 },
               shadowOpacity: 0.3,
@@ -29,9 +33,7 @@ class ModalProgress extends Component {
               elevation: 3
             }}
           >
-            {/* <ActivityIndicator isVisible={true} size="large" />
-            <Text style={{ marginLeft: 8 }}>Loading...</Text> */}
-            <DotsLoader size={10} color={'#1e90ff'} betweenSpace={5}/>
+            <SkypeIndicator size={32} color={'#1e90ff'}/>
           </View>
         </View>
       </Modal>
@@ -39,8 +41,13 @@ class ModalProgress extends Component {
   } // render
 } //  ModalProgress
 
-ModalProgress.propTypes = {
-  isVisible: PropTypes.bool.isRequired
+ModalProgress.PropTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func
 };
+ModalProgress.defaultProps = {
+  onClose: ()=>{},
+  isVisible: false
+}
 
 export default ModalProgress;

@@ -5,13 +5,13 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
 import PropTypes from "prop-types";
 
-import { LoginManager,LoginButton,AccessToken,GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
+import { LoginButton,AccessToken,GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
 class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "gui5",
-      password: "tigers3me",
+      username: "",
+      password: "",
       securePassword: true
     };
   } // constructor

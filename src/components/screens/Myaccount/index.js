@@ -1,20 +1,14 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View,} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { bindActionCreators } from "redux";
-import * as authActions from "../../../actions/authenticate";
-import { connect } from "react-redux";
-
 import * as COLOR from "../../../config/colors";
 import DownHeaderBar from "../../atoms/DownHeaderBar"
-import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
+import { Container, Tabs, Tab, } from 'native-base'
 import styles from './styles';
 import ViewAccount from "./Viewaccount";
 import EditAccount from "./Editaccount";
-
 
 class Myaccount extends Component {
   static navigationOptions = {
@@ -29,10 +23,8 @@ class Myaccount extends Component {
       selectedIndex:0,
       initialPage:0,
       activeTab:0
-     
     }
     this.updateIndex = this.updateIndex.bind(this)
-
   }
   componentDidMount(){
     this.setState({selectedIndex:0,initialPage:0, activeTab:0});
@@ -42,11 +34,9 @@ class Myaccount extends Component {
     this.setState({selectedIndex});
   };
   
-
   render() {
     const buttons = ['View', 'Edit'];
     const { selectedIndex, initialPage } = this.state;
-
     return (
       <View
       style={{
@@ -94,8 +84,6 @@ class Myaccount extends Component {
           </Tab>          
         </Tabs>
         </Container>
-
-
       </View>
     </View>
     );

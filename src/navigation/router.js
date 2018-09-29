@@ -1,5 +1,4 @@
 /* @flow */
-
 import {
   StackNavigator,
   NavigationActions,
@@ -18,7 +17,7 @@ import StoreView from "../components/screens/StoreView";
 import Categories from "../components/screens/Categories";
 import Epubreader from "../epubreader/epubreader";
 import Search from "../components/screens/Search";
-import * as COLOR from "./colors";
+import * as COLOR from "../config/colors";
 import DrawerContainer from "../components/drawer";
 
 export const LoginStack = StackNavigator({

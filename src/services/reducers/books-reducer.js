@@ -1,7 +1,5 @@
-import { combineReducers } from 'redux';
 
 import { BOOKS_AVAILABLE, ADD_BOOK, UPDATE_BOOK, DELETE_BOOK } from "../actions/books_actions" //Import the actions types constant we defined in our actions
-
 let dataState = { books: [], loading:true };
 
 export default function booksControl (state = dataState, action={}) {
@@ -12,11 +10,9 @@ export default function booksControl (state = dataState, action={}) {
             state = Object.assign({}, state, { books: books});
             return state;
         }
-
         case BOOKS_AVAILABLE:
             state = Object.assign({}, state, { books: action.books, loading:false });
             return state;
-
         case UPDATE_BOOK:{
             let book = action.book;
             let books =  cloneObject(state.books) //clone the current state
@@ -31,7 +27,6 @@ export default function booksControl (state = dataState, action={}) {
             state = Object.assign({}, state, { books: books});
             return state;
         }
-
         case DELETE_BOOK:{
             let books =  cloneObject(state.books) //clone the current state
             let index = getIndex(books, action.id); //find the index of the book with the id passed
@@ -39,12 +34,10 @@ export default function booksControl (state = dataState, action={}) {
             state = Object.assign({}, state, { books: books});
             return state;
         }
-
         default:
             return state;
     }
 };
-
 
 function cloneObject(object){
     return JSON.parse(JSON.stringify(object));

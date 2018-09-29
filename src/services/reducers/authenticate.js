@@ -1,16 +1,15 @@
 /* @flow */
 
 import { AsyncStorage } from "react-native";
-
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
   RESTORE_SESSION,
-} from "../config/redux-events";
+} from "../redux-events";
 
-import { DATA_SESSION } from "../config/global";
+import { DATA_SESSION } from "../../config/global";
 import { LoginManager} from 'react-native-fbsdk';
 
 const initialState = {
@@ -19,8 +18,6 @@ const initialState = {
   authSession: null,
   authError: ""
 };
-
-
 export default function authenticate(state = initialState, action = {}) {
   switch (action.type) {
     case LOGIN_REQUEST:

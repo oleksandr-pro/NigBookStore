@@ -8,8 +8,6 @@ import DownHeaderBar from "../../atoms/DownHeaderBar"
 import MyInfinityScroll from "../MyInfinityScroll"
 import { Container, Tabs, Tab, ScrollableTab } from 'native-base'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import BookCategories from "../StoreTabViews/BookCategories";
-
 
 class StoreView extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -25,7 +23,6 @@ class StoreView extends Component {
       selectedIndex:0,
       initialPage:0,
       activeTab:0
-     
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
@@ -105,9 +102,7 @@ class StoreView extends Component {
               activeTabStyle={styles.ActiveTabStyle}
             >
               <MyInfinityScroll dataUrl={DATAURLS[3]} screenProps = {this.props.screenProps}/>
-              
-            </Tab>
-            
+            </Tab>            
           </Tabs>
           </Container>
         </View>

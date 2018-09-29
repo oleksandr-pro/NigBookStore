@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
+import ModalProgress from '../common/loading';
 
 class RegisterView extends Component {
   constructor(props) {
@@ -11,14 +12,15 @@ class RegisterView extends Component {
       usernameInput: "",
       emailInput: "",
       passwordInput: "",
-      securePassword: true
+      securePassword: true,
+      loading:false,
     };
   } // constructor
 
   register(){
     let {usernameInput, emailInput, passwordInput} = this.state;
     if (usernameInput===""||emailInput===""||passwordInput==="") return null;
-
+    this.setState({loading:true});
     return fetch(`https://zacsbooks.com/api/user/register`, {
         headers: {'Content-Type':'application/json'},
         method:'POST',
@@ -28,14 +30,17 @@ class RegisterView extends Component {
         const{uid, uri} = responseJson;
         if (uid!==undefined){
           console.log('success');
-          this.registerSuccess();
+          this.createPayRow();
         } else {
           const{form_errors} = responseJson;
           console.log('failure', form_errors);
           this.registerFailed(form_errors);
         }
     })
-    .catch(error => {this.registerFailed({name:'Network Error'})});
+    .catch(error => {
+      this.registerFailed({name:'Network Error'});
+      this.setState({loading:false})
+    });
   }
 
   registerFailed(error){
@@ -51,10 +56,41 @@ class RegisterView extends Component {
   registerSuccess(){
     return Alert.alert(
       "Successfully registered",
-      ``,
+      `Payment initialized`,
       [{ text: "OK", onPress: () => null }],
       { cancelable: true }
     );
+  }
+
+  createPayRow(){
+    let {emailInput,} = this.state;
+    let title = Math.random().toString().slice(2,12);
+    let request = {
+      type: 'custom_payment',
+      title,
+      field_email: {
+        und: [
+          {
+            value: emailInput
+          }
+        ]
+      }
+    }
+    return fetch(`https://zacsbooks.com/api/node`, {
+      headers: {'Content-Type':'application/json'},
+      method:'POST',
+      body: JSON.stringify(request)
+    }).then(res => res.json())
+    .then(res=> {
+      this.setState({loading:false});
+      const {nid, uri} = res;
+      console.log('response', res);
+      this.registerSuccess();
+    })
+    .catch(error=> {
+      this.registerFailed({name: 'Payment Initialization Failed'});
+      this.setState({loading:false})
+    })
   }
 
   render() {
@@ -65,6 +101,7 @@ class RegisterView extends Component {
           margin: 16
         }}
       >
+        <ModalProgress isVisible={this.state.loading} />
         <View
           style={{
             marginBottom: 4

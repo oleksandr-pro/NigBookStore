@@ -3,11 +3,9 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { bindActionCreators } from "redux";
-import * as authActions from "../actions/authenticate";
+import * as authActions from "../services/actions/authenticate";
 import { connect } from "react-redux";
-
 import * as COLOR from "../config/colors";
 
 class ContactUs extends Component {
@@ -31,6 +29,7 @@ class ContactUs extends Component {
 
   render() {
     const { authSession } = this.props.state;
+    const {user} = authSession;
     return (
       <View
         style={{
@@ -49,7 +48,7 @@ class ContactUs extends Component {
             style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
           >{`Username`}</Text>
           <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            authSession.username
+            user.username
           }`}</Text>
         </View>
 
@@ -63,14 +62,13 @@ class ContactUs extends Component {
             style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
           >{`Email`}</Text>
           <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            authSession.email
+            user.email
           }`}</Text>
         </View>
       </View>
     );
   } // render
 } // Profile
-
 export default connect(
   state => ({ state: state.authenticate }),
   dispatch => ({

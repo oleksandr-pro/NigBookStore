@@ -38,7 +38,7 @@ class EpubReader extends Component {
 
   componentDidMount() {
     const { navigation } = this.props;
-    const path = navigation.getParam('path', '');
+    const {path} = navigation.state.params;
     console.log('path', path);
     this.streamer.start()
       .then((origin) => {

@@ -2,13 +2,10 @@
 
 import React, { Component } from "react";
 import { View, StatusBar, Platform } from "react-native";
-
-import { MainStack, LoginStack } from "../config/router";
-
+import { MainStack, LoginStack } from "../navigation/router";
 import { bindActionCreators } from "redux";
-import * as authActions from "../actions/authenticate";
+import * as authActions from "../services/actions/authenticate";
 import { connect } from "react-redux";
-import AppIntroSlider from 'react-native-app-intro-slider';
 import { StyleSheet } from 'react-native';
 import {Root} from "native-base";
 
@@ -18,7 +15,6 @@ const styles = StyleSheet.create({
     height: 200,
   }
 });
-
 class Main extends Component {
   constructor(props){
     super(props);
@@ -26,9 +22,9 @@ class Main extends Component {
       showRealApp: false
     }
   }
-
   render() {
-    if (!this.props.state.isAuth) {
+    console.log('error', this.props.state);
+    if (this.props.state.isAuth) {
       return (     <Root>
         <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
@@ -44,11 +40,8 @@ class Main extends Component {
           </View>
         );
       }
-      
     }
   } 
-
-
 export default connect(
   state => ({ state: state.authenticate }),
   dispatch => ({

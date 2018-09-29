@@ -3,7 +3,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import * as COLOR from "../config/colors";
 
 class Settings extends Component {
@@ -23,7 +22,7 @@ class Settings extends Component {
         <Icon name="menu" size={32} color={COLOR.ICON} />
       </TouchableOpacity>
     )
-  }); // navigationOptions
+  });
 
   render() {
     return (

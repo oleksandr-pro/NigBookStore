@@ -6,7 +6,7 @@ import LoadingSpinner from '../../atoms/loadingSpinner'
 import FlatListGrid from '../../molecules/itemContainer/flatListGrid'
 import NativeItemModal from '../../molecules/NativeItemModal'
 import { connect } from "react-redux";
-import {addBook, updateBook} from '../../../actions/books_actions'
+import {addBook, updateBook} from '../../../services/actions/books_actions'
 
 const { width, height } = Dimensions.get('window')
 class MyInfinityScroll extends Component {
@@ -30,7 +30,6 @@ class MyInfinityScroll extends Component {
     console.log(props);
   }
   componentDidMount() {
-
     this.makeRemoteRequest();
   }
 
@@ -47,10 +46,8 @@ class MyInfinityScroll extends Component {
   makeRemoteRequest = (page) => {
     console.log(page);
     let url = `https://zacsbooks.com/`+this.props.dataUrl+'?page='+(page-1);
-
     console.log('url', url);
     this.setState({ loading: true });
-
     return new Promise((resolve, reject) => {
       fetch(url)
       .then(res => res.json())
@@ -72,9 +69,6 @@ class MyInfinityScroll extends Component {
   };
 
   sleep = (time) => new Promise(resolve => setTimeout(() => resolve(), time));
-
-  
-
   onFetch = async (page = 0, startFetch, abortFetch) => {
     try {
       let pageLimit = 12
@@ -103,12 +97,10 @@ class MyInfinityScroll extends Component {
         break
     }
   }
-
   getFileName=(url)=> {
     let num = url.split('/').length;
     return url.split('/')[num-1];
   }
-
   onChangeScrollToIndex = (num) => {
     this.setState({ text: num })
     let index = num
@@ -121,7 +113,6 @@ class MyInfinityScroll extends Component {
       console.warn(err)
     }
   }
-
   _onPressItem = (type, index, item) => {
     this._showModal(item);
   }
@@ -129,11 +120,7 @@ class MyInfinityScroll extends Component {
   _hideModal = () => {
     this.setState({isModalVisible: false})
   }
-
   _showModal = (selectedItem) => this.setState({ isModalVisible: true, selectedItem })
-
-
-
   renderItem = (item, index, separator) => {
     if (this.state.layout === 'list') {
       return (
@@ -146,16 +133,13 @@ class MyInfinityScroll extends Component {
     }
     return null
   }
-
   renderHeader = () => (
     <View>     
     </View>
   )
-
   renderPaginationFetchingView = () => (
     <LoadingSpinner height={height * 0.2} text="loading..." />
   )
-
   render() {
     if (this.props.loading) {
       return (
@@ -228,5 +212,4 @@ class MyInfinityScroll extends Component {
 function mapStateToProps(state, props) {
   return {}
 }
-
 export default connect(mapStateToProps, {addBook, updateBook})(MyInfinityScroll);

@@ -1,32 +1,24 @@
 /* @flow */
-
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { bindActionCreators } from "redux";
-import * as authActions from "../../../../actions/authenticate";
+import * as authActions from "../../../../services/actions/authenticate";
 import { connect } from "react-redux";
-
 import {Container, Content, Form, Item, Label, Text} from 'native-base';
 
-import * as COLOR from "../../../../config/colors";
-
 class ViewAccount extends Component {
-  
   render() {
-    const { user } = this.props.state.authSession;
+    const { user=null } = this.props.state.authSession;
     return (
       <Container>
         <Content>
         <Form style={{padding:15}}>
               <Item fixedLabel style={{height:40}}>
                 <Label>Username</Label>
-                <Text> {user.name} </Text>
+                <Text> {user!==null?user.name:null} </Text>
               </Item>
               <Item fixedLabel style={{height:40}}>
                 <Label>Email</Label>
-                <Text> {user.mail} </Text>
+                <Text> {user!==null?user.mail:null} </Text>
               </Item>
           </Form>
         </Content>

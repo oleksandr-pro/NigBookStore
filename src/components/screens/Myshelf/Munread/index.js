@@ -7,60 +7,56 @@ var {
     ActivityIndicator,
 } = require('react-native');
 import { bindActionCreators } from "redux";
-import * as bookActions from "../../../../actions/books_actions";
+import * as bookActions from "../../../../services/actions/books_actions";
 import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
 import styles from "./styles";
-import Loader from '../../../atoms/Loader';
 import RNFS from 'react-native-fs';
+import ModalProgress from "../../../common/loading";
 
 class Munread extends Component {
- 
     constructor(props){
         super(props);
-
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             books:[],
             loading: false,
         };
     }
-  componentWillReceiveProps(nextProps){
-      if(nextProps!==this.props){
-
-          this.setState({books:nextProps.books});
-      }
-
-  }
 
   componentDidMount(){
       this.props.getBooks();
       this.setState({books:this.props.books});
-
   }
-
-//   updateBook(book){
-//       book['wish'] = false;
-//       this.props.updateBook(book);
-//   }
 
   likeBook(book){
     book['like']=true;
     this.props.updateBook(book);
     }
 
+    onCloseModal=()=>{
+        this.setState({loading:false});
+    }
+
   updateBook(book){
         let {downloadurl=''} = book;
         var flag = downloadurl.split('/').length;
         if (flag>0){
-            var filename = url.split('/')[flag-1];
+            var filename = downloadurl.split('/')[flag-1];
             console.log('filename', filename);
         }
         this.setState({loading:true});
+        setTimeout(() => {
+            this.props.onDismiss();
+            if (this.state.loading){
+                this.setState({loading:false});
+                return Alert.alert('Timeout', 'Timeout. Connection error');
+            }
+        }, 60000);
         let path = RNFS.DocumentDirectoryPath+'/www/'+ filename;
         RNFS.mkdir(RNFS.DocumentDirectoryPath+'/www').then(()=>{
-            RNFS.downloadFile({fromUrl:'https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub', toFile: path}).promise.then(res => {
+            RNFS.downloadFile({fromUrl:downloadurl, toFile: path}).promise.then(res => {
             console.log('The file saved to ', res.statusCode)
             this.setState({loading:false});
             book['localpath'] = filename;
@@ -80,7 +76,8 @@ class Munread extends Component {
     }
 
   render() {
-      console.log('Rendering', this.state.books);
+      const {books} = this.props;
+      console.log('Rendering', books);
         if (this.props.loading) {
             return (
                 <View style={styles.activityIndicatorContainer}>
@@ -94,11 +91,11 @@ class Munread extends Component {
         } else {   
             return (
                 <View style={{flex: 1, backgroundColor: '#eaeaea'}}>
-                    <Loader
-                        loading={this.state.loading} /> 
+                    <ModalProgress
+                        isVisible={this.state.loading} /> 
                     <Content>
                     <List>
-                    {this.state.books.map((item, index) => {
+                    {books.map((item, index) => {
                         return (
                         <View key={index}>
                             {item.read ===true  && item.wish===true
@@ -115,7 +112,6 @@ class Munread extends Component {
                     })}
                 </List>
                 </Content>
-
                 </View>
             );
         }

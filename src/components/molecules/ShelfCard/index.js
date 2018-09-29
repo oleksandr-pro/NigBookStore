@@ -38,27 +38,15 @@ class ShelfCard extends Component {
 
     return (
       <View style={{justifyContent:'center', alignItems:'center', flex:1}}>
-     
           <View style={[ {width:width-20}]}>
-
-            
                 <Card style={{flex: 1}}>
-                   
                     <CardItem bordered>
-                        
                         <Body>
                             <View style={{flex:1, flexDirection:'row'}}>
                                 <View style={{flex:1, }}>
                                     <Image source={{uri: book.image}} style={{ flex: 1, height:200}}/>
                                 </View>
                                 <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center', padding:5}}>
-                                    <View style={styles.colCenter}>
-                                    {/* <Text style={styles.titleText}> {book.title}</Text> 
-                                    <Text numberOfLines={1} ellipsizeMode ={'tail'}>{this.state.selectedNode['Author Name']}</Text>
-                                    <Text style={[styles.titleText, {marginBottom:5}]}> {book.pages} pages</Text>  */}
-
-                                    </View>
-                                    
                                     <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center' }}>
                                         {book.read === true && book.wish ===false
                                         ?<Button primary small onPress={() =>this.props.upreBook()}>    
@@ -67,7 +55,6 @@ class ShelfCard extends Component {
                                         :<Button primary small onPress={() =>this.props.upreBook()}>    
                                         <Text>Download </Text>
                                          </Button>
-                                        
                                         }
                                         {book.read === true && book.wish ===false
                                         ?<Button danger small
@@ -90,22 +77,13 @@ class ShelfCard extends Component {
                                         </Button>
                                         : <View/>
                                         }
-                                        
-                                    
-                                    
-                                    </View>
-                                   
-                                    
+                                    </View>   
                                 </View>
                             </View>
-                        
                         </Body>
                     </CardItem>
-                   
                 </Card>
-               
           </View>
-
   </View>
 
     );

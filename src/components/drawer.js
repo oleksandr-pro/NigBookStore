@@ -2,15 +2,12 @@
 
 import React, { Component } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import { NavigationActions } from "react-navigation";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../config/colors";
-
 import { bindActionCreators } from "redux";
-import * as authActions from "../actions/authenticate";
-import * as screenTrackActions from "../actions/screen-tracking";
+import * as authActions from "../services/actions/authenticate";
+import * as screenTrackActions from "../services/actions/screen-tracking";
 import { connect } from "react-redux";
-import getCurrentRouteName from "../utils/get-current-route";
 
 class DrawerContainer extends Component {
   constructor(props) {
@@ -24,7 +21,6 @@ class DrawerContainer extends Component {
 
   render() {
     const { navigation } = this.props;
-
     return (
       <View
         style={{
@@ -39,7 +35,6 @@ class DrawerContainer extends Component {
             source={require("../assets/img/logo.png")}
           />
         </View>
-
         <View
           style={{
             flex: 1,

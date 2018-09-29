@@ -7,7 +7,7 @@ var {
     ActivityIndicator
 } = require('react-native');
 import { bindActionCreators } from "redux";
-import * as bookActions from "../../../../actions/books_actions";
+import * as bookActions from "../../../../services/actions/books_actions";
 import { connect } from "react-redux";
 import {Content, List} from 'native-base';
 import ShelfCard from "../../../molecules/ShelfCard";
@@ -53,7 +53,6 @@ class Mrecent extends Component {
         book ={item}
         upreBook={()=>{this.props.screenProps.navigate('Epub', { name: 'Jane' })}}
     />
-
   );
  
   render() {

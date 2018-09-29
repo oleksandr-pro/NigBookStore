@@ -4,27 +4,19 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
-  Image,
-  Keyboard,
-  AsyncStorage
+  Image, AsyncStorage
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../config/colors";
-
 import { bindActionCreators } from "redux";
-import * as authActions from "../actions/authenticate";
+import * as authActions from "../services/actions/authenticate";
 import { connect } from "react-redux";
-
 import LoginView from "./login/login";
 import RegisterView from "./login/register";
 import ModalProgress from "./common/loading";
 import { CARD } from "../config/colors";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { StyleSheet } from 'react-native';
-
-
 import { DATA_SESSION } from "../config/global";
 
 const styles = StyleSheet.create({
@@ -59,7 +51,6 @@ const slides = [
     backgroundColor: '#22bcb5',
   }
 ];
-
 class Login extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
@@ -72,13 +63,13 @@ class Login extends Component {
       hideLogo: false,
       showLogin: true,
       initializing: true,
-      showRealApp: false
+      showRealApp: false,
+      modalVisible:false,
     };
+    this.renderViewSwitch.bind(this);
   } // constructor
 
   _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
     this.setState({ showRealApp: true });
   }
 
@@ -207,6 +198,9 @@ class Login extends Component {
     }
   }; // renderLogo
 
+  closeModal = ()=>{
+    this.setState({modalVisible:false});
+  };
   render() {
     // if loading show splash
     if (this.state.initializing && this.state.showRealApp==false) {
@@ -214,7 +208,6 @@ class Login extends Component {
         <View
           style={{
             flex: 1,
-
             backgroundColor: COLOR.HEADER
           }}
         >
@@ -234,12 +227,10 @@ class Login extends Component {
         </View>
       );
     }
-
     // if screen done
     if (this.state.initializing===false && this.state.showRealApp==false){
       return <AppIntroSlider slides={slides} onDone={this._onDone} showSkipButton onSkip={this._onDone}/>;
     }
-
     // conditional login/register view
     return (
       <View
@@ -249,13 +240,17 @@ class Login extends Component {
           backgroundColor: COLOR.HEADER
         }}
       >
-        <ModalProgress isVisible={this.props.state.requestingAuth} />
+        <ModalProgress 
+        isVisible={this.props.state.requestingAuth&&this.state.modalVisible}
+        onClose = {this.closeModal}
+        />
         {this.renderLogo()}
         {this.state.showLogin ? (
           <LoginView
             setHideLogo={value => this._setHideLogo(value)}
             login={(username, password, email, pictureurl, callback) => {
               this.props.actions.login(username, password, email, pictureurl, callback);
+              this.setState({modalVisible:true})
             }}
             error={this.props.state.authError}
             navigate={route => this.props.navigation.navigate(route)}

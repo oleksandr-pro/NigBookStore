@@ -2,11 +2,6 @@
 
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { bindActionCreators } from "redux";
-import * as authActions from "../../../actions/authenticate";
-import { connect } from "react-redux";
 import MyInfinityScroll from "../MyInfinityScroll"
 import * as COLOR from "../../../config/colors";
 import DownHeaderBar from "../../atoms/DownHeaderBar"
@@ -25,8 +20,7 @@ class Categories extends Component {
     this.state = {
       selectedIndex:0,
       initialPage:0,
-      activeTab:0
-     
+      activeTab:0   
     }
     this.updateIndex = this.updateIndex.bind(this)
   };
@@ -40,7 +34,6 @@ class Categories extends Component {
   };
 
   render() {
-
     const buttons = ['Award Winners', 'Adults','Nigerian Writing', 'Fictions','Non Fictions'];
     const { selectedIndex, initialPage } = this.state;
     const DATAURLS = ['categories/award_winners','categories/adults', 'categories/nigerian-writings','categories/fictions', 'categories/non-fictions' ];
@@ -77,8 +70,7 @@ class Categories extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}             
               >
-               <MyInfinityScroll dataUrl={DATAURLS[0]} screenProps = {this.props.screenProps}/>
-              
+               <MyInfinityScroll dataUrl={DATAURLS[0]} screenProps = {this.props.screenProps}/>              
             </Tab>
             <Tab
               heading={buttons[1]}
@@ -106,8 +98,7 @@ class Categories extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[3]} screenProps = {this.props.screenProps}/>
-              
+              <MyInfinityScroll dataUrl={DATAURLS[3]} screenProps = {this.props.screenProps}/>             
             </Tab>
             <Tab
               heading={buttons[4]}
@@ -116,14 +107,10 @@ class Categories extends Component {
               activeTextStyle={styles.ActiveTextStyle}
               activeTabStyle={styles.ActiveTabStyle}
             >
-              <MyInfinityScroll dataUrl={DATAURLS[4]} screenProps = {this.props.screenProps}/>
-              
-            </Tab>
-            
+              <MyInfinityScroll dataUrl={DATAURLS[4]} screenProps = {this.props.screenProps}/>              
+            </Tab>            
           </Tabs>
-
         </Container>
-
       </View>
     </View>
     );

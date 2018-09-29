@@ -1,19 +1,14 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { bindActionCreators } from "redux";
-import * as authActions from "../../../../actions/authenticate";
+import * as authActions from "../../../../services/actions/authenticate";
 import { connect } from "react-redux";
-
 import {Container, Content, Form, Item, Label, Text, Input, Button} from 'native-base';
 import ModalProgress from '../../../common/loading';
 import * as COLOR from "../../../../config/colors";
 
 class EditAccount extends Component {
-  
      constructor(){
          super()
          this.state = {
@@ -29,7 +24,6 @@ class EditAccount extends Component {
         let {mail, name} = user;
         this.setState({name:name, mail:mail})
     }
-
     doUpdate = ()=>{
         this.setState({isLoading:true});
         let {name, mail, password, uid} = this.state;

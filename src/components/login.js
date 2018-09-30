@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import LoginView from "./login/login";
 import RegisterView from "./login/register";
 import ModalProgress from "./common/loading";
-import { CARD } from "../config/colors";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { StyleSheet } from 'react-native';
 import { DATA_SESSION } from "../config/global";
@@ -241,18 +240,18 @@ class Login extends Component {
         }}
       >
         <ModalProgress 
-        isVisible={this.props.state.requestingAuth&&this.state.modalVisible}
+        isVisible={this.props.common.isFetching&&this.state.modalVisible}
         onClose = {this.closeModal}
         />
         {this.renderLogo()}
         {this.state.showLogin ? (
           <LoginView
             setHideLogo={value => this._setHideLogo(value)}
-            login={(username, password, email, pictureurl, callback) => {
-              this.props.actions.login(username, password, email, pictureurl, callback);
+            login={(user, callback) => {
+              this.props.actions.login(user, callback);
               this.setState({modalVisible:true})
             }}
-            error={this.props.state.authError}
+            error={this.props.auth.authError}
             navigate={route => this.props.navigation.navigate(route)}
           />
         ) : (
@@ -263,9 +262,16 @@ class Login extends Component {
   } // render
 } // Login
 
+const mapStateToProps = state => ({
+  common:state.common,
+  auth:state.authenticate
+})
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(authActions, dispatch)
+})
+
 export default connect(
-  state => ({ state: state.authenticate }),
-  dispatch => ({
-    actions: bindActionCreators(authActions, dispatch)
-  })
+  mapStateToProps,
+  mapDispatchToProps
 )(Login);

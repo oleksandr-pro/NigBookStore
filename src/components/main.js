@@ -3,11 +3,10 @@
 import React, { Component } from "react";
 import { View, StatusBar, Platform } from "react-native";
 import { MainStack, LoginStack } from "../navigation/router";
-import { bindActionCreators } from "redux";
-import * as authActions from "../services/actions/authenticate";
 import { connect } from "react-redux";
 import { StyleSheet } from 'react-native';
 import {Root} from "native-base";
+import ModalProgress from '../components/common/loading';
 
 const styles = StyleSheet.create({
   image: {
@@ -23,12 +22,15 @@ class Main extends Component {
     }
   }
   render() {
-    console.log('error', this.props.state);
-    if (this.props.state.isAuth) {
+    console.log('auth info', this.props.auth);
+    if (this.props.auth.isAuth) {
       return (     <Root>
         <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
           <MainStack />
+          <ModalProgress 
+          isVisible={this.props.common.isFetching}
+          />
         </View>
         </Root>
       );
@@ -37,14 +39,18 @@ class Main extends Component {
           <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
           <LoginStack />
+          <ModalProgress 
+          isVisible={this.props.common.isFetching}
+          />
           </View>
         );
       }
     }
-  } 
+  }
+const mapStateToProps = state => ({
+  common:state.common,
+  auth:state.authenticate
+}) 
 export default connect(
-  state => ({ state: state.authenticate }),
-  dispatch => ({
-    actions: bindActionCreators(authActions, dispatch)
-  })
+  mapStateToProps
 )(Main);

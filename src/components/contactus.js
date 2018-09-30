@@ -48,7 +48,7 @@ class ContactUs extends Component {
             style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
           >{`Username`}</Text>
           <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            user.username
+            user.name
           }`}</Text>
         </View>
 
@@ -62,7 +62,7 @@ class ContactUs extends Component {
             style={{ color: COLOR.PLACEHOLDER_TEXT_LIGHT, fontSize: 14 }}
           >{`Email`}</Text>
           <Text style={{ fontSize: 16, color: COLOR.PRIMARY_TEXT }}>{`${
-            user.email
+            user.mail
           }`}</Text>
         </View>
       </View>

@@ -4,6 +4,9 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
 import ModalProgress from '../common/loading';
+import * as registerActions from '../../services/actions/register';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 class RegisterView extends Component {
   constructor(props) {
@@ -20,31 +23,15 @@ class RegisterView extends Component {
   register(){
     let {usernameInput, emailInput, passwordInput} = this.state;
     if (usernameInput===""||emailInput===""||passwordInput==="") return null;
-    this.setState({loading:true});
-    return fetch(`https://zacsbooks.com/api/user/register`, {
-        headers: {'Content-Type':'application/json'},
-        method:'POST',
-        body: JSON.stringify({'name':usernameInput, 'pass':passwordInput, 'mail':emailInput})
-      }).then(response => response.json())
-      .then(responseJson => {
-        const{uid, uri} = responseJson;
-        if (uid!==undefined){
-          console.log('success');
-          this.createPayRow();
-        } else {
-          const{form_errors} = responseJson;
-          console.log('failure', form_errors);
-          this.registerFailed(form_errors);
-        }
-    })
-    .catch(error => {
-      this.registerFailed({name:'Network Error'});
-      this.setState({loading:false})
-    });
+    let user = {
+      name:usernameInput,
+      mail:emailInput,
+      pass:passwordInput
+    }
+    this.props.actions.register(user,this.registerFailed)
   }
 
-  registerFailed(error){
-    let {name='', mail=''} = error;
+  registerFailed(){
     return Alert.alert(
       "Registration Failed",
       `Please input correct values.`,
@@ -230,5 +217,13 @@ class RegisterView extends Component {
     );
   } // render
 } // RegisterView
-
-export default RegisterView;
+const mapStateToProps = state => ({
+  register:state.register,
+})
+const mapDispatchToProps = dispatch => ({
+  actions:bindActionCreators(registerActions, dispatch)
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterView);

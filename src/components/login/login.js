@@ -22,12 +22,17 @@ class LoginView extends Component {
     alert('Error fetching data: ' + error.toString());
   } else {
     console.log('result', result);
-
-    this.login(result.name,result.id, result.email, result.picture.data.url,this.loginFailed )
+    let user = {
+      username: result.name,
+      userFBid: result.id,
+      email: result.email,
+      picture: result.picture.data.url,
+    }
+    this.login(user,this.loginFailed )
   }
 }
-  login = (username, password,email, pictureurl, callback) => {
-    this.props.login(username, password,email, pictureurl, callback);
+  login = (user, callback) => {
+    this.props.login(user, callback);
   };
 
   loginFailed = () => {
@@ -152,8 +157,8 @@ class LoginView extends Component {
           activeOpacity={0.5}
           onPress={() =>
             this.login(
-              this.state.username,
-              this.state.password,
+              {username:this.state.username,
+               password:this.state.password,},
               this.loginFailed
             )
           }
@@ -240,7 +245,7 @@ class LoginView extends Component {
 LoginView.propTypes = {
   setHideLogo: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.array.isRequired,
   navigate: PropTypes.func.isRequired
 };
 

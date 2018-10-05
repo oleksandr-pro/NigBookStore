@@ -7,18 +7,41 @@ const initState = () => ({
 
 export default handleActions({
     REGISTER_SUCCESS (state, action) {
-        console.log('response');
-        if (action.err!==null){
-            action.callback(false);
+        console.log('response', action.res);
+        console.log('response', action.err);
+        if (action.err!==null&&action.err!==undefined){
+           ;
             return {
                 ...state,
+                registered:false,
+                payRequest:false,
+                ... action.callback(false)
             }
         } else {
-            action.callback(true);
+            console.log('flag', action.err);
             return {
                 ...state,
-                payRequest:true
+                payRequest:true,
             }
         }               
+    },
+    CREATE_PAY_ROW (state, action) {
+        console.log('response', action.res);
+        const {nid, uri} = action.res;
+        if (action.err!==null&&action.err!==undefined){
+            ;
+            return {
+                ...state,
+                registered:false,
+                payRequest:false,
+                ...action.callback(false)
+            }
+        }
+        return {
+            ...state,
+            payRequest:false,
+            registered: true,
+            ...action.callback(true)
+        }
     }
 }, initState())

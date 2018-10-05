@@ -17,12 +17,14 @@ export const FETCH_API = Symbol('FETCH_API');
 
 export default store=>next=>action=>{
     if (!action[FETCH_API]) return next(action)
-    const {receiveType='', endpoint, method, postObj=null, loader=true, callback=null}=action[FETCH_API];
-    const {dispatch} = store;
+    const {receiveType='', endpoint, method, shouldAuth=true, postObj=null, loader=true, callback=null}=action[FETCH_API];
+    const {dispatch, getState} = store;
     loader?dispatch({
         type:'COMMON_REQUEST',
     }):void 0;
-    return sendRequest(endpoint, method, postObj)
+    st = shouldAuth?getState().authenticate.bauth:null;
+    console.log('basic authentication', st);
+    return sendRequest(endpoint, method, postObj, st)
         .then(res=>{
             dispatch({type:'COMMON_RECEIVE'});
             console.log('response', res);
@@ -30,7 +32,7 @@ export default store=>next=>action=>{
         })
         .then(checkNet)
         .then(res=>{
-            return dispatch({type:receiveType, res, postObj});
+            return dispatch({type:receiveType, res, postObj, callback});
         })
         .catch(err=>{
             console.log('error in the api', err);

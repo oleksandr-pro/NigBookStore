@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../../config/colors";
-import ModalProgress from '../common/loading';
+import PayModalProgress from '../common/payloading';
 import * as registerActions from '../../services/actions/register';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -28,7 +28,35 @@ class RegisterView extends Component {
       mail:emailInput,
       pass:passwordInput
     }
-    this.props.actions.register(user,this.registerFailed)
+    let title = Math.random().toString().slice(2,12);
+    let pay = {
+      type: 'custom_payment',
+      title,
+      field_email: {
+        und: [
+          {
+            value: emailInput
+          }
+        ]
+      }
+    }
+    this.props.actions.register(user,this.startRegister, pay, this.endPay)
+  }
+
+  startRegister=(flag)=>{
+    console.log('flag', flag);
+      if (!flag){
+        return this.registerFailed()
+      } else {
+        return this.registerSuccess();
+      }
+  }
+  endPay=(flag)=>{
+    if (!flag){
+      return this.registerFailed()
+    } else {
+      return this.registerSuccess()
+    }
   }
 
   registerFailed(){
@@ -49,37 +77,6 @@ class RegisterView extends Component {
     );
   }
 
-  createPayRow(){
-    let {emailInput,} = this.state;
-    let title = Math.random().toString().slice(2,12);
-    let request = {
-      type: 'custom_payment',
-      title,
-      field_email: {
-        und: [
-          {
-            value: emailInput
-          }
-        ]
-      }
-    }
-    return fetch(`https://zacsbooks.com/api/node`, {
-      headers: {'Content-Type':'application/json'},
-      method:'POST',
-      body: JSON.stringify(request)
-    }).then(res => res.json())
-    .then(res=> {
-      this.setState({loading:false});
-      const {nid, uri} = res;
-      console.log('response', res);
-      this.registerSuccess();
-    })
-    .catch(error=> {
-      this.registerFailed({name: 'Payment Initialization Failed'});
-      this.setState({loading:false})
-    })
-  }
-
   render() {
     return (
       <View
@@ -88,7 +85,7 @@ class RegisterView extends Component {
           margin: 16
         }}
       >
-        <ModalProgress isVisible={this.state.loading} />
+        <PayModalProgress isVisible={this.props.payRequest} />
         <View
           style={{
             marginBottom: 4
@@ -217,8 +214,10 @@ class RegisterView extends Component {
     );
   } // render
 } // RegisterView
+
 const mapStateToProps = state => ({
   register:state.register,
+  common:state.common
 })
 const mapDispatchToProps = dispatch => ({
   actions:bindActionCreators(registerActions, dispatch)

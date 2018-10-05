@@ -17,14 +17,14 @@ export const FETCH_API = Symbol('FETCH_API');
 
 export default store=>next=>action=>{
     if (!action[FETCH_API]) return next(action)
-    const {receiveType='', endpoint, method, shouldAuth=true, postObj=null, loader=true, callback=null}=action[FETCH_API];
+    const {receiveType='', endpoint, method, shouldAuth=true,ps=false, pheaders=null, postObj=null, loader=true, callback=null}=action[FETCH_API];
     const {dispatch, getState} = store;
     loader?dispatch({
         type:'COMMON_REQUEST',
     }):void 0;
     st = shouldAuth?getState().authenticate.bauth:null;
     console.log('basic authentication', st);
-    return sendRequest(endpoint, method, postObj, st)
+    return sendRequest(endpoint, method, postObj, st, ps, pheaders)
         .then(res=>{
             dispatch({type:'COMMON_RECEIVE'});
             console.log('response', res);

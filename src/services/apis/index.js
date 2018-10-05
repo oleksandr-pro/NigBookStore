@@ -1,25 +1,32 @@
 import {create} from 'apisauce';
-import {apiHost} from '../../config/global';
-const host = apiHost;
-const api = create({baseURL:host, timeout: 10000});
+import {apiHost, psHost} from '../../config/global';
+
 export const requestMethod = {
     GET:0,
     POST:1
 }
-export async function sendRequest(endpoint, method, postObj=null, st=null ){
+export async function sendRequest(endpoint, method, postObj=null, st=null, ps=false,pheaders=null ){
     let body = null;
-    const getParams = {
+    let getParams = {
         headers: {
             'Content-Type':'application/json',
             ...st!==null?{ Authorization: st } : undefined
         }
     }
-    const postParams = {
+    
+    getParams.headers = {...getParams.headers,...pheaders!==null?pheaders:undefined}
+
+    let postParams = {
         headers: {
             'Content-Type': 'application/json',
             ...st!==null?{ Authorization: st } : undefined
         },
     }
+
+    postParams.headers = {...postParams.heasers, ...pheaders!==null?pheaders:undefined};
+
+    const host = ps?psHost:apiHost;
+    const api = create({baseURL:host, timeout: 10000});
     console.log('postParams', postParams);
     switch(method){
         case requestMethod.GET:
@@ -59,5 +66,5 @@ function encodeQueryData(data) {
     let ret = [];
     for (let d in data)
       ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-    return ret.join('&');
+    return ret.join('&').replace('%40', '@');
  }

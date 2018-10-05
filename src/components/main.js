@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import { View, StatusBar, Platform } from "react-native";
-import { MainStack, LoginStack } from "../navigation/router";
+import { MainStack, LoginStack, PayStack } from "../navigation/router";
 import { connect } from "react-redux";
 import { StyleSheet } from 'react-native';
 import {Root} from "native-base";
@@ -23,7 +23,7 @@ class Main extends Component {
   }
   render() {
     console.log('auth info', this.props.auth);
-    if (this.props.auth.isAuth) {
+    if (this.props.auth.isAuth && this.props.pay.paid) {
       return (     <Root>
         <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
@@ -34,7 +34,18 @@ class Main extends Component {
         </View>
         </Root>
       );
-    } else {
+    } else if( this.props.auth.isAuth && !this.props.pay.paid){
+      return (
+        <View style={{flex:1}}>
+        <PayStack/>
+          <ModalProgress 
+          isVisible={this.props.common.isFetching}
+          />
+        </View>
+      )
+    }
+    
+    else {
         return (
           <View style={{ flex: 1 }}>
           {Platform.OS == "ios" && <StatusBar barStyle="light-content" />}
@@ -49,6 +60,7 @@ class Main extends Component {
   }
 const mapStateToProps = state => ({
   common:state.common,
+  pay: state.pay,
   auth:state.authenticate
 }) 
 export default connect(

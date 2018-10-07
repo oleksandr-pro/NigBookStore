@@ -3,6 +3,7 @@ package com.nigbookstore;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
 import com.rnziparchive.RNZipArchivePackage;
 import com.futurepress.staticserver.FPStaticServerPackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -39,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPaystackPackage(),
             new FBSDKPackage(mCallbackManager),
             new RNZipArchivePackage(),
             new FPStaticServerPackage(),

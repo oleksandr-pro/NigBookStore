@@ -3,7 +3,7 @@ import {FETCH_API} from '../middleware/api-middleware';
 import {requestMethod} from '../apis';
 import {PS_SECRET_KEY} from '../../config/global';
 
-export const payStackInit = (ps,callback)=>
+export const payStackInit = (user,callback)=>
     async(dispatch)=> {
         const res = await dispatch({
             [FETCH_API]: {
@@ -12,7 +12,7 @@ export const payStackInit = (ps,callback)=>
             method: requestMethod.POST,
             shouldAuth: false,
             ps:true,
-            headers:{Authorization:`Bearer ${PS_SECRET_KEY}`},
+            pheaders:{Authorization:`Bearer ${PS_SECRET_KEY}`},
             postObj:user,
             callback
             }

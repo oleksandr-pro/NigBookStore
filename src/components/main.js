@@ -43,8 +43,7 @@ class Main extends Component {
           />
         </View>
       )
-    }
-    
+    }  
     else {
         return (
           <View style={{ flex: 1 }}>

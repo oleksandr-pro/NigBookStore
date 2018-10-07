@@ -23,11 +23,10 @@ export async function sendRequest(endpoint, method, postObj=null, st=null, ps=fa
         },
     }
 
-    postParams.headers = {...postParams.heasers, ...pheaders!==null?pheaders:undefined};
-
+    postParams.headers = {...postParams.headers, ...pheaders!==null?pheaders:undefined};
     const host = ps?psHost:apiHost;
     const api = create({baseURL:host, timeout: 10000});
-    console.log('postParams', postParams);
+    console.log('postParams', postParams.headers);
     switch(method){
         case requestMethod.GET:
             if (postObj!==null){

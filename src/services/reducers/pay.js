@@ -1,8 +1,9 @@
 import {handleActions} from 'redux-actions'
-import {getDateFormat} from '../../utils/get_date_format';
+import getDateFormat from '../../utils/get_date_format';
 const initState = () => ({
     payDetails:null,
-    paid: false,
+    payData:null,
+    paid: null,
 })
 
 export default handleActions({
@@ -14,6 +15,7 @@ export default handleActions({
             const amount = node.Amount;
             const nextPayDay = node['Next Payment Date'];
             if (nextPayDay!==''&&amount!==''){
+                console.log('nextPayday', nextPayDay);
                 const nPD = getDateFormat(nextPayDay);
                 if (nPD.getTime()>new Date().getTime()&&parseFloat(amount)===0){
                     return {
@@ -33,10 +35,11 @@ export default handleActions({
     
     PAY_STACK_INIT(state, action) {
         console.log('pay stack init', action.res);
-        const {data} = action.res;
+        const {status, message, data} = action.res;
         return {
             ...state,
-
+            ...action.callback(action.res),
+            payData:data
         }
     }
 }, initState())

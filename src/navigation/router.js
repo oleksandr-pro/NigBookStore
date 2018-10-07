@@ -19,6 +19,8 @@ import Epubreader from "../epubreader/epubreader";
 import Search from "../components/screens/Search";
 import * as COLOR from "../config/colors";
 import DrawerContainer from "../components/drawer";
+//for pay stack
+import Subscription from '../components/payscreens/subscription';
 
 export const LoginStack = StackNavigator({
   Login: {
@@ -28,6 +30,12 @@ export const LoginStack = StackNavigator({
     screen: ForgotPassword
   }
 });
+
+export const PayStack = StackNavigator({
+  Subscription: {
+    screen: Subscription
+  }
+})
 
 const HomeItem = StackNavigator({
   Home: {

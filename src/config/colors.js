@@ -29,7 +29,7 @@ export const DHB_TEXT_COLOR = "#FFCA28";
 
 //for book card view
 export const CARD_PRICE_COLOR="#3949AB";
-
+export const PINKY_RED = "#d81b60";
 // for parelette from material design
 
 export const DARK_PRIMARY_COLOR="#FFA000";//background-color

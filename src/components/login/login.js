@@ -10,8 +10,8 @@ class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "ie",
-      password: "tigers3me",
+      username: "fff",
+      password: "12345",
       securePassword: true
     };
   } // constructor

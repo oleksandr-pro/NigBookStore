@@ -18,3 +18,28 @@ export const payStackInit = (user,callback)=>
             }
         })
     }
+
+
+export const startPay = (pay, mail, callback) =>
+    async(dispatch)=>{
+        const createPayRow = await dispatch({
+            [FETCH_API]: {
+                receiveType:'CREATE_PAY_ROW',
+                endpoint: 'api/node',
+                method:requestMethod.POST,
+                postObj:pay,
+                loader:false,
+                callback:callback
+            }
+        });
+        
+        const payDetail = await dispatch({
+            [FETCH_API]: {
+              receiveType:'PAYMENT_DETAILS',
+              endpoint:'payment-details',
+              method:requestMethod.GET,
+              postObj:{field_email_value:mail}
+            }
+          })
+          console.log('payDetail', payDetail);
+    }

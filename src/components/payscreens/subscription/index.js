@@ -13,30 +13,12 @@ class Subscription extends Component {
         headerTintColor: COLOR.HEADER_TINT,
         headerStyle: {
           backgroundColor: COLOR.HEADER
-        },
+        }
       }); // navigationOptions
 
       doPayInit = () => {
-        const {payDetails}  =  this.props.pay;
-        const {node} = payDetails[0];
-        const {title, Amount, Email} = node;
-        const payInit = {
-          reference:title,
-          amount:Amount,
-          email: Email,
-        }
-        this.props.actions.payStackInit(payInit, this.afterPayInit);
+        this.props.navigation.navigate('ChargePay');
       }
-
-      afterPayInit = (res) => {
-        const {status, message, data} = res;
-        if (status){
-          this.props.navigation.navigate('')
-        } else {
-          alert(message);
-        }
-      }
-      
       render() {
         const { authSession } = this.props.auth;
         const {user} = authSession;

@@ -21,6 +21,7 @@ import * as COLOR from "../config/colors";
 import DrawerContainer from "../components/drawer";
 //for pay stack
 import Subscription from '../components/payscreens/subscription';
+import ChargePay from '../components/payscreens/chargepay';
 
 export const LoginStack = StackNavigator({
   Login: {
@@ -34,7 +35,11 @@ export const LoginStack = StackNavigator({
 export const PayStack = StackNavigator({
   Subscription: {
     screen: Subscription
+  },
+  ChargePay: {
+    screen:ChargePay
   }
+
 })
 
 const HomeItem = StackNavigator({

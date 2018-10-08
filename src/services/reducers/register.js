@@ -22,6 +22,7 @@ export default handleActions({
             return {
                 ...state,
                 payRequest:true,
+                ... action.callback(true)
             }
         }               
     },

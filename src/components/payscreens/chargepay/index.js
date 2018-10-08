@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import {Icon} from 'native-base';
 import styles from './styles';
 import * as payActions from '../../../services/actions/pay';
-import * as authActions from '../../../services/actions/authenticate';
 import * as COLOR from "../../../config/colors";
 import {Metrics} from '../../../Themes';
 import {validateName} from '../../../utils/validation';
@@ -32,26 +31,30 @@ class ChargePay extends Component {
       constructor(){
           super();
           this.state = {
-            cardNumber:'',
-            expiryMonth:'',
-            expiryYear:'',
-            cvc:''
+            cardNumber:'50606 66666 66666 6666',
+            expiryMonth:'12',
+            expiryYear:'18',
+            cvc:'123'
           }
       }
 
-      afterPaid = (res) => {
-        const {status, message, data} = res;
+      afterPaid = (status, res) => {
+        console.log('response', res);
         if (status){
-          
+          this.props.navigation.navigate('ChargeSuccess')
         } else {
-          alert(message);
+          alert(res);
         }
       }
 
       startPay = () => {
         const { authSession } = this.props.auth;
+        const {cardNumber, expiryMonth, expiryYear, cvc} = this.state; 
         const {user} = authSession;
         const {mail} = user;
+        const cardInfo = {
+          cardNumber, expiryMonth, expiryYear, cvc
+        }
         const now = new Date();
         let title = Math.random().toString().slice(2,12);
         let pay = {
@@ -78,7 +81,8 @@ class ChargePay extends Component {
                 ]
             },
         }
-        this.props.actions.startPay(pay, mail, this.afterPaid)
+        
+        this.props.actions.startPay(pay, mail, cardInfo, this.afterPaid)
       }
 
       render() {
@@ -112,9 +116,9 @@ class ChargePay extends Component {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                     keyboardType={Platform.OS == 'ios' ? "number-pad" : "phone-pad"}
-                    maxLength={16}
+                    maxLength={24}
                     value = {cardNumber}
-                    onChange = {cardNumber=>this.setState({cardNumber})}
+                    onChangeText = {cardNumber=>this.setState({cardNumber})}
                     />
 
                     <View style={{ flexDirection: "row" }}>
@@ -149,7 +153,7 @@ class ChargePay extends Component {
                         keyboardType={Platform.OS == 'ios' ? "number-pad" : "phone-pad"}
                         maxLength={2}
                         value = {expiryMonth}
-                        onChange = {expiryMonth=>this.setState({expiryMonth})}
+                        onChangeText = {expiryMonth=>this.setState({expiryMonth})}
                     />
 
                     <TextInput
@@ -167,7 +171,7 @@ class ChargePay extends Component {
                         keyboardType={Platform.OS == 'ios' ? "number-pad" : "phone-pad"}
                         maxLength={2}
                         value = {expiryYear}
-                        onChange = {expiryYear=>this.setState({expiryYear})}
+                        onChangeText = {expiryYear=>this.setState({expiryYear})}
                     />
                     </View>
 
@@ -184,7 +188,7 @@ class ChargePay extends Component {
                     keyboardType={Platform.OS == 'ios' ? "number-pad" : "phone-pad"}
                     maxLength={4}
                     value = {cvc}
-                    onChange = {cvc=>this.setState({cvc})}
+                    onChangeText = {cvc=>this.setState({cvc})}
                     />
 
                     <View style={styles.saveCancelBg}>
@@ -220,7 +224,6 @@ export default connect(
     dispatch => ({
       actions: bindActionCreators(
         Object.assign({}, 
-          authActions,
           payActions), 
           dispatch)
     })

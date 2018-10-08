@@ -18,6 +18,7 @@
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
+      <meta-data android:name="co.paystack.android.PublicKey" android:value="pk_test_35a23e781eef0ba295df4cacb8e94bc9437d1cef"/>
       <activity
         android:name="com.nigbookstore.MainActivity"
         android:label="@string/app_name"

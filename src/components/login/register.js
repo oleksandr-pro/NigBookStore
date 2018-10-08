@@ -28,19 +28,8 @@ class RegisterView extends Component {
       mail:emailInput,
       pass:passwordInput
     }
-    let title = Math.random().toString().slice(2,12);
-    let pay = {
-      type: 'custom_payment',
-      title,
-      field_email: {
-        und: [
-          {
-            value: emailInput
-          }
-        ]
-      }
-    }
-    this.props.actions.register(user,this.startRegister, pay, this.endPay)
+
+    this.props.actions.register(user,this.startRegister)
   }
 
   startRegister=(flag)=>{
@@ -50,13 +39,6 @@ class RegisterView extends Component {
       } else {
         return this.registerSuccess();
       }
-  }
-  endPay=(flag)=>{
-    if (!flag){
-      return this.registerFailed()
-    } else {
-      return this.registerSuccess()
-    }
   }
 
   registerFailed(){
@@ -71,7 +53,7 @@ class RegisterView extends Component {
   registerSuccess(){
     return Alert.alert(
       "Successfully registered",
-      `Payment initialized`,
+      `Please check your email`,
       [{ text: "OK", onPress: () => null }],
       { cancelable: true }
     );

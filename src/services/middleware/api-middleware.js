@@ -22,7 +22,7 @@ export default store=>next=>action=>{
     loader?dispatch({
         type:'COMMON_REQUEST',
     }):void 0;
-    st = shouldAuth?getState().authenticate.bauth:null;
+    st = shouldAuth?getState().authenticate.authSession.bauth?getState().authenticate.authSession.bauth:getState().authenticate.bauth:null;
     console.log('basic authentication', st);
     return sendRequest(endpoint, method, postObj, st, ps, pheaders)
         .then(res=>{

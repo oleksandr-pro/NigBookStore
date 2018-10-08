@@ -34,7 +34,7 @@ class Main extends Component {
         </View>
         </Root>
       );
-    } else if( this.props.auth.isAuth && !this.props.pay.paid){
+    } else if( this.props.auth.isAuth && this.props.pay.paid===false){
       return (
         <View style={{flex:1}}>
         <PayStack/>

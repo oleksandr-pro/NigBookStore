@@ -22,6 +22,7 @@ import DrawerContainer from "../components/drawer";
 //for pay stack
 import Subscription from '../components/payscreens/subscription';
 import ChargePay from '../components/payscreens/chargepay';
+import ChargeSuccess from '../components/payscreens/chargesuccess';
 
 export const LoginStack = StackNavigator({
   Login: {
@@ -38,6 +39,9 @@ export const PayStack = StackNavigator({
   },
   ChargePay: {
     screen:ChargePay
+  },
+  ChargeSuccess: {
+    screen: ChargeSuccess
   }
 
 })

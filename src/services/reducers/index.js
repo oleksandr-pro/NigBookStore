@@ -6,6 +6,7 @@ import common from './common';
 import register from './register';
 import forget from './forget';
 import pay from './pay';
+import profile from './profile';
 
 export { 
     common,
@@ -14,5 +15,6 @@ export {
     booksControl,
     register,
     forget,
-    pay
+    pay,
+    profile
 };

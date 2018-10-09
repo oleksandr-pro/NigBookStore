@@ -4,9 +4,11 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import * as authActions from "../../../../services/actions/authenticate";
 import { connect } from "react-redux";
+import {Alert} from 'react-native';
 import {Container, Content, Form, Item, Label, Text, Input, Button} from 'native-base';
-import ModalProgress from '../../../common/loading';
-import * as COLOR from "../../../../config/colors";
+import {validateName, validateEmail, validateConfirmPassword} from '../../../../utils/validation'
+import * as profileActions from '../../../../services/actions/profile';
+import styles from './styles';
 
 class EditAccount extends Component {
      constructor(){
@@ -19,69 +21,83 @@ class EditAccount extends Component {
             uid:''
          }
      }
+
     componentDidMount(){
-        const { user } = this.props.state.authSession;
+        const { user } = this.props.auth.authSession;
         let {mail, name} = user;
         this.setState({name:name, mail:mail})
     }
-    doUpdate = ()=>{
-        this.setState({isLoading:true});
-        let {name, mail, password, uid} = this.state;
-        if (name===''||mail===''||password===''){
-            this.setState({isLoading:true});
-            return Alert.alert(
-                "Not correct",
-                "Please fill all fields",
-                [{ text: "OK", onPress: () => null }],
-                { cancelable: true }
-              );
+
+    afterUpdate = (status, message) => {
+      console.log('message', message);
+      if (status) {
+        Alert.alert ("Success", 'Updated Successfully', 
+        [{ text: "OK", onPress: () => null }],
+        { cancelable: true });
+      } else {
+        try{
+          const err =  message[Object.keys(message)[0]];
+          const msg = err.split(';')[0]
+          Alert.alert ("Failed", msg, 
+          [{ text: "OK", onPress: () => null }],
+          { cancelable: true });
+        } catch(e) {
+          Alert.alert ("Failed", '', 
+          [{ text: "OK", onPress: () => null }],
+          { cancelable: true });
         }
-        return fetch(`https://zacsbooks.com/api/user/${uid} `, {
-            headers: {'Content-Type':'application/json'},
-            method:'POST',
-            body: JSON.stringify({'name':name, 'mail':mail, 'pass':password})
-            }).then(response => response.json())
-            .then(responseJson => {
-                console.log('response', responseJson);
-                if (responseJson[0]!==true){
-                    Alert.alert ("Failed", responseJson[0], 
-                    [{ text: "OK", onPress: () => null }],
-                    { cancelable: true });
-                    const { user } = this.props.state.authSession;
-                    let {mail, name} = user;
-                    this.setState({name:name, mail:mail})
-                } else {
-                    Alert.alert ("Success", responseJson[0], 
-                    [{ text: "OK", onPress: () => null }],
-                    { cancelable: true });
-                }
-                this.setState({isLoading:false})
-            })
-            .catch(error=>{console.log('error', error); this.setState({isLoading:false})});
+        
+      }
     }
+
+    doUpdate = () => {
+      const {name, mail, pass, pass2, current_pass} = this.state;
+      const {uid} = this.props.auth.authSession.user;
+      const user = {
+        name, mail, pass, pass2, current_pass, uid
+      };
+      this.props.actions.updateProfile(user, this.afterUpdate);
+    }
+   
   render() {
-    const { user } = this.props.state.authSession;
+    const {name, mail, pass, pass2, current_pass} = this.state;
+    const notValid = !validateName(name)||!validateEmail(mail)||!validateName(pass)||!validateName(pass2)||!validateName(current_pass)||!validateConfirmPassword(pass, pass2);
+    console.log('not valid', notValid);
     return (
       <Container>
         <Content>
-        <ModalProgress isVisible={this.state.isLoading} />
-        <Form style={{padding:15}}>
-              <Item fixedLabel style={{height:40}}>
-                <Label>Username</Label>
-                <Input value={this.state.name} onChangeText={name =>this.setState({name:name})}/>
+          <Form style={styles.formCon}>
+              <Item stackedLabel style={styles.item}>
+                <Label style={styles.labelText}>Username</Label>
+                <Input value={this.state.name} onChangeText={name =>this.setState({name})}/>
               </Item>
-              <Item fixedLabel style={{height:40}} >
-                <Label>Email</Label>
-                <Input value={this.state.mail} onChangeText={mail =>this.setState({mail:mail})}/>
+              <Item stackedLabel style={styles.item}>
+                <Label style={styles.labelText}>Email</Label>
+                <Input value={this.state.mail} onChangeText={mail =>this.setState({mail})}/>
               </Item>
-              <Item fixedLabel style={{height:40}}>
-                <Label>password</Label>
-                <Input value = {this.state.password} onChangeText={password =>this.setState({password:password})} secureTextEntry={true}/>
+              <Item stackedLabel style={styles.item}>
+                <Label style={styles.labelText}>New Password</Label>
+                <Input value = {this.state.pass} onChangeText={pass =>this.setState({pass})} secureTextEntry={true}/>
               </Item>
-              <Button block primary style={{ paddingBottom: 4, marginTop:10 }} onPress={this.doUpdate}>
-                    <Text> Submit </Text>
-                </Button>
+              <Item stackedLabel style={styles.item}>
+                <Label style={styles.labelText}>Confirm Password</Label>
+                <Input value = {this.state.pass2} onChangeText={pass2 =>this.setState({pass2})} secureTextEntry={true}/>
+              </Item>
+              <Item stackedLabel style={styles.item}>
+                <Label style={styles.labelText}>Current Password</Label>
+                <Input value = {this.state.current_pass} onChangeText={current_pass =>this.setState({current_pass})} secureTextEntry={true}/>
+              </Item>
+              <Button block primary rounded 
+                style={{ paddingBottom: 4, marginTop:10, margin:10, justifyContent:'center', alignItems:'center' }} 
+                disabled = {notValid}
+                onPress={this.doUpdate}
+              >
+                  <Text> Submit </Text>
+              </Button>
           </Form>
+
+          
+          
         </Content>
       </Container>
     );
@@ -89,8 +105,11 @@ class EditAccount extends Component {
 } // Profile
 
 export default connect(
-  state => ({ state: state.authenticate }),
+  state => ({ 
+    auth: state.authenticate,
+    profile: state.profile
+    }),
   dispatch => ({
-    actions: bindActionCreators(authActions, dispatch)
+    actions: bindActionCreators(profileActions, dispatch)
   })
 )(EditAccount);

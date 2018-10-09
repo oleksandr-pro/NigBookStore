@@ -129,3 +129,15 @@ export const payAfterHome = () => {
         type: 'PAY_AFTER_HOME'
     }
 }
+
+export const paymentHistory = (user) => 
+    async(dispatch) => {
+        const paymentHistory = await dispatch({
+            [FETCH_API]: {
+                receiveType: 'PAYMENT_HISTORY',
+                endpoint: 'payment-history',
+                method: requestMethod.GET,
+                postObj:user,
+            }
+        })
+    }

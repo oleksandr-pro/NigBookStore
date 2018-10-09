@@ -3,7 +3,8 @@ import {apiHost, psHost} from '../../config/global';
 
 export const requestMethod = {
     GET:0,
-    POST:1
+    POST:1,
+    PUT:2
 }
 export async function sendRequest(endpoint, method, postObj=null, st=null, ps=false,pheaders=null ){
     let body = null;
@@ -50,6 +51,20 @@ export async function sendRequest(endpoint, method, postObj=null, st=null, ps=fa
             api.setHeaders(postParams.headers);
             console.log('api', api);
             return api.post(endpoint, body).then((res)=>{
+                console.log('response', res);
+                return res;
+            }).catch((e)=>{
+                e={error:'Err', ...e}
+                return e;
+            })
+        case requestMethod.PUT:
+            if (postObj!==null){
+                body = JSON.stringify(postObj);
+                console.log('body', body);
+            }
+            api.setHeaders(postParams.headers);
+            console.log('api', api);
+            return api.put(endpoint, body).then((res)=>{
                 console.log('response', res);
                 return res;
             }).catch((e)=>{

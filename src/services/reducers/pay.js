@@ -4,7 +4,9 @@ const initState = () => ({
     payDetails:null,
     payData:null,
     paid: null,
-    paidRef: null
+    paidRef: null,
+    paymentHistory:[],
+    loading:true
 })
 
 export default handleActions({
@@ -73,7 +75,22 @@ export default handleActions({
 
     PAY_AFTER_HOME (state, action) {
         return {
+            ...state,
             paid: true
+        }
+    },
+
+    PAYMENT_HISTORY (state, action) {
+        console.log('payment history', action.res);
+        const {nodes} = action.res;
+        let paymentHistory = state.paymentHistory;
+        if (nodes){
+            paymentHistory = nodes.map(ii=>({...ii.node}))
+        }
+        return {
+            ...state,
+            paymentHistory,
+            loading:false
         }
     }
 

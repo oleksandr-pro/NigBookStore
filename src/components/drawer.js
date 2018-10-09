@@ -47,8 +47,9 @@ class DrawerContainer extends Component {
               this.props.actions.setScreen("Home");
               this.setState({
                 homeSelected: true,
-                contactusSelected: false,
-                settingsSelected: false
+                categorySelected: false,
+                aboutusSelected: false,
+                logoutSelected:false
               });
               navigation.navigate("HomeItem");
             }}
@@ -57,18 +58,22 @@ class DrawerContainer extends Component {
               style={{
                 padding: 16,
                 flexDirection: "row",
-                backgroundColor: this.state.homeSelected
-                  ? COLOR.TINT_DARK
-                  : null
               }}
             >
               <Icon
                 style={{ marginRight: 24 }}
                 name="home"
                 size={21}
-                color={COLOR.PRIMARY_TEXT}
+                color={this.state.homeSelected
+                  ? COLOR.HEADER
+                  : COLOR.SECONDARY_TEXT_COLOR}
               />
-              <Text style={{ fontSize: 14, color: COLOR.PRIMARY_TEXT }}>
+              <Text style={{ 
+                fontSize: 16,
+                fontWeight:'bold', 
+                color:this.state.homeSelected
+                ? COLOR.HEADER
+                : COLOR.SECONDARY_TEXT_COLOR}}>
                 Home
               </Text>
             </View>
@@ -80,8 +85,9 @@ class DrawerContainer extends Component {
               this.props.actions.setScreen("ContactUs");
               this.setState({
                 homeSelected: false,
-                contactusSelected: true,
-                settingsSelected: false
+                categorySelected: true,
+                aboutusSelected: false,
+                logoutSelected:false
               });
 
               navigation.navigate("ContactUsItem");
@@ -91,19 +97,23 @@ class DrawerContainer extends Component {
               style={{
                 padding: 16,
                 flexDirection: "row",
-                backgroundColor: this.state.contactusSelected
-                  ? COLOR.TINT_DARK
-                  : null
               }}
             >
               <Icon
                 style={{ marginRight: 24 }}
                 name="email"
                 size={21}
-                color={COLOR.PRIMARY_TEXT}
+                color={this.state.categorySelected
+                  ? COLOR.HEADER
+                  : COLOR.SECONDARY_TEXT_COLOR}
               />
-              <Text style={{ fontSize: 14, color: COLOR.PRIMARY_TEXT }}>
-                Contact Us
+              <Text style={{ 
+                fontSize: 16,
+                fontWeight:'bold', 
+                color:this.state.categorySelected
+                ? COLOR.HEADER
+                : COLOR.SECONDARY_TEXT_COLOR}}>
+                Shop by Category
               </Text>
             </View>
           </TouchableOpacity>
@@ -114,8 +124,9 @@ class DrawerContainer extends Component {
               this.props.actions.setScreen("Settings");
               this.setState({
                 homeSelected: false,
-                contactusSelected: false,
-                settingsSelected: true
+                categorySelected: false,
+                aboutusSelected: true,
+                logoutSelected:false
               });
 
               navigation.navigate("SettingsItem");
@@ -125,19 +136,24 @@ class DrawerContainer extends Component {
               style={{
                 padding: 16,
                 flexDirection: "row",
-                backgroundColor: this.state.settingsSelected
-                  ? COLOR.TINT_DARK
-                  : null
+                
               }}
             >
               <Icon
                 style={{ marginRight: 24 }}
                 name="settings"
                 size={21}
-                color={COLOR.PRIMARY_TEXT}
+                color={this.state.aboutusSelected
+                  ? COLOR.HEADER
+                  : COLOR.SECONDARY_TEXT_COLOR}
               />
-              <Text style={{ fontSize: 14, color: COLOR.PRIMARY_TEXT }}>
-                Settings
+              <Text style={{
+                fontSize: 16,
+                fontWeight:'bold', 
+                color:this.state.aboutusSelected
+                ? COLOR.HEADER
+                : COLOR.SECONDARY_TEXT_COLOR}}>
+                About Us
               </Text>
             </View>
           </TouchableOpacity>
@@ -150,7 +166,15 @@ class DrawerContainer extends Component {
           />
           <TouchableOpacity
             style={{ marginBottom: 24, marginTop: 16 }}
-            onPress={() => this.props.actions.logout()}
+            onPress={() => {
+              this.props.actions.logout();
+              this.setState({
+                homeSelected: false,
+                categorySelected: false,
+                aboutusSelected: false,
+                logoutSelected:true
+              })
+            }}
           >
             <View
               style={{
@@ -162,10 +186,17 @@ class DrawerContainer extends Component {
                 style={{ marginRight: 24 }}
                 name="logout"
                 size={21}
-                color={COLOR.PRIMARY_TEXT}
+                color={this.state.logoutSelected
+                  ? COLOR.HEADER
+                  : COLOR.SECONDARY_TEXT_COLOR}
               />
-              <Text style={{ fontSize: 14, color: COLOR.PRIMARY_TEXT }}>
-                Logout
+              <Text style={{ 
+                fontSize: 16,
+                fontWeight:'bold', 
+                color:this.state.logoutSelected
+                ? COLOR.HEADER
+                : COLOR.SECONDARY_TEXT_COLOR}}>
+                Log out
               </Text>
             </View>
           </TouchableOpacity>

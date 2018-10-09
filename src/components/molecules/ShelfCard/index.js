@@ -56,7 +56,7 @@ class ShelfCard extends Component {
                                         <Text>Download </Text>
                                          </Button>
                                         }
-                                        {book.read === true && book.wish ===false
+                                        {book.read === true
                                         ?<Button danger small
                                             onPress={() =>
                                             ActionSheet.show(
@@ -64,7 +64,7 @@ class ShelfCard extends Component {
                                                 options: BUTTONS,
                                                 cancelButtonIndex: CANCEL_INDEX,
                                                 destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                                                title: "Delete this book."
+                                                title: book.wish?"Completely delete this book.":"Delete this book."
                                             },
                                             buttonIndex => {
                                                 if (buttonIndex === 0){

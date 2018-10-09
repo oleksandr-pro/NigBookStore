@@ -18,11 +18,15 @@ export default class flatListGrid extends PureComponent {
     console.log(rowData.node.Image.src);
     return (
       <TouchableOpacity onPress={() => this.props.onPress('GridView', rowID, rowData)}>
-        <View style={{ margin: 0.5, width: (width-20) / 3, paddingBottom: 15 }}>
-        <Card>
+        <View style={{ 
+          margin: 0.5, 
+          width: (width-20) / 3,
+          paddingBottom: 15 }}>
+        <Card style={{padding:0, margin:0, justifyContent:'center', alignItems:'center'}}>
           <Image 
             source={{uri: rowData.node.Image.src}} 
-            width = {(width-20) / 3}              
+            width = {(width-20) / 3}
+            style={{alignSelf:'center'}}              
           />
          
           {/* <CustomCardContent data={rowData.node}/> */}

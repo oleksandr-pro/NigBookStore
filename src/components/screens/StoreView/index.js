@@ -36,7 +36,7 @@ class StoreView extends Component {
   };
 
   render() {
-    const buttons = ['Featured', 'New Books','Categories', 'Best Seller','All'];
+    const buttons = ['Recommended', 'New Addition','Fiction', 'Non-Fiction'];
     const { selectedIndex, initialPage } = this.state;
     const DATAURLS = ['stores/featured_book','stores/new_books', 'stores/best_sellers','stores/all'];
     
@@ -66,7 +66,7 @@ class StoreView extends Component {
             renderTabBar={()=> <ScrollableTab />}            
           >
             <Tab
-              heading={'Featured'}
+              heading={'Recommended'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -76,7 +76,7 @@ class StoreView extends Component {
               
             </Tab>
             <Tab
-              heading={'New Books'}
+              heading={'New Addition'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -86,7 +86,7 @@ class StoreView extends Component {
             </Tab>
 
             <Tab
-              heading={'Best Seller'}
+              heading={'Fiction'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}
@@ -95,7 +95,7 @@ class StoreView extends Component {
               <MyInfinityScroll dataUrl={DATAURLS[2]} screenProps = {this.props.screenProps}/>
             </Tab>
             <Tab
-              heading={'All'}
+              heading={'Non-Fiction'}
               textStyle={styles.TabTextStyle}
               tabStyle={styles.TabStyle}
               activeTextStyle={styles.ActiveTextStyle}

@@ -10,7 +10,6 @@ export default handleActions({
         console.log('response', action.res);
         console.log('response', action.err);
         if (action.err!==null&&action.err!==undefined){
-           ;
             return {
                 ...state,
                 registered:false,

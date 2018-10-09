@@ -3,7 +3,7 @@ var Symbol = require('es6-symbol');
 
 const checkNet = response => {
     const {status} = response;
-    if (status>=200&&status<500){
+    if (status>=200&&status<400){
         return response.data;
     } else {
         const error = new Error(response.problem);
@@ -52,6 +52,7 @@ export default store=>next=>action=>{
                         type: receiveType,
                         res: err.response.data,
                         err: 'CLIENT_ERROR',
+                        postObj,
                         callback
                     })
                 default:

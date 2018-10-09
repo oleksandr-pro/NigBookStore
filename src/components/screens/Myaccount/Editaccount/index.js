@@ -87,12 +87,14 @@ class EditAccount extends Component {
                 <Label style={styles.labelText}>Current Password</Label>
                 <Input value = {this.state.current_pass} onChangeText={current_pass =>this.setState({current_pass})} secureTextEntry={true}/>
               </Item>
-              <Button block primary rounded 
-                style={{ paddingBottom: 4, marginTop:10, margin:10, justifyContent:'center', alignItems:'center' }} 
+              <Item style={{borderBottomWidth:0,marginTop:30}}>
+              </Item>
+              <Button block rounded 
+                style={{marginHorizontal:20}} 
                 disabled = {notValid}
                 onPress={this.doUpdate}
               >
-                  <Text> Submit </Text>
+                  <Text style={{textAlign:'center'}}> Submit </Text>
               </Button>
           </Form>
 

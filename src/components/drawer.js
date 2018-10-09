@@ -82,7 +82,7 @@ class DrawerContainer extends Component {
           <TouchableOpacity
             style={{ marginBottom: 24 }}
             onPress={() => {
-              this.props.actions.setScreen("ContactUs");
+              this.props.actions.setScreen("Category");
               this.setState({
                 homeSelected: false,
                 categorySelected: true,
@@ -90,7 +90,7 @@ class DrawerContainer extends Component {
                 logoutSelected:false
               });
 
-              navigation.navigate("ContactUsItem");
+              navigation.navigate("CategoryItem");
             }}
           >
             <View
@@ -101,7 +101,7 @@ class DrawerContainer extends Component {
             >
               <Icon
                 style={{ marginRight: 24 }}
-                name="email"
+                name="view-list"
                 size={21}
                 color={this.state.categorySelected
                   ? COLOR.HEADER
@@ -121,7 +121,7 @@ class DrawerContainer extends Component {
           <TouchableOpacity
             style={{ marginBottom: 18 }}
             onPress={() => {
-              this.props.actions.setScreen("Settings");
+              this.props.actions.setScreen("AboutUs");
               this.setState({
                 homeSelected: false,
                 categorySelected: false,
@@ -129,7 +129,7 @@ class DrawerContainer extends Component {
                 logoutSelected:false
               });
 
-              navigation.navigate("SettingsItem");
+              navigation.navigate("AboutUsItem");
             }}
           >
             <View
@@ -141,7 +141,7 @@ class DrawerContainer extends Component {
             >
               <Icon
                 style={{ marginRight: 24 }}
-                name="settings"
+                name="book"
                 size={21}
                 color={this.state.aboutusSelected
                   ? COLOR.HEADER
@@ -158,12 +158,6 @@ class DrawerContainer extends Component {
             </View>
           </TouchableOpacity>
 
-          <View
-            style={{
-              backgroundColor: COLOR.BACKGROUND,
-              height: 2
-            }}
-          />
           <TouchableOpacity
             style={{ marginBottom: 24, marginTop: 16 }}
             onPress={() => {

@@ -5,9 +5,9 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as COLOR from "../config/colors";
 
-class Settings extends Component {
+class AboutUs extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Settings",
+    title: "About Us",
     headerTintColor: COLOR.HEADER_TINT,
     headerStyle: {
       backgroundColor: COLOR.HEADER
@@ -40,8 +40,8 @@ class Settings extends Component {
             paddingHorizontal: 16
           }}
         >
-          <Text style={{ color: COLOR.PRIMARY, fontSize: 18 }}>Settings1</Text>
-          <Text style={{ fontSize: 14 }}>Placeholder settings</Text>
+          <Text style={{ color: COLOR.PRIMARY, fontSize: 18 }}>About Us 1</Text>
+          <Text style={{ fontSize: 14 }}>Placeholder about us</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -51,12 +51,12 @@ class Settings extends Component {
             paddingHorizontal: 16
           }}
         >
-          <Text style={{ color: COLOR.PRIMARY, fontSize: 18 }}>Settings2</Text>
-          <Text style={{ fontSize: 14 }}>Placeholder settings</Text>
+          <Text style={{ color: COLOR.PRIMARY, fontSize: 18 }}>About Us 2</Text>
+          <Text style={{ fontSize: 14 }}>Placeholder about us</Text>
         </TouchableOpacity>
       </View>
     );
   } // render
-} // Settings
+} 
 
-export default Settings;
+export default AboutUs;

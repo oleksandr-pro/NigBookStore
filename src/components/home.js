@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, AsyncStorage } from "react-native";
 import { HomeTabs } from "../navigation/router";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import {Icon } from 'native-base';
 import { bindActionCreators } from "redux";
 import * as screenTrackActions from "../services/actions/screen-tracking";
 import * as bookActions from "../services/actions/books_actions";
@@ -27,7 +27,7 @@ class Home extends Component {
           }} 
           onPress = {() =>navigation.navigate("Search")}       
         >
-          <Icon name="search" size={32} color={COLOR.ICON} />
+          <Icon name="search" size={32} style={{color:COLOR.ICON}} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -35,7 +35,7 @@ class Home extends Component {
           }}
           onPress={() => navigation.navigate("DrawerOpen")}
         >
-          <Icon name="menu" size={32} color={COLOR.ICON} />
+          <Icon name="menu" size={32} style={{color:COLOR.ICON}} />
         </TouchableOpacity>     
       </View>
     )

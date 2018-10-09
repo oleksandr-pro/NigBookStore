@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import * as DIMEN from "../../../config/dimens";
-import * as COLOR from "../../../config/colors";
+import * as DIMEN from "../../config/dimens";
+import * as COLOR from "../../config/colors";
 
 const styles = StyleSheet.create({
     btgContainer: {

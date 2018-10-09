@@ -10,14 +10,16 @@ const styles = StyleSheet.create({
     listCon: {
         flexDirection:'row',
         height:50,
-        width: Metrics.WIDTH*0.85
+        width: '100%',
+        alignSelf:'center'
     },
     mainView: {
         justifyContent:'center',
         alignItems:'center',
-        marginTop:10
+        alignSelf:'center'
     },
     txt:{
+        textAlign:'center',
         fontSize:Fonts.moderateScale(13)
     },
     labelText: {

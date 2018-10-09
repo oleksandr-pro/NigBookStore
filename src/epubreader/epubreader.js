@@ -22,8 +22,7 @@ class EpubReader extends Component {
     this.state = {
       flow: "paginated", // paginated || scrolled-continuous
       location: 6,
-      url: "file:///data/user/0/com.reactor/files/downloaded1.epub",
-      // "https://zacsbooks.com/sites/default/files/Christmas_in_Nigeria_Converted_Cleaned_Ready_4.epub",
+      url:"",
       src: "",
       origin: "",
       title: "",
@@ -43,7 +42,6 @@ class EpubReader extends Component {
     this.streamer.start()
       .then((origin) => {
         console.log("Served from:", origin);
-        // this.setState({origin})
         this.streamer.check(`http://localhost:8899/${path}`).then((t) => {
               console.log("checking", t);
               if (!t){
@@ -51,7 +49,6 @@ class EpubReader extends Component {
               }
           });
         return this.streamer.add(`http://localhost:8899/${path}`);
-        // return this.streamer.get(this.state.url);
       })
       .catch((error) => console.warn("fetch error:", error))
       .then((src) => {
@@ -78,7 +75,6 @@ class EpubReader extends Component {
         <StatusBar hidden={!this.state.showBars}/>
         <Epub style={styles.reader}
               ref="epub"
-              //src={"https://s3.amazonaws.com/epubjs/books/moby-dick.epub"}
               src={this.state.src}
               flow={this.state.flow}
               location={this.state.location}
@@ -87,12 +83,9 @@ class EpubReader extends Component {
                 this.setState({visibleLocation});
               }}
               onLocationsReady={(locations)=> {
-                // console.log("location total", locations.total);
                 this.setState({sliderDisabled : false});
               }}
               onReady={(book)=> {
-                // console.log("Metadata", book.package.metadata)
-                // console.log("Table of Contents", book.toc)
                 this.setState({
                   title : book.package.metadata.title,
                   toc: book.navigation.toc
@@ -113,25 +106,11 @@ class EpubReader extends Component {
               }}
               onSelected={(cfiRange, rendition) => {
                 console.log("selected", cfiRange)
-                // Add marker
                 rendition.highlight(cfiRange, {});
               }}
               onMarkClicked={(cfiRange) => {
                 console.log("mark clicked", cfiRange)
               }}
-              // themes={{
-              //   tan: {
-              //     body: {
-              //       "-webkit-user-select": "none",
-              //       "user-select": "none",
-              //       "background-color": "tan"
-              //     }
-              //   }
-              // }}
-              // theme="tan"
-              // regenerateLocations={true}
-              // generateLocations={true}
-              // origin={this.state.origin}
               onError={(message) => {
                 console.log("EPUBJS-Webview", message);
               }}

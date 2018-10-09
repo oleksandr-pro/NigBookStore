@@ -7,14 +7,14 @@ import {
   TabBarBottom
 } from "react-navigation";
 import Home from "../components/home";
-import ContactUs from "../components/contactus";
-import Settings from "../components/settings";
+import AboutUs from "../components/aboutus";
 import Login from "../components/login";
 import ForgotPassword from "../components/forgotpassword";
 import Myshelf from "../components/screens/Myshelf";
 import Myaccount from "../components/screens/Myaccount";
 import StoreView from "../components/screens/StoreView";
-import Categories from "../components/screens/Categories";
+import Category from "../components/category";
+import CShow from '../components/categories/cshow';
 import Epubreader from "../epubreader/epubreader";
 import Search from "../components/screens/Search";
 import * as COLOR from "../config/colors";
@@ -43,7 +43,6 @@ export const PayStack = StackNavigator({
   ChargeSuccess: {
     screen: ChargeSuccess
   }
-
 })
 
 const HomeItem = StackNavigator({
@@ -55,15 +54,18 @@ const HomeItem = StackNavigator({
   }
 });
 
-const ContactUsItem = StackNavigator({
-  ContactUs: {
-    screen: ContactUs
+const CategoryItem = StackNavigator({
+  Category: {
+    screen: Category
+  },
+  CShow: {
+    screen: CShow
   }
 });
 
-const SettingsItem = StackNavigator({
-  Settings: {
-    screen: Settings
+const AboutUsItem = StackNavigator({
+  AboutUs: {
+    screen: AboutUs
   }
 });
 
@@ -72,11 +74,11 @@ export const MainStack = DrawerNavigator(
     HomeItem: {
       screen: HomeItem
     },
-    ContactUsItem: {
-      screen: ContactUsItem
+    CategoryItem: {
+      screen: CategoryItem
     },
-    SettingsItem: {
-      screen: SettingsItem
+    AboutUsItem: {
+      screen: AboutUsItem
     },
     Search: {
       screen: Search
@@ -93,9 +95,6 @@ export const HomeTabs = TabNavigator(
     },
     MyAccount: {
       screen: Myaccount
-    },
-    Categories: {
-      screen: Categories
     },
     Store: {
       screen:StoreView

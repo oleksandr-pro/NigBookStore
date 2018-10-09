@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {Icon} from 'native-base';
-import {formatDate} from '../../../utils/useful-func';
+import {formatDate, addMonths} from '../../../utils/useful-func';
 import * as payActions from '../../../services/actions/pay';
 import * as authActions from '../../../services/actions/authenticate';
 import * as COLOR from "../../../config/colors";
@@ -28,8 +28,7 @@ class ChargeSuccess extends Component {
           const {paidRef} = this.props.pay;
           const {user} = this.props.auth.authSession;
           const {mail} = user;
-          const date = new Date();
-          const next = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+          const next = addMonths(1);
           let title = Math.random().toString().slice(2,12);
           let pay = {
             type: 'custom_payment',

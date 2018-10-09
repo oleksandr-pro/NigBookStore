@@ -62,7 +62,6 @@ export function deleteBook(id){
         AsyncStorage.getItem('data', (err, books) => {
             if (books !== null){
                 books = JSON.parse(books);
-
                 var index = getIndex(books, id); //find the index of the quote with the id passed
                 if(index !== -1) books.splice(index, 1);//if yes, undo, remove the QUOTE
                 AsyncStorage.setItem('data', JSON.stringify(books), () => {

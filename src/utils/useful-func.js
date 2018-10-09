@@ -20,7 +20,7 @@ function getDaysInMonth(year, month) {
 
 export function addMonths(value) {
     var d = new Date(),
-        n = date.getDate();
+        n = d.getDate();
     d.setDate(1);
     d.setMonth(d.getMonth() + value);
     d.setDate(Math.min(n, getDaysInMonth(d.getFullYear(), d.getMonth())));

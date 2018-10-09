@@ -67,9 +67,7 @@ class ChargeSuccess extends Component {
       render() {
         const { authSession } = this.props.auth;
         const {user} = authSession;
-
-        var date = new Date();
-        var nextPayDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        var nextPayDay = addMonths(1);
         const st_nextPayDay = formatDate(nextPayDay);
         return (
             <View

@@ -13,27 +13,36 @@ export default handleActions({
     PAYMENT_DETAILS (state, action) {  
         console.log('pay detail', action.res);
         const {nodes} = action.res;
-        const {node} = nodes[0];
-        if (node!==undefined){
-            const amount = node.Amount;
-            const nextPayDay = node['Next Payment Date'];
-            if (nextPayDay!==''&&amount!==''){
-                console.log('nextPayday', nextPayDay);
-                const nPD = getDateFormat(nextPayDay);
-                if (nPD.getTime()>new Date().getTime()){
-                    return {
-                        ...state,
-                        payDetails:nodes,
-                        paid:true
+        try {
+            const {node} = nodes[0];
+            if (node!==undefined){
+                const amount = node.Amount;
+                const nextPayDay = node['Next Payment Date'];
+                if (nextPayDay!==''&&amount!==''){
+                    console.log('nextPayday', nextPayDay);
+                    const nPD = getDateFormat(nextPayDay);
+                    if (nPD.getTime()>new Date().getTime()){
+                        return {
+                            ...state,
+                            payDetails:nodes,
+                            paid:true
+                        }
                     }
-                }
-            }             
+                }             
+            }
+            return {
+                ...state,
+                payDetails:nodes,
+                paid:false
+            }      
+        } catch(e){
+            return {
+                ...state,
+                payDetails:nodes,
+                paid:false
+            }   
         }
-        return {
-            ...state,
-            payDetails:nodes,
-            paid:false
-        }      
+        
     },
     
     PAY_STACK_INIT(state, action) {
